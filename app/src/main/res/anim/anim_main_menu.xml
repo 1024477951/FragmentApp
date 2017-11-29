@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/bounce_interpolator"
+    >
+    <translate
+        android:duration="1000"
+        android:fromYDelta="50%p"
+        android:toXDelta="-20%"
+        />
+    <alpha
+        android:duration="500"
+        android:fromAlpha="0.5"
+        android:toAlpha="1.0" />
+    <scale
+        android:fromXScale="0.5"
+        android:toXScale="1.5"
+        android:fromYScale="0.5"
+        android:toYScale="1.5"
+        android:duration="2000"
+        />
+
+</set>

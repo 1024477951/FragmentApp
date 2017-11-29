@@ -1,0 +1,148 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:weightSum="4">
+        <LinearLayout android:id="@+id/home"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_line"
+            android:padding="@dimen/dp_3"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:onClick="click"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <com.fragmentapp.home.view.BounceView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selected_main_home"
+                android:clickable="false"
+                android:checked="true"
+                android:button="@null"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#696868"
+                android:textSize="@dimen/sp_11sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_2"
+                android:text="首页"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/contact"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_line"
+            android:padding="@dimen/dp_3"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:onClick="click"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <com.fragmentapp.home.view.BounceView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selected_main_contact"
+                android:clickable="false"
+                android:checked="false"
+                android:button="@null"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#696868"
+                android:textSize="@dimen/sp_11sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_2"
+                android:text="通讯录"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/community"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_line"
+            android:padding="@dimen/dp_3"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:onClick="click"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <com.fragmentapp.home.view.BounceView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selected_main_community"
+                android:clickable="false"
+                android:checked="false"
+                android:button="@null"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#696868"
+                android:textSize="@dimen/sp_11sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_2"
+                android:text="消息"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/me"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_line"
+            android:padding="@dimen/dp_3"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:onClick="click"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <com.fragmentapp.home.view.BounceView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selected_main_me"
+                android:clickable="false"
+                android:checked="false"
+                android:button="@null"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#696868"
+                android:textSize="@dimen/sp_11sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_2"
+                android:text="我的"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

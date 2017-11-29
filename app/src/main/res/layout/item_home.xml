@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <TextView android:id="@+id/tv_val"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="11ssafdfsasddf1"
+        android:layout_gravity="center"
+        android:textColor="#793a3a"
+        android:textSize="17sp"/>
+
+</FrameLayout>
