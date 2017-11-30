@@ -17,10 +17,14 @@
         android:layout_gravity="center"
         android:textSize="@dimen/sp_17sp"/>
 
+    <!--<com.fragmentapp.view.refresh.TextHeadView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
     <com.fragmentapp.view.refresh.RefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:_height="@dimen/dp_50"
+        app:_height="@dimen/dp_60"
         android:id="@+id/refreshLayout" >
 
         <android.support.v7.widget.RecyclerView

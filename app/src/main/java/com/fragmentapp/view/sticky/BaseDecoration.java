@@ -17,11 +17,6 @@ import android.view.View;
 
 import com.fragmentapp.BuildConfig;
 
-/**
- * Created by gavin
- * Created date 17/7/1
- * Created log
- */
 
 public abstract class BaseDecoration extends RecyclerView.ItemDecoration {
 

@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by gavin
- * Created date 17/5/24
  * View悬浮
  * 利用分割线实现悬浮
  */

@@ -112,21 +112,23 @@ public class RefreshLayout extends FrameLayout {
     /**
      * 设置头部View
      */
-    public void setHeaderView(final IHeadView headView) {
+    public RefreshLayout setHeaderView(final IHeadView headView) {
         if (headView != null) {
             mHeadLayout.addView(headView.getView());
             heads.add(headView);
         }
+        return this;
     }
 
     /**
      * 设置尾部View
      */
-    public void setFootView(final IFootView footView) {
+    public RefreshLayout setFootView(final IFootView footView) {
         if (footView != null) {
             mFootLayout.addView(footView.getView());
             foots.add(footView);
         }
+        return this;
     }
 
     public boolean onFingerTouch(MotionEvent ev) {
@@ -160,6 +162,8 @@ public class RefreshLayout extends FrameLayout {
                     if (paddingTop <= (mHeadHeight+10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
                         listParam.setMargins(0, paddingTop, 0, 0);
                         list.setLayoutParams(listParam);
+                        if (callBack != null)
+                            callBack.pullListener(paddingTop);
                     }
 
                 }else if (isBottom){
@@ -388,12 +392,17 @@ public class RefreshLayout extends FrameLayout {
         }
     }
 
-    public void setCallBack(CallBack callBack) {
+    public RefreshLayout setCallBack(CallBack callBack) {
         this.callBack = callBack;
+        return this;
     }
 
     public interface CallBack{
+        /**监听下拉时的状态*/
         void refreshHeaderView(int state,String stateVal);
+        /**监听下拉时的距离*/
+        void pullListener(int y);
     }
+
 
 }
