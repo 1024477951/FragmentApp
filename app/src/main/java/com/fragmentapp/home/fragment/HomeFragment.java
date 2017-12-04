@@ -118,8 +118,8 @@ public class HomeFragment extends LazyFragment {
                     @Override
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
-                        downView.setPULL_HEIGHT(pullHeight);
-                        Log.e("tag", pullHeight + "");
+                        downView.setPull_height(pullHeight);
+//                        Log.e("tag", pullHeight + "");
                     }
                 });
     }

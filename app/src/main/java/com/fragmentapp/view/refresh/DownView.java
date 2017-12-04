@@ -6,11 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+
+import com.fragmentapp.R;
 
 /**
  * Created by liuzhen on 2017/11/29.
@@ -18,13 +17,13 @@ import android.view.animation.DecelerateInterpolator;
 
 public class DownView extends View implements IHeadView{
 
-    private int PULL_HEIGHT;
-//    private int PULL_DELTA;
-    private float mWidthOffset;
+    private int pull_height;
     private Path mPath;
     private Paint mBackPaint;
+    private int backColor;
     private int mWidth;
     private int mHeight;
+    private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(10);
 
     public DownView(Context context) {
         this(context, null);
@@ -36,23 +35,18 @@ public class DownView extends View implements IHeadView{
 
     public DownView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
 
-        mWidthOffset = 0.5f;
+    private void init(){
+        setWillNotDraw(false);
+        backColor = getResources().getColor(R.color.color_8b90af);
         mPath = new Path();
         mBackPaint = new Paint();
         mBackPaint.setAntiAlias(true);
         mBackPaint.setStyle(Paint.Style.FILL);
-        mBackPaint.setColor(0xff8b90af);
+        mBackPaint.setColor(backColor);
     }
-
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        int height = MeasureSpec.getSize(heightMeasureSpec);
-//        if (height > PULL_DELTA + PULL_HEIGHT) {
-//            heightMeasureSpec = MeasureSpec.makeMeasureSpec(PULL_DELTA + PULL_HEIGHT, MeasureSpec.getMode(heightMeasureSpec));
-//        }
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//    }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -60,19 +54,18 @@ public class DownView extends View implements IHeadView{
         if (changed) {
             mWidth = getWidth();
             mHeight = getHeight();
-//            PULL_HEIGHT = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mHeight/3, getResources().getDisplayMetrics());
-//            PULL_DELTA = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mHeight/2, getResources().getDisplayMetrics());
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawRect(0, 0, mWidth, PULL_HEIGHT, mBackPaint);
+        canvas.drawRect(0, 0, mWidth, pull_height, mBackPaint);
 
         mPath.reset();
-        mPath.moveTo(0, PULL_HEIGHT);
-        mPath.quadTo(mWidthOffset * mWidth, PULL_HEIGHT + (mHeight - PULL_HEIGHT) * 2, mWidth, PULL_HEIGHT);
-        canvas.drawPath(mPath, mBackPaint);
+        mPath.moveTo(0, pull_height);//起点
+        mPath.quadTo(mWidth/2,pull_height*2,mWidth,pull_height);//控制点和终点
+
+        canvas.drawPath(mPath, mBackPaint);//绘制二级贝塞尔弧形
         invalidate();
     }
 
@@ -81,20 +74,18 @@ public class DownView extends View implements IHeadView{
         return this;
     }
 
-    private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(10);
+
     @Override
     public void startAnim() {
+        backColor = getResources().getColor(R.color.color_8babaf);
         ValueAnimator va = ValueAnimator.ofFloat(mHeight, mHeight/2);
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float val = (float) animation.getAnimatedValue();
                 val = decelerateInterpolator.getInterpolation(val / mHeight) * val;
-//                setTranslationY(val);
-//                getLayoutParams().height = (int) val;
-                PULL_HEIGHT = (int)val;
+                pull_height = (int)val;
                 requestLayout();
-//                Log.e("tag",val+"");
             }
         });
         va.setDuration(500);
@@ -103,11 +94,11 @@ public class DownView extends View implements IHeadView{
 
     @Override
     public void stopAnim() {
-
+        backColor = getResources().getColor(R.color.color_8b90af);
     }
-
-    public void setPULL_HEIGHT(int y){
-        PULL_HEIGHT = y;
+    /**改变控制点*/
+    public void setPull_height(int y){
+        pull_height = y;
         invalidate();
     }
 
