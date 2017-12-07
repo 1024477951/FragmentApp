@@ -58,7 +58,7 @@ public class BounceView extends android.support.v7.widget.AppCompatCheckBox{
                 );
             }
         });
-        anim.setInterpolator(new BounceInterpolator());
+        anim.setInterpolator(new BounceInterpolator());//反弹
         anim.setDuration(500);
         anim.start();
     }

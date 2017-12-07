@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import com.fragmentapp.R;
 
@@ -15,7 +16,7 @@ import com.fragmentapp.R;
  * Created by liuzhen on 2017/11/29.
  */
 
-public class DownView extends View implements IHeadView{
+public class DownHeadView extends View implements IHeadView{
 
     private int pull_height;
     private Path mPath;
@@ -25,15 +26,15 @@ public class DownView extends View implements IHeadView{
     private int mHeight;
     private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(10);
 
-    public DownView(Context context) {
+    public DownHeadView(Context context) {
         this(context, null);
     }
 
-    public DownView(Context context, AttributeSet attrs) {
+    public DownHeadView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DownView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DownHeadView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -78,6 +79,7 @@ public class DownView extends View implements IHeadView{
     @Override
     public void startAnim() {
         backColor = getResources().getColor(R.color.color_8babaf);
+        mBackPaint.setColor(backColor);
         ValueAnimator va = ValueAnimator.ofFloat(mHeight, mHeight/2);
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -88,6 +90,7 @@ public class DownView extends View implements IHeadView{
                 requestLayout();
             }
         });
+        va.setInterpolator(new OvershootInterpolator(3));//甩动差值器
         va.setDuration(500);
         va.start();
     }
@@ -95,6 +98,7 @@ public class DownView extends View implements IHeadView{
     @Override
     public void stopAnim() {
         backColor = getResources().getColor(R.color.color_8b90af);
+        mBackPaint.setColor(backColor);
     }
     /**改变控制点*/
     public void setPull_height(int y){

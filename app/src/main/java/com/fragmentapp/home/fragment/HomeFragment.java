@@ -7,17 +7,13 @@ import android.view.View;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
-import com.fragmentapp.helper.DensityUtil;
-import com.fragmentapp.home.FragmentFactory;
 import com.fragmentapp.home.adapter.HomeAdapter;
 import com.fragmentapp.view.refresh.DefFootView;
 import com.fragmentapp.view.refresh.DefHeaderView;
-import com.fragmentapp.view.refresh.DownView;
+import com.fragmentapp.view.refresh.DownHeadView;
 import com.fragmentapp.view.refresh.RefreshLayout;
+import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
-import com.fragmentapp.view.sticky.OnGroupClickListener;
-import com.fragmentapp.view.sticky.PowerGroupListener;
-import com.fragmentapp.view.sticky.PowerfulStickyDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +32,8 @@ public class HomeFragment extends LazyFragment {
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     private TextHeadView headView;
-    private DownView downView;
+    private DownHeadView downHeadView;//扇形头部
+    private StickyHeadView stickyHeadView;//粘性头部
     private List<String> list = new ArrayList<>();
 
     @Override
@@ -92,11 +89,12 @@ public class HomeFragment extends LazyFragment {
 //        recyclerView.addItemDecoration(decoration);
 
 //        headView = new TextHeadView(getActivity());
-        downView = new DownView(getActivity());
-
-        refreshLayout.setHeaderView(downView)
+        downHeadView = new DownHeadView(getActivity());
+        stickyHeadView = new StickyHeadView(getActivity());
+        refreshLayout.setHeaderView(downHeadView)
 //                .setHeaderView(headView)
-                .setHeaderView(new DefHeaderView(getActivity()))
+//                .setHeaderView(new DefHeaderView(getActivity()))
+                .setHeaderView(stickyHeadView)
                 .setFootView(new DefFootView(getActivity()))
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
@@ -118,8 +116,9 @@ public class HomeFragment extends LazyFragment {
                     @Override
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
-                        downView.setPull_height(pullHeight);
-//                        Log.e("tag", pullHeight + "");
+                        downHeadView.setPull_height(pullHeight);
+                        stickyHeadView.move(pullHeight);
+                        Log.e("tag", pullHeight + "");
                     }
                 });
     }

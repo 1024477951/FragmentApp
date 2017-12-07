@@ -88,7 +88,7 @@ public class DefHeaderView extends View implements IHeadView{
 
         mPath = new Paint();
         mPath.setAntiAlias(true);
-        mPath.setColor(Color.rgb(114, 114, 114));
+        mPath.setColor(Color.BLUE);
 
         animator1 = ValueAnimator.ofFloat(1f, 1.2f, 1f, 0.8f);//从左到右过渡
         animator1.setDuration(800);
