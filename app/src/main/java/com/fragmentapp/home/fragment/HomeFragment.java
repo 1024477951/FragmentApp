@@ -91,9 +91,10 @@ public class HomeFragment extends LazyFragment {
 //        headView = new TextHeadView(getActivity());
         downHeadView = new DownHeadView(getActivity());
         stickyHeadView = new StickyHeadView(getActivity());
-        refreshLayout.setHeaderView(downHeadView)
+        refreshLayout
+                .setHeaderView(downHeadView)
 //                .setHeaderView(headView)
-//                .setHeaderView(new DefHeaderView(getActivity()))
+                .setHeaderView(new DefHeaderView(getActivity()))
                 .setHeaderView(stickyHeadView)
                 .setFootView(new DefFootView(getActivity()))
                 .setCallBack(new RefreshLayout.CallBack() {
