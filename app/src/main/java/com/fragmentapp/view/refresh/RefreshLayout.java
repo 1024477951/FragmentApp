@@ -224,16 +224,16 @@ public class RefreshLayout extends FrameLayout {
     private void refreshHeaderView() {
         if (callBack == null || isStart)
             return;
-        String val = "准备刷新";
+        String val = "准备";
         switch (currentState) {
             case DOWN_REFRESH : // 下拉刷新状态
-                val = "下拉刷新";
+                val = "下拉";
                 break;
             case RELEASE_REFRESH : // 松开刷新状态
-                val = "开始刷新...";
+                val = "开始...";
                 break;
             case LOADING : // 正在刷新中状态
-                val = "正在刷新中...";
+                val = "刷新中...";
                 break;
         }
         callBack.refreshHeaderView(currentState,val);

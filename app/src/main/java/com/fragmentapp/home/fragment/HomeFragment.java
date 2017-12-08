@@ -31,7 +31,7 @@ public class HomeFragment extends LazyFragment {
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
-    private TextHeadView headView;
+    private TextHeadView textHeadView;
     private DownHeadView downHeadView;//扇形头部
     private StickyHeadView stickyHeadView;//粘性头部
     private List<String> list = new ArrayList<>();
@@ -88,19 +88,19 @@ public class HomeFragment extends LazyFragment {
 
 //        recyclerView.addItemDecoration(decoration);
 
-//        headView = new TextHeadView(getActivity());
+        textHeadView = new TextHeadView(getActivity());
         downHeadView = new DownHeadView(getActivity());
         stickyHeadView = new StickyHeadView(getActivity());
         refreshLayout
                 .setHeaderView(downHeadView)
-//                .setHeaderView(headView)
+                .setHeaderView(textHeadView)
                 .setHeaderView(new DefHeaderView(getActivity()))
                 .setHeaderView(stickyHeadView)
                 .setFootView(new DefFootView(getActivity()))
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
                     public void refreshHeaderView(int state, String stateVal) {
-//                      headView.setText(stateVal);
+                        textHeadView.setText(stateVal);
                         switch (state) {
                             case RefreshLayout.DOWN_REFRESH: // 下拉刷新状态
 
