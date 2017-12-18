@@ -14,6 +14,7 @@ import com.fragmentapp.view.refresh.DownHeadView;
 import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
+import com.fragmentapp.view.refresh.WaterHeadView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,66 +51,26 @@ public class HomeFragment extends LazyFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new HomeAdapter(getActivity(), R.layout.item_home, list));
 
-//        PowerfulStickyDecoration decoration = PowerfulStickyDecoration.Builder
-//                .init(new PowerGroupListener() {
-//                    @Override
-//                    public String getGroupName(int position) {
-//                        //获取组名，用于判断是否是同一组
-//                        if (list.size() > position) {
-//                            return list.get(position)+"--";
-//                        }
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public View getGroupView(int position) {
-//                        //获取自定定义的组View
-//                        if (list.size() > position) {
-//                            View view = getLayoutInflater().inflate(R.layout.item_group, null, false);
-//                            ((TextView) view.findViewById(R.id.tv)).setText(list.get(position)+"--");
-//                            return view;
-//                        } else {
-//                            return null;
-//                        }
-//                    }
-//                })
-//                .setGroupHeight(DensityUtil.dp2px(getActivity(), 40))     //设置高度
-//                .setGroupBackground(Color.WHITE)
-//                .setDivideColor(Color.parseColor("#CCCCCC"))            //分割线颜色
-//                .setDivideHeight(DensityUtil.dp2px(getActivity(), 1))     //分割线高度
-//                .setOnClickListener(new OnGroupClickListener() {                   //点击事件，返回当前分组下的第一个item的position
-//                    @Override
-//                    public void onClick(int position) {                                 //Group点击事件
-//                        String content = "onGroupClick --> " + list.get(position);
-//                        Toast.makeText(getActivity(), content, Toast.LENGTH_LONG).show();
-//                    }
-//                })
-//                .build();
-
-//        recyclerView.addItemDecoration(decoration);
-
         textHeadView = new TextHeadView(getActivity());
         downHeadView = new DownHeadView(getActivity());
         stickyHeadView = new StickyHeadView(getActivity());
         refreshLayout
-                .setHeaderView(downHeadView)
-                .setHeaderView(textHeadView)
-                .setHeaderView(new DefHeaderView(getActivity()))
-                .setHeaderView(stickyHeadView)
+//                .setHeaderView(downHeadView)
+//                .setHeaderView(textHeadView)
+//                .setHeaderView(new DefHeaderView(getActivity()))
+//                .setHeaderView(stickyHeadView)
+                .setHeaderView(new WaterHeadView(getActivity()))
                 .setFootView(new DefFootView(getActivity()))
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
                     public void refreshHeaderView(int state, String stateVal) {
-                        textHeadView.setText(stateVal);
+//                        textHeadView.setText(stateVal);
                         switch (state) {
                             case RefreshLayout.DOWN_REFRESH: // 下拉刷新状态
-
                                 break;
                             case RefreshLayout.RELEASE_REFRESH: // 松开刷新状态
-//                              headView.down();
                                 break;
                             case RefreshLayout.LOADING: // 正在刷新中状态
-//                              headView.up();
                                 break;
                         }
                     }
@@ -117,9 +78,9 @@ public class HomeFragment extends LazyFragment {
                     @Override
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
-                        downHeadView.setPull_height(pullHeight);
-                        stickyHeadView.move(pullHeight);
-                        Log.e("tag", pullHeight + "");
+//                        downHeadView.setPull_height(pullHeight);
+//                        stickyHeadView.move(pullHeight);
+//                        Log.e("tag", pullHeight + "");
                     }
                 });
     }
