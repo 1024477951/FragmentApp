@@ -20,10 +20,10 @@
         android:clipToPadding="false"
         android:weightSum="4">
         <LinearLayout android:id="@+id/home"
-            android:layout_width="@dimen/dp_0"
+            android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/dp_3"
+            android:padding="@dimen/d10.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
@@ -43,18 +43,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11sp"
+                android:textSize="@dimen/sp_11"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginTop="@dimen/d4.0"
                 android:text="首页"/>
 
         </LinearLayout>
 
         <LinearLayout android:id="@+id/contact"
-            android:layout_width="@dimen/dp_0"
+            android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/dp_3"
+            android:padding="@dimen/d4.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
@@ -74,18 +74,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11sp"
+                android:textSize="@dimen/sp_11"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginTop="@dimen/d4.0"
                 android:text="通讯录"/>
 
         </LinearLayout>
 
         <LinearLayout android:id="@+id/community"
-            android:layout_width="@dimen/dp_0"
+            android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/dp_3"
+            android:padding="@dimen/d4.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
@@ -105,18 +105,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11sp"
+                android:textSize="@dimen/sp_11"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginTop="@dimen/d4.0"
                 android:text="消息"/>
 
         </LinearLayout>
 
         <LinearLayout android:id="@+id/me"
-            android:layout_width="@dimen/dp_0"
+            android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/dp_3"
+            android:padding="@dimen/d4.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
@@ -136,9 +136,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11sp"
+                android:textSize="@dimen/sp_11"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginTop="@dimen/d4.0"
                 android:text="我的"/>
 
         </LinearLayout>

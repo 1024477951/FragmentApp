@@ -1,11 +1,13 @@
 package com.fragmentapp.http;
 
-import com.fragmentapp.login.bean.PersonBean;
+import com.fragmentapp.home.bean.ArticleDataBean;
+import com.fragmentapp.login.bean.LoginDataBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.http.Headers;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -15,8 +17,13 @@ import retrofit2.http.QueryMap;
 
 public interface RetrofitService {
 
+    @FormUrlEncoded
     @POST("/Login")
-    Observable<PersonBean> login(@QueryMap Map<String, String> map);
+    Observable<BaseResponses<LoginDataBean>> login(@FieldMap Map<String, String> map);
+
+    //获取文章列表信息
+    @POST("/Article/getArticleList")
+    Observable<ArticleDataBean> getArticleList(@QueryMap Map<String, String> map);
 
     //添加Headers：使用同样的键url_name；使用不同值user或pay，对应账户服地址和支付服地址。
 //    @Headers({"url_name:pay"})

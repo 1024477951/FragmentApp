@@ -20,7 +20,7 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
 
     @Override
     public void onNext(T t) {
-        Log.e(TAG, "onNext");
+        Log.e(TAG, "onNext"+t);
         if (t.getStatus() == 200) {
             onNextResponse(t);
         } else {
@@ -34,7 +34,7 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
         Log.e(TAG, "onError" + e.toString());
         if (Looper.myLooper() == null) {
             Looper.prepare();
-//            ToastUtils.showToastLongSafe("网络超时，请重新尝试");
+            Log.e(TAG,"onError 网络超时，请重新尝试");
             Looper.loop();
         }
 

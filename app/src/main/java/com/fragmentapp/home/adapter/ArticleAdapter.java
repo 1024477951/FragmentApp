@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fragmentapp.R;
+import com.fragmentapp.home.bean.ArticleDataBean;
 
 import java.util.List;
 
@@ -15,14 +15,14 @@ import java.util.List;
  * Created by liuzhen on 2017/11/20.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
 
     private Context context;
     private int resource;
-    private List<String> list;
+    private List<ArticleDataBean> list;
     private LayoutInflater inflate;
 
-    public HomeAdapter(Context context,int resource,List<String> list){
+    public ArticleAdapter(Context context, int resource, List<ArticleDataBean> list){
         this.context = context;
         this.resource = resource;
         this.list = list;
@@ -30,19 +30,24 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     @Override
-    public HomeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ArticleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder holder = new ViewHolder(inflate.inflate(resource, parent, false));
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(HomeAdapter.ViewHolder holder, int position) {
-        holder.tv.setText(list.get(position));
+    public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
+
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return 20;
+    }
+
+    public void setList(List<ArticleDataBean> list){
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder
@@ -53,7 +58,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         public ViewHolder(View view)
         {
             super(view);
-            tv = (TextView) view.findViewById(R.id.tv_val);
+//            tv = view.findViewById(R.id.tv_val);
         }
     }
 

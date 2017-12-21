@@ -13,11 +13,10 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.FragmentHelper;
 import com.fragmentapp.home.adapter.MainAdapter;
-import com.fragmentapp.home.imple.IMainView;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements IMainView ,ViewPager.OnPageChangeListener{
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -55,16 +54,6 @@ public class MainActivity extends BaseActivity implements IMainView ,ViewPager.O
         addTab(findViewById(R.id.community),2);
         addTab(findViewById(R.id.me),3);
         select(0);
-    }
-
-    @Override
-    public void success() {
-
-    }
-
-    @Override
-    public void error() {
-
     }
 
     public void click(View view){

@@ -9,7 +9,7 @@
     </style>
 
     <style name="TabLayoutTextStyle">
-        <item name="android:textSize">@dimen/sp_10sp</item>
+        <item name="android:textSize">@dimen/sp_10</item>
     </style>
 
     <declare-styleable name="pressureview">

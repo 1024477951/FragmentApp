@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    public String TAG = getClass().getSimpleName();
+
     public abstract int layoutID();
     public abstract void init();
 
@@ -38,6 +40,23 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected <T> T cover(Object t){
         return (T)t;
+    }
+
+    protected boolean isNull(String... param){
+        boolean b = false;
+        for (String p : param) {
+            if (p == null || p.isEmpty())
+                b = true;
+        }
+        return b;
+    }
+    protected boolean isNull(Object... param){
+        boolean b = false;
+        for (Object p : param) {
+            if (p == null)
+                b = true;
+        }
+        return b;
     }
 
 }

@@ -1,15 +1,14 @@
 package com.fragmentapp.login.presenter;
 
+import android.util.Log;
+
 import com.fragmentapp.base.BasePresenter;
-import com.fragmentapp.http.BaseResponses;
 import com.fragmentapp.http.BaseObserver;
-import com.fragmentapp.login.bean.PersonBean;
+import com.fragmentapp.http.BaseResponses;
+import com.fragmentapp.login.bean.LoginDataBean;
 import com.fragmentapp.login.imple.ILoginModel;
 import com.fragmentapp.login.imple.ILoginView;
 import com.fragmentapp.login.model.LoginModel;
-
-import rx.Observable;
-import rx.Observer;
 
 /**
  * Created by liuzhen on 2017/11/3.
@@ -25,23 +24,20 @@ public class LoginPresenter extends BasePresenter {
         model = new LoginModel();
     }
 
-    public void test(){
-        model.login(observer);
-        PersonBean bean = new PersonBean();
-        bean.setName("123");
-        bean.setPwd("123");
-        bean.setAccount("123");
-        Observable.just(bean).subscribe((Observer<? super PersonBean>) observer);
+    public void login(String username,String pwd){
+        model.login(observer,username,pwd);
     }
 
-    BaseObserver<BaseResponses> observer = new BaseObserver<BaseResponses>() {
+    BaseObserver<BaseResponses<LoginDataBean>> observer = new BaseObserver<BaseResponses<LoginDataBean>>(){
+
         @Override
-        public void onNextResponse(BaseResponses baseResponses) {
-            view.success();
+        public void onNextResponse(BaseResponses<LoginDataBean> loginDataBean) {
+            Log.e("token",loginDataBean.getData().getHCACCESSTOKEN()+"");
+            view.success(loginDataBean.getData());
         }
 
         @Override
-        public void onErrorResponse(BaseResponses baseResponses) {
+        public void onErrorResponse(BaseResponses<LoginDataBean> loginDataBean) {
             view.error();
         }
     };

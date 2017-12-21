@@ -1,5 +1,8 @@
 package com.fragmentapp.http;
 
+import android.util.Log;
+
+import com.fragmentapp.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,7 +41,7 @@ public class RetrofitHelper {
         return SingleHolder.INSTANCE;
     }
 
-    private static final long DEFAULT_TIMEOUT = 10L;
+    private static final long DEFAULT_TIMEOUT = 20L;
 
     final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -61,6 +64,9 @@ public class RetrofitHelper {
                 public Response intercept(Chain chain) throws IOException {
                     //获取request
                     Request request = chain.request();
+                    if (BuildConfig.DEBUG) {
+//                        Log.e("request",request.toString());
+                    }
                     //获取request的创建者builder
                     Request.Builder builder = request.newBuilder();
                     //从request中获取headers，通过给定的键url_name

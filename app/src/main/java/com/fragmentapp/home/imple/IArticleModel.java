@@ -1,5 +1,6 @@
 package com.fragmentapp.home.imple;
 
+import com.fragmentapp.home.bean.ArticleDataBean;
 import com.fragmentapp.http.BaseObserver;
 import com.fragmentapp.http.BaseResponses;
 
@@ -7,8 +8,8 @@ import com.fragmentapp.http.BaseResponses;
  * Created by liuzhen on 2017/11/7.
  */
 
-public interface IMainModel {
+public interface IArticleModel {
 
-    void login(BaseObserver<BaseResponses> observer);
+    void getArticleList();
 
 }

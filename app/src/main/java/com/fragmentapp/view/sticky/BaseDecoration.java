@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.fragmentapp.R;
@@ -32,13 +33,13 @@ public abstract class BaseDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int childCount = parent.getChildCount();
         int left = parent.getPaddingLeft();
-        int right = parent.getWidth() - parent.getPaddingRight();
-
+        int right = parent.getWidth() + left;
+//        Log.e("tag","left "+left+" right "+right);
         for (int i = 0; i < childCount - 1; i++) {
             View view = parent.getChildAt(i);
             float top = view.getBottom();
             float bottom = view.getBottom() + height;
-            c.drawRect(left, top, right, bottom, paint);
+            c.drawRect(left+view.getLeft(), top, view.getRight(), bottom, paint);
         }
     }
 }

@@ -41,7 +41,7 @@ public class BottomBar extends LinearLayout {
 
     private View getGroup(String title,int color){
         RadioButton button = new RadioButton(getContext());
-        ViewGroup.LayoutParams params = new LayoutParams(R.dimen.dp_0, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+        ViewGroup.LayoutParams params = new LayoutParams(R.dimen.d0_0, ViewGroup.LayoutParams.WRAP_CONTENT,1);
         button.setLayoutParams(params);
         button.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(color), null, null);
         button.setText(title);

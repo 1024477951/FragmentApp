@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_gradient_white">
+    <com.fragmentapp.view.water.WaterHeadView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_radius_12b7f5"
+        android:alpha="0.3"
+        android:padding="@dimen/d20.0"
+        android:layout_marginBottom="@dimen/d150.0"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="@dimen/d20.0"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_17"
+                android:layout_gravity="left"
+                android:textColor="@color/color_111111"
+                android:text="name:"/>
+            <EditText android:id="@+id/et_name"
+                android:layout_width="@dimen/d500.0"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10.0"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/color_111111"
+                android:background="@null"
+                android:maxLines="1"
+                android:hint="用户名"
+                android:text="s645"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/d20.0"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/color_111111"
+                android:text="password:"/>
+            <EditText android:id="@+id/et_pwd"
+                android:layout_width="@dimen/d500.0"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d10.0"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/color_111111"
+                android:background="@null"
+                android:maxLines="1"
+                android:hint="密码"
+                android:text=""/>
+        </LinearLayout>
+
+        <Button android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/d0.0"
+            android:background="@drawable/shape_radius_primary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d20.0"
+            android:textSize="@dimen/sp_21"
+            android:textColor="@color/white"
+            android:text="submit"/>
+
+    </LinearLayout>
+</FrameLayout>
