@@ -25,8 +25,19 @@ public class ArticlePresenter extends BasePresenter {
     }
 
     public void getArticleList(){
-        model.getArticleList();
+        model.getArticleList(observer);
     }
 
+    BaseObserver<BaseResponses<ArticleDataBean>> observer = new BaseObserver<BaseResponses<ArticleDataBean>>() {
+        @Override
+        public void onNextResponse(BaseResponses<ArticleDataBean> articleDataBeanBaseResponses) {
+            view.success(articleDataBeanBaseResponses.getData().getList());
+        }
+
+        @Override
+        public void onErrorResponse(BaseResponses<ArticleDataBean> articleDataBeanBaseResponses) {
+
+        }
+    };
 
 }

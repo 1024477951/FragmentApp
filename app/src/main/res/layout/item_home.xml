@@ -52,6 +52,7 @@
                 android:textSize="@dimen/d49.0"
                 android:layout_marginLeft="@dimen/d15.0"
                 android:textColor="@color/color_999999"
+                android:maxLines="1"
                 android:text="7天前"/>
 
         </LinearLayout>

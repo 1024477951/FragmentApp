@@ -38,7 +38,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     private TextHeadView textHeadView;
     private DownHeadView downHeadView;//扇形头部
     private StickyHeadView stickyHeadView;//粘性头部
-    private List<ArticleDataBean> list = new ArrayList<>();
+    private List<ArticleDataBean.ListBean> list = new ArrayList<>();
     private ArticleAdapter adapter;
 
     private ArticlePresenter presenter;
@@ -98,13 +98,13 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     }
 
     @Override
-    public void success(List<ArticleDataBean> list) {
+    public void success(List<ArticleDataBean.ListBean> list) {
         adapter.setList(list);
         Toast.makeText(getActivity(),"success",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void error() {
-
+        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 }

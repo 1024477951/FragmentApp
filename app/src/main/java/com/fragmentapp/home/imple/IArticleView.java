@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IArticleView {
 
-    void success(List<ArticleDataBean> list);
+    void success(List<ArticleDataBean.ListBean> list);
     void error();
 
 }

@@ -10,6 +10,6 @@ import com.fragmentapp.http.BaseResponses;
 
 public interface IArticleModel {
 
-    void getArticleList();
+    void getArticleList(BaseObserver<BaseResponses<ArticleDataBean>> observer);
 
 }
