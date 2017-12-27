@@ -1,9 +1,12 @@
 package com.fragmentapp.view.water;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,11 +22,13 @@ public class WaterBgView extends View {
 
     private Path path = null;
 
-    private int width, height,waterHeight,waterUp = -2;
+    private int width, height,waveHeight,waterUp = -1;
 
     private Paint paint;
     /**off = 偏移值，speed = 速度*/
     private int off,speed = 15;
+
+    private Bitmap bitmap;
 
     public WaterBgView(Context context) {
         this(context,null,0);
@@ -48,7 +53,7 @@ public class WaterBgView extends View {
         paint.setStyle(Paint.Style.FILL);
         // 设置画笔颜色
         paint.setColor(getResources().getColor(R.color.color_4446b7));
-
+        bitmap = ((BitmapDrawable)(getResources().getDrawable(R.mipmap.icon_moon))).getBitmap();
     }
 
     @Override
@@ -56,13 +61,13 @@ public class WaterBgView extends View {
         super.onDraw(canvas);
         path.reset();
         //假设屏幕宽度为600，平均分成四分，两个控制点分别定位宽度的四分之三和四分之一，结束点为二分之一
-        path.moveTo(-width + off, waterHeight);//起点
+        path.moveTo(-width + off, waveHeight);//起点
         //左边区域，移动的时候连贯,假设max=600
-        path.quadTo(-width * 3 / 4 + off,waterHeight + 60,-width / 2 + off,waterHeight);//-450,60
-        path.quadTo(-width / 4 + off,waterHeight - 60,off,waterHeight);//-150,-60
+        path.quadTo(-width * 3 / 4 + off,waveHeight + 60,-width / 2 + off,waveHeight);//-450,60
+        path.quadTo(-width / 4 + off,waveHeight - 60,off,waveHeight);//-150,-60
         //根据上面的假设得到两个的控制点距离，x1 = width * 3 / 4，x2 = width / 4 ，和结束点 end = width / 2
-        path.quadTo(width / 4 + off,waterHeight + 60,width / 2 + off,waterHeight);//150,-60
-        path.quadTo(width * 3 / 4 + off,waterHeight - 60,width + off,waterHeight);//450,60
+        path.quadTo(width / 4 + off,waveHeight + 60,width / 2 + off,waveHeight);//150,-60
+        path.quadTo(width * 3 / 4 + off,waveHeight - 60,width + off,waveHeight);//450,60
         //闭合区域
         path.lineTo(width,height);
         path.lineTo(-width,height);//一直到最下方
@@ -91,11 +96,16 @@ public class WaterBgView extends View {
             off = 0;
 //            Log.e("tag","-----------------------------"+off);
         }
-        waterHeight = waterHeight + waterUp;
+        waveHeight = waveHeight + waterUp;
         //水位上升下降
-        if (waterHeight <= height / 2 || waterHeight >= height * 4 / 5) {
+//        if (waterHeight <= height / 2 || waterHeight >= height * 4 / 5) {
+//            waterUp = -waterUp;
+//        }
+        if (waveHeight <=  height * 3 / 5 - 50 || waveHeight >=  height * 3 / 5 + 50) {
             waterUp = -waterUp;
         }
+
+        canvas.drawBitmap(bitmap,width * 3 / 4,100,paint);
         postInvalidate();
     }
 
@@ -105,10 +115,12 @@ public class WaterBgView extends View {
         if (changed) {
             width = getWidth();
             height = getHeight();
-            waterHeight = height * 4 / 5;//波浪的高度
+            waveHeight = height * 3 / 5;//波浪的高度
         }
     }
 
-
+    public void cancel(){
+        bitmap = null;
+    }
 
 }

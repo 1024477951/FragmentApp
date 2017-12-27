@@ -11,6 +11,7 @@ import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.login.bean.LoginDataBean;
 import com.fragmentapp.login.imple.ILoginView;
 import com.fragmentapp.login.presenter.LoginPresenter;
+import com.fragmentapp.view.water.WaterBgView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,6 +26,8 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     EditText et_name;
     @BindView(R.id.et_pwd)
     EditText et_pwd;
+    @BindView(R.id.bg)
+    WaterBgView waterBgView;
 
     @Override
     public int layoutID() {
@@ -61,4 +64,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         new LoginPresenter(this).login(name,pwd);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        waterBgView.cancel();
+    }
 }

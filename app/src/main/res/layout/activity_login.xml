@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_gradient_white">
     <com.fragmentapp.view.water.WaterBgView
+        android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <LinearLayout
@@ -13,7 +14,7 @@
         android:background="@drawable/shape_radius_12b7f5"
         android:alpha="0.3"
         android:padding="@dimen/d20.0"
-        android:layout_marginBottom="@dimen/d150.0"
+        android:layout_marginBottom="@dimen/d100.0"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -72,7 +73,8 @@
             android:background="@drawable/shape_radius_primary"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/d20.0"
-            android:textSize="@dimen/sp_21"
+            android:padding="@dimen/d10.0"
+            android:textSize="@dimen/sp_17"
             android:textColor="@color/white"
             android:text="submit"/>
 

@@ -3,10 +3,12 @@
 博客地址：http://www.cnblogs.com/LiuZhen/p/8000377.html
           http://www.cnblogs.com/LiuZhen/p/7865625.html
 
-
+<!--首页菜单-->
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/menu.gif)
-
+<!--可叠加头部下拉控件-->
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/pull4.gif)
+<!--贝塞尔浪花登录背景-->
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/water.gif)
 
 具体介绍请到博客查看详情
 博客地址：http://www.cnblogs.com/LiuZhen/p/8000377.html
