@@ -30,7 +30,7 @@
                 android:textSize="@dimen/sp_17"
                 android:layout_gravity="left"
                 android:textColor="@color/color_111111"
-                android:text="name:"/>
+                android:text="name : "/>
             <EditText android:id="@+id/et_name"
                 android:layout_width="@dimen/d500.0"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_17"
                 android:textColor="@color/color_111111"
-                android:text="password:"/>
+                android:text="password : "/>
             <EditText android:id="@+id/et_pwd"
                 android:layout_width="@dimen/d500.0"
                 android:layout_height="wrap_content"
