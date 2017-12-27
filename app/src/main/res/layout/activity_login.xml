@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_gradient_white">
-    <com.fragmentapp.view.water.WaterHeadView
+    <com.fragmentapp.view.water.WaterBgView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <LinearLayout

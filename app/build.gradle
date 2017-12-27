@@ -46,7 +46,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    compile 'cn.bmob.android:bmob-sdk:3.5.5'
+//    compile 'cn.bmob.android:bmob-sdk:3.5.5'
 
     compile 'com.android.support:design:27.0.0'
 

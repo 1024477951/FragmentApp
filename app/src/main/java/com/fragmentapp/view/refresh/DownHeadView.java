@@ -24,7 +24,7 @@ public class DownHeadView extends View implements IHeadView{
     private int backColor;
     private int mWidth;
     private int mHeight;
-    private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(10);
+    private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(10);//先快后慢差值器
 
     public DownHeadView(Context context) {
         this(context, null);
