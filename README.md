@@ -1,6 +1,8 @@
 # FragmentApp
 具体介绍请到博客查看详情，持续更新中
 
+欢迎收藏
+
 --首页菜单--
 
 博客地址：http://www.cnblogs.com/LiuZhen/p/7865625.html
@@ -19,4 +21,10 @@
 
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/water.gif)
 
-具体介绍请到博客查看详情
+--首页是常用的懒加载--
+
+博客地址：http://www.cnblogs.com/LiuZhen/p/8135682.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/lazy.gif)
+
+具体介绍请到博客查看详情，有意见可以在博客发表评论
