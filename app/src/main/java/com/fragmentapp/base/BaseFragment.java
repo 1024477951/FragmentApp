@@ -43,7 +43,6 @@ public abstract class BaseFragment extends Fragment{
             }
         }
         isPrepared = true;
-        init();
         return contentView;
     }
 
