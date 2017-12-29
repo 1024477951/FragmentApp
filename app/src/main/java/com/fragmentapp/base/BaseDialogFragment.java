@@ -40,6 +40,7 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment {
                 parent.removeView(contentView);
             }
         }
+        setCancelable(false);
         init();
         return contentView;
     }

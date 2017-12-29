@@ -36,7 +36,12 @@ public class ArticlePresenter extends BasePresenter {
 
         @Override
         public void onErrorResponse(BaseResponses<ArticleDataBean> articleDataBeanBaseResponses) {
+            view.error();
+        }
 
+        @Override
+        public void onNetWorkError(String val) {
+            view.error();
         }
     };
 

@@ -32,7 +32,8 @@ public class ArticleModel implements IArticleModel {
 
         String token = SharedPreferencesUtils.getParam("token");
         if (token == null) {
-            Log.e("model","token is null");
+            Log.e("ArticleModel","token is null");
+            observer.onErrorResponse(null);
             return;
         }
         RetrofitHelper.getInstance().getService()

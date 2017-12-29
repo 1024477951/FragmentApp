@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void select(int position){
         if (menus.get(position).isChecked())
             return;//防止执行多次
-        Log.e("tag",position+"");
+//        Log.e("tag",position+"");
         for (int i = 0;i < menus.size();i++) {
             CheckBox box = menus.get(i);
             if (box == null)

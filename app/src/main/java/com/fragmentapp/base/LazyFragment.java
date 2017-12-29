@@ -40,15 +40,15 @@ public abstract class LazyFragment extends BaseFragment {
         if(!isPrepared || !isVisible || isLoad) {
             return;
         }
+        emptyLayout = new EmptyLayout(getActivity());//初始化空页面布局
         init();
         isLoad = true;//加载完后更改状态，只限定加载一次
-        emptyLayout = new EmptyLayout(getActivity());
 //        Log.e("tag","onVisible");
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         emptyLayout.clear();
         emptyLayout = null;
     }

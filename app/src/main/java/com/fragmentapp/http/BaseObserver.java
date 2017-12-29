@@ -32,6 +32,7 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
     @Override
     public void onError(Throwable e) {
         Log.e(TAG, "onError" + e.toString());
+        onNetWorkError("onError 网络超时，请重新尝试--"+e.getMessage());
         if (Looper.myLooper() == null) {
             Looper.prepare();
             Log.e(TAG,"onError 网络超时，请重新尝试");
@@ -45,11 +46,11 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
         Log.e(TAG, "onComplete");
     }
 
-
+    /**返回成功*/
     public abstract void onNextResponse(T t);
-
+    /**接口失败信息*/
     public abstract void onErrorResponse(T t);
-
-
+    /**网络错误*/
+    public abstract void onNetWorkError(String val);
 }
 

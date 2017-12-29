@@ -40,13 +40,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ArticleAdapter.ViewHolder holder, int position) {
-//        ArticleDataBean.ListBean bean = list.get(position);
-//
-//        holder.tv_title.setText(bean.getArticle_name());
-//        holder.tv_content.setText(bean.getArticle_info());
-//        holder.tv_time.setText(bean.getArticle_addtime());
-//        holder.tv_read.setText(bean.getArticle_view());
-//        holder.tv_home.setText(bean.getArticle_urlcom());
+        ArticleDataBean.ListBean bean = list.get(position);
+
+        holder.tv_title.setText(bean.getArticle_name());
+        holder.tv_content.setText(bean.getArticle_info());
+        holder.tv_time.setText(bean.getArticle_addtime());
+        holder.tv_read.setText(bean.getArticle_view());
+        holder.tv_home.setText(bean.getArticle_urlcom());
 
 //        GlideApp.with(AndroidApplication.getInstance().getApplicationContext())
 //                .load(item.path)
@@ -59,7 +59,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 20;
+        return list.size();
     }
 
     public void setList(List<ArticleDataBean.ListBean> list){

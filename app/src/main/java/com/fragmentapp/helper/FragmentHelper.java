@@ -43,7 +43,6 @@ public class FragmentHelper {
                     break;
             }
             Bundle bundle = new Bundle();
-            bundle.putString("tag",pos+"");
             fragment.setArguments(bundle);
             arr.put(pos, new SoftReference<LazyFragment>(fragment));
         }

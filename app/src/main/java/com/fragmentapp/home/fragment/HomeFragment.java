@@ -2,11 +2,14 @@ package com.fragmentapp.home.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
+import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.home.adapter.ArticleAdapter;
 import com.fragmentapp.home.bean.ArticleDataBean;
 import com.fragmentapp.home.imple.IArticleView;
@@ -31,6 +34,8 @@ import butterknife.OnClick;
 
 public class HomeFragment extends LazyFragment implements IArticleView {
 
+    @BindView(R.id.root)
+    View root;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
@@ -90,6 +95,13 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 //                        Log.e("tag", pullHeight + "");
                     }
                 });
+
+        emptyLayout.setCallBack(new EmptyLayout.CallBack() {
+            @Override
+            public void click() {
+                init();
+            }
+        });
     }
 
     @OnClick({R.id.search})
@@ -99,12 +111,16 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void success(List<ArticleDataBean.ListBean> list) {
+        if (list.size() == 0){
+            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
+        }
         adapter.setList(list);
         Toast.makeText(getActivity(),"success",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void error() {
+        emptyLayout.showEmpty((ViewGroup) root,"error");
         Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 }

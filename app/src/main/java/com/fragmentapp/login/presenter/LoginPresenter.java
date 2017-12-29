@@ -40,6 +40,11 @@ public class LoginPresenter extends BasePresenter {
         public void onErrorResponse(BaseResponses<LoginDataBean> loginDataBean) {
             view.error();
         }
+
+        @Override
+        public void onNetWorkError(String val) {
+            view.error();
+        }
     };
 
 }

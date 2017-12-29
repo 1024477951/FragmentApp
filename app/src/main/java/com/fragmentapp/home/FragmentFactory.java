@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.base.BaseFragment;
-import com.fragmentapp.home.fragment.SearchFragment;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class FragmentFactory extends BaseActivity {
             BaseFragment fragment = null;
             switch (fragmentId){
                 case SEARCH:
-//                    fragment = new SearchFragment();
+//                    fragment = new EmptyFragment();
                     break;
             }
             if (fragment != null)
