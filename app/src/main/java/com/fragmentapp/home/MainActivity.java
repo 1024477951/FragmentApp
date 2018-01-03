@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
+import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.helper.FragmentHelper;
 import com.fragmentapp.home.adapter.MainAdapter;
 
@@ -54,6 +55,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         addTab(findViewById(R.id.community),2);
         addTab(findViewById(R.id.me),3);
         select(0);
+
+        emptyLayout.setCallBack(new EmptyLayout.CallBack() {
+            @Override
+            public void click() {
+                init();
+            }
+        });
     }
 
     public void click(View view){

@@ -2,6 +2,8 @@ package com.fragmentapp;
 
 import android.app.Application;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -24,6 +26,12 @@ public class App extends Application {
             return;
         }
         LeakCanary.install(this);
+
+        Logger.addLogAdapter(new AndroidLogAdapter() {
+            @Override public boolean isLoggable(int priority, String tag) {
+                return BuildConfig.DEBUG;
+            }
+        });
     }
 
     public static App getInstance(){
