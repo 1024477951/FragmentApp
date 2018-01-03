@@ -2,6 +2,7 @@ package com.fragmentapp.login;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity implements ILoginView{
 
+    @BindView(R.id.root)
+    View root;
     @BindView(R.id.et_name)
     EditText et_name;
     @BindView(R.id.et_pwd)
@@ -50,6 +53,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void error() {
+        emptyLayout.showEmpty((ViewGroup) root,"error");
         Toast.makeText(context,"error",Toast.LENGTH_SHORT).show();
     }
 

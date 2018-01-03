@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.fragmentapp.helper.AppManager;
+import com.fragmentapp.helper.EmptyLayout;
 
 import butterknife.ButterKnife;
 
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public String TAG = getClass().getSimpleName();
+    protected EmptyLayout emptyLayout;
 
     public abstract int layoutID();
     public abstract void init();
@@ -29,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         AppManager.getAppManager().addActivity(this);
         context = this;
         ButterKnife.bind(this);
+        emptyLayout = new EmptyLayout(this);
         init();
     }
 
@@ -36,6 +39,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
+        emptyLayout.clear();
+        emptyLayout = null;
     }
 
     protected <T> T cover(Object t){

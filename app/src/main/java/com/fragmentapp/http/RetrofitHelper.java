@@ -41,7 +41,7 @@ public class RetrofitHelper {
         return SingleHolder.INSTANCE;
     }
 
-    private static final long DEFAULT_TIMEOUT = 5L;
+    private static final long DEFAULT_TIMEOUT = 15L;
 
     final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
