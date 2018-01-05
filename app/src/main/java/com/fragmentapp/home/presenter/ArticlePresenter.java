@@ -24,24 +24,28 @@ public class ArticlePresenter extends BasePresenter {
         model = new ArticleModel();
     }
 
-    public void getArticleList(){
-        model.getArticleList(observer);
+    public void getArticleList(int page){
+        model.getArticleList(observer,page);
     }
 
     BaseObserver<BaseResponses<ArticleDataBean>> observer = new BaseObserver<BaseResponses<ArticleDataBean>>() {
         @Override
         public void onNextResponse(BaseResponses<ArticleDataBean> articleDataBeanBaseResponses) {
-            view.success(articleDataBeanBaseResponses.getData().getList());
+            if (articleDataBeanBaseResponses.getData() != null && articleDataBeanBaseResponses.getData().getList() != null)
+                view.success(articleDataBeanBaseResponses.getData().getList());
+            view.loadStop();
         }
 
         @Override
         public void onErrorResponse(BaseResponses<ArticleDataBean> articleDataBeanBaseResponses) {
             view.error();
+            view.loadStop();
         }
 
         @Override
         public void onNetWorkError(String val) {
             view.error();
+            view.loadStop();
         }
     };
 

@@ -180,28 +180,21 @@ public class RefreshLayout extends FrameLayout {
                         isLoadingMore = true;//头部是否拉取到位，然后执行加载动画
 
                 }
-//                Log.e(TAG,"paddingTop "+paddingTop +" mHeadHeight "+mHeadHeight+ " topMargin "+listParam.topMargin+" bottomMargin "+listParam.bottomMargin
-//                        +" footParam bottom "+footParam.bottomMargin);
-//                Log.i(TAG,"paddingTop "+paddingTop);
                 break;
             case MotionEvent.ACTION_UP :
-                currentState = LOADING;
-                refreshHeaderView();
-                if (isLoadingMore){
+                if (isLoadingMore){//是否开始加载
+                    currentState = LOADING;
+                    refreshHeaderView();
                     isLoadingMore = false;
                     isStart = true;//是否开始加载
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-//                            Log.i(TAG, "停止 END");
-//                            currentState = END;
-                            refreshHeaderView();
-                            listParam.setMargins(0, 0, 0, 0);
-                            footParam.setMargins(0,0,0,-mHeadHeight);
-                            list.setLayoutParams(listParam);
-                            stop();
-                        }
-                    },2000);
+//                    postDelayed(new Runnable() {//没有网络访问时固定2秒加载完成
+//                        @Override
+//                        public void run() {
+////                            Log.i(TAG, "停止 END");
+////                            currentState = END;
+//                            stop();
+//                        }
+//                    },2000);
                 }else{
                     if (!isStart){
                         // 隐藏头布局
@@ -376,15 +369,23 @@ public class RefreshLayout extends FrameLayout {
         }
         return false;
     }
-
+    /**是否下拉操作**/
+    public boolean isBottom() {
+        return isBottom;
+    }
+    /**开始加载**/
     public void start(){
         isLoadingMore = true;
         for (IHeadView head : heads) {
             head.startAnim();
         }
     }
-
+    /**结束加载**/
     public void stop(){
+        refreshHeaderView();
+        listParam.setMargins(0, 0, 0, 0);
+        footParam.setMargins(0,0,0,-mHeadHeight);
+        list.setLayoutParams(listParam);
         isLoadingMore = false;
         isStart = false;
         for (IHeadView head : heads) {

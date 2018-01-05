@@ -53,7 +53,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void error() {
-        emptyLayout.showEmpty((ViewGroup) root,"error");
         Toast.makeText(context,"error",Toast.LENGTH_SHORT).show();
     }
 

@@ -68,6 +68,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     public void setList(List<ArticleDataBean.ListBean> list){
+        this.list.clear();
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+    public void addList(List<ArticleDataBean.ListBean> list){
         this.list.addAll(list);
         notifyDataSetChanged();
     }

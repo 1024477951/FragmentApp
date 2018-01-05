@@ -47,6 +47,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     private ArticleAdapter adapter;
 
     private ArticlePresenter presenter;
+    private int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -56,7 +57,8 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     @Override
     protected void init() {
         presenter = new ArticlePresenter(this);
-        presenter.getArticleList();
+        page = 1;
+        presenter.getArticleList(page);
 
         adapter = new ArticleAdapter(getActivity(), R.layout.item_home, list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -83,6 +85,10 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                             case RefreshLayout.RELEASE_REFRESH: // 松开刷新状态
                                 break;
                             case RefreshLayout.LOADING: // 正在刷新中状态
+                                if (refreshLayout.isBottom() == false)
+                                    page = 1;
+                                presenter.getArticleList(page);
+
                                 break;
                         }
                     }
@@ -113,14 +119,24 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     public void success(List<ArticleDataBean.ListBean> list) {
         if (list.size() == 0){
             emptyLayout.showEmpty((ViewGroup) getView(),"empty");
+        }else {
+            page++;
+            if (refreshLayout.isBottom())
+                adapter.addList(list);
+            else
+                adapter.setList(list);
+            Toast.makeText(getActivity(), "success"+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
-        adapter.setList(list);
-        Toast.makeText(getActivity(),"success",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void error() {
         emptyLayout.showEmpty((ViewGroup) root,"error");
         Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadStop() {
+        refreshLayout.stop();
     }
 }

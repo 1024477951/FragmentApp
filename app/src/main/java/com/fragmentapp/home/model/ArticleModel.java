@@ -25,10 +25,10 @@ import io.reactivex.schedulers.Schedulers;
 public class ArticleModel implements IArticleModel {
 
     @Override
-    public void getArticleList(BaseObserver<BaseResponses<ArticleDataBean>> observer) {
+    public void getArticleList(BaseObserver<BaseResponses<ArticleDataBean>> observer,int page) {
         Map<String, Integer> map = new HashMap<>();
         map.put("id", 2);
-        map.put("p", 1);
+        map.put("p", page);
 
         String token = SharedPreferencesUtils.getParam("token");
         if (token == null) {
