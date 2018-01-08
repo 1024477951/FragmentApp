@@ -15,6 +15,10 @@
 
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/pull4.gif)
 
+--分页效果--
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/page.gif)
+
 --贝塞尔浪花登录背景--
 
 博客地址：http://www.cnblogs.com/LiuZhen/p/8125751.html

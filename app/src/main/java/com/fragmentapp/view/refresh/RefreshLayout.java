@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.fragmentapp.R;
+import com.fragmentapp.helper.TimeUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -30,11 +32,11 @@ public class RefreshLayout extends FrameLayout {
 
     private String TAG = "tag";
     private int downY;// 按下时y轴的偏移量
-    private final static float RATIO = 3f;
+    private final static float RATIO = 2f;
     //头部的高度
     protected int mHeadHeight = 120;
     //头部layout
-    protected FrameLayout mHeadLayout,mFootLayout;//头部容器
+    protected FrameLayout mHeadLayout, mFootLayout;//头部容器
     private List<IHeadView> heads = new ArrayList<>();//支持添加多个头部
     private List<IFootView> foots = new ArrayList<>();
 
@@ -44,10 +46,10 @@ public class RefreshLayout extends FrameLayout {
     private int currentState = DOWN_REFRESH;// 头布局的状态: 默认为下拉刷新状态
 
     private View list;//子节点中的 recyclerview 视图
-    private LayoutParams listParam,footParam;//用于控制下拉动画展示
+    private LayoutParams listParam, footParam;//用于控制下拉动画展示
     private boolean isLoadingMore = false;// 是否进入加载状态，防止多次重复的启动
     private boolean isStart = false;//表示正在加载刷新中，还没停止
-    private boolean isTop = false,isBottom = false;
+    private boolean isTop = false, isBottom = false;
     private int mTouchSlop;
     private CallBack callBack;
 
@@ -75,20 +77,20 @@ public class RefreshLayout extends FrameLayout {
 
     private void initHeaderContainer() {
         mHeadLayout = new FrameLayout(getContext());
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,mHeadHeight);
-        this.addView(mHeadLayout,layoutParams);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, mHeadHeight);
+        this.addView(mHeadLayout, layoutParams);
     }
 
     public void initFootContainer() {
-        footParam = new LayoutParams(LayoutParams.MATCH_PARENT,mHeadHeight);
+        footParam = new LayoutParams(LayoutParams.MATCH_PARENT, mHeadHeight);
         mFootLayout = new FrameLayout(getContext());//底部布局
         mFootLayout.setBackgroundColor(Color.BLACK);
         footParam.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        footParam.setMargins(0,0,0,-mHeadHeight);
-        this.addView(mFootLayout,footParam);
+        footParam.setMargins(0, 0, 0, -mHeadHeight);
+        this.addView(mFootLayout, footParam);
     }
 
-    private void init(){
+    private void init() {
         initHeaderContainer();
     }
 
@@ -132,22 +134,21 @@ public class RefreshLayout extends FrameLayout {
     }
 
     public boolean onFingerTouch(MotionEvent ev) {
-        isTop = isViewToTop(list,mTouchSlop);
-        isBottom = isViewToBottom(list,mTouchSlop);
+        isTop = isViewToTop(list, mTouchSlop);
+        isBottom = isViewToBottom(list, mTouchSlop);
 //        Log.e(TAG,"isTop "+isTop+" isBottom "+isBottom);
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN :
+            case MotionEvent.ACTION_DOWN:
                 currentState = LOADING;
                 downY = (int) ev.getY();
                 break;
-            case MotionEvent.ACTION_MOVE :
+            case MotionEvent.ACTION_MOVE:
                 if (!isTop && !isBottom)//没有到顶，无需计算操作
                     break;
                 int moveY = (int) ev.getY();
-                int diff = (int) (((float)moveY - (float)downY) / RATIO);
-//                int paddingTop = -mHeadLayout.getHeight() + diff;
+                int diff = (int) (((float) moveY - (float) downY) / RATIO);
                 int paddingTop = diff;
-                if (paddingTop>0 && isTop) {
+                if (paddingTop > 0 && isTop) {
                     //向下滑动多少后开始启动刷新,Margin判断是为了限制快速用力滑动的时候导致头部侵入的高度不够就开始加载了
                     if (paddingTop >= mHeadHeight && (listParam.topMargin >= mHeadHeight) && currentState == DOWN_REFRESH) { // 完全显示了.
 //                        Log.i(TAG, "松开刷新 RELEASE_REFRESH");
@@ -159,19 +160,19 @@ public class RefreshLayout extends FrameLayout {
                         currentState = DOWN_REFRESH;
                         refreshHeaderView();
                     }
-                    if (paddingTop <= (mHeadHeight+10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
+                    if (paddingTop <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
                         listParam.setMargins(0, paddingTop, 0, 0);
                         list.setLayoutParams(listParam);
                         if (callBack != null)
                             callBack.pullListener(paddingTop);
                     }
 
-                }else if (isBottom){
+                } else if (isBottom) {
                     //限制上滑时不能超过底部的宽度，不然会超出边界
                     //mHeadHeight+20 上滑设置的margin要超过headheight，不然下面判断的大于headheight不成立，下面的margin基础上面设置后的参数
-                    if (Math.abs(paddingTop) <= (mHeadHeight+10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
+                    if (Math.abs(paddingTop) <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
                         listParam.setMargins(0, 0, 0, -paddingTop);
-                        footParam.setMargins(0,0,0,-paddingTop-mHeadHeight);
+                        footParam.setMargins(0, 0, 0, -paddingTop - mHeadHeight);
                         list.setLayoutParams(listParam);
                     }
                     //如果滑动的距离大于头部或者底部的高度，并且设置的margin也大于headheight
@@ -181,8 +182,8 @@ public class RefreshLayout extends FrameLayout {
 
                 }
                 break;
-            case MotionEvent.ACTION_UP :
-                if (isLoadingMore){//是否开始加载
+            case MotionEvent.ACTION_UP:
+                if (isLoadingMore) {//是否开始加载
                     currentState = LOADING;
                     refreshHeaderView();
                     isLoadingMore = false;
@@ -195,17 +196,17 @@ public class RefreshLayout extends FrameLayout {
 //                            stop();
 //                        }
 //                    },2000);
-                }else{
-                    if (!isStart){
+                } else {
+                    if (!isStart) {
                         // 隐藏头布局
-                        listParam.setMargins(0, 0,0,0);
-                        footParam.setMargins(0,0,0,-mHeadHeight);
+                        listParam.setMargins(0, 0, 0, 0);
+                        footParam.setMargins(0, 0, 0, -mHeadHeight);
                         list.setLayoutParams(listParam);
                     }
                 }
 //                Log.i(TAG, "松开 REFRESHING");
                 break;
-            default :
+            default:
                 break;
         }
         return super.onTouchEvent(ev);
@@ -219,26 +220,27 @@ public class RefreshLayout extends FrameLayout {
             return;
         String val = "准备";
         switch (currentState) {
-            case DOWN_REFRESH : // 下拉刷新状态
+            case DOWN_REFRESH: // 下拉刷新状态
                 val = "下拉";
                 break;
-            case RELEASE_REFRESH : // 松开刷新状态
+            case RELEASE_REFRESH: // 松开刷新状态
                 val = "开始...";
                 break;
-            case LOADING : // 正在刷新中状态
+            case LOADING: // 正在刷新中状态
                 val = "刷新中...";
+                TimeUtil.startTime();
                 break;
         }
-        callBack.refreshHeaderView(currentState,val);
+        callBack.refreshHeaderView(currentState, val);
     }
 
-    public static boolean isViewToTop(View view, int mTouchSlop){
+    public static boolean isViewToTop(View view, int mTouchSlop) {
         if (view instanceof AbsListView) return isAbsListViewToTop((AbsListView) view);
         if (view instanceof RecyclerView) return isRecyclerViewToTop((RecyclerView) view);
-        return  (view != null && Math.abs(view.getScrollY()) <= 2 * mTouchSlop);
+        return (view != null && Math.abs(view.getScrollY()) <= 2 * mTouchSlop);
     }
 
-    public static boolean isViewToBottom(View view, int mTouchSlop){
+    public static boolean isViewToBottom(View view, int mTouchSlop) {
         if (view instanceof AbsListView) return isAbsListViewToBottom((AbsListView) view);
         if (view instanceof RecyclerView) return isRecyclerViewToBottom((RecyclerView) view);
 //        if (view instanceof WebView) return isWebViewToBottom((WebView) view,mTouchSlop);
@@ -369,28 +371,58 @@ public class RefreshLayout extends FrameLayout {
         }
         return false;
     }
-    /**是否下拉操作**/
+
+    /**
+     * 是否下拉操作
+     **/
     public boolean isBottom() {
         return isBottom;
     }
-    /**开始加载**/
-    public void start(){
+
+    /**
+     * 开始加载
+     **/
+    public void start() {
         isLoadingMore = true;
         for (IHeadView head : heads) {
             head.startAnim();
         }
     }
-    /**结束加载**/
-    public void stop(){
-        refreshHeaderView();
-        listParam.setMargins(0, 0, 0, 0);
-        footParam.setMargins(0,0,0,-mHeadHeight);
-        list.setLayoutParams(listParam);
-        isLoadingMore = false;
-        isStart = false;
-        for (IHeadView head : heads) {
-            head.stopAnim();
+
+    /**
+     * 结束加载
+     **/
+    public void stop() {
+        TimeUtil.endTime();
+        long loadTime = TimeUtil.getDateMillis();//大于0表示小于默认的加载时间
+        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
+        if (loadTime > 0) {//最小限制2秒的动画加载效果
+            postDelayed(new Runnable() {//没有网络访问时固定2秒加载完成
+                @Override
+                public void run() {
+                    refreshHeaderView();
+                    listParam.setMargins(0, 0, 0, 0);
+                    footParam.setMargins(0, 0, 0, -mHeadHeight);
+                    list.setLayoutParams(listParam);
+                    isLoadingMore = false;
+                    isStart = false;
+                    for (IHeadView head : heads) {
+                        head.stopAnim();
+                    }
+                }
+            }, loadTime);
+        }else{
+            refreshHeaderView();
+            listParam.setMargins(0, 0, 0, 0);
+            footParam.setMargins(0, 0, 0, -mHeadHeight);
+            list.setLayoutParams(listParam);
+            isLoadingMore = false;
+            isStart = false;
+            for (IHeadView head : heads) {
+                head.stopAnim();
+            }
         }
+
     }
 
     public RefreshLayout setCallBack(CallBack callBack) {
@@ -398,10 +430,15 @@ public class RefreshLayout extends FrameLayout {
         return this;
     }
 
-    public interface CallBack{
-        /**监听下拉时的状态*/
-        void refreshHeaderView(int state,String stateVal);
-        /**监听下拉时的距离*/
+    public interface CallBack {
+        /**
+         * 监听下拉时的状态
+         */
+        void refreshHeaderView(int state, String stateVal);
+
+        /**
+         * 监听下拉时的距离
+         */
         void pullListener(int y);
     }
 

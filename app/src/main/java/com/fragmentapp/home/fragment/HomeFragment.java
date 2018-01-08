@@ -21,6 +21,7 @@ import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
 import com.fragmentapp.view.sticky.DividerDecoration;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     private ArticleAdapter adapter;
 
     private ArticlePresenter presenter;
-    private int page = 1;
+    private int page = 1,lastPage = -1;
 
     @Override
     protected int getLayoutId() {
@@ -85,10 +86,12 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                             case RefreshLayout.RELEASE_REFRESH: // 松开刷新状态
                                 break;
                             case RefreshLayout.LOADING: // 正在刷新中状态
-                                if (refreshLayout.isBottom() == false)
+                                if (refreshLayout.isBottom() == false) {
                                     page = 1;
+                                    lastPage = -1;
+                                }
                                 presenter.getArticleList(page);
-
+                                Logger.e("----------loading");
                                 break;
                         }
                     }
@@ -105,7 +108,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         emptyLayout.setCallBack(new EmptyLayout.CallBack() {
             @Override
             public void click() {
-                init();
+                presenter.getArticleList(page);
             }
         });
     }
@@ -120,11 +123,14 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         if (list.size() == 0){
             emptyLayout.showEmpty((ViewGroup) getView(),"empty");
         }else {
-            page++;
-            if (refreshLayout.isBottom())
-                adapter.addList(list);
-            else
-                adapter.setList(list);
+            page++;//如果有数据则+1下一页
+            if (lastPage != page) {
+                if (refreshLayout.isBottom())
+                    adapter.addList(list);
+                else
+                    adapter.setList(list);
+            }
+            lastPage = page;
             Toast.makeText(getActivity(), "success"+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }

@@ -22,7 +22,7 @@
     <com.fragmentapp.view.refresh.RefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:_height="@dimen/d160.0"
+        app:_height="@dimen/d140.0"
         android:id="@+id/refreshLayout" >
 
         <android.support.v7.widget.RecyclerView
