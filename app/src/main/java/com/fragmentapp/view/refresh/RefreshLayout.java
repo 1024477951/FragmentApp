@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.helper.TimeUtil;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class RefreshLayout extends FrameLayout {
 
     private String TAG = "tag";
     private int downY;// 按下时y轴的偏移量
-    private final static float RATIO = 2f;
+    private final static int RATIO = 3;//
     //头部的高度
     protected int mHeadHeight = 120;
     //头部layout
@@ -146,8 +147,14 @@ public class RefreshLayout extends FrameLayout {
                 if (!isTop && !isBottom)//没有到顶，无需计算操作
                     break;
                 int moveY = (int) ev.getY();
-                int diff = (int) (((float) moveY - (float) downY) / RATIO);
-                int paddingTop = diff;
+                /**
+                 * 得到滑动的距离，可以打印出日志查看，如果滑动的速度很快，那么得到距离的跨度会很大，比如快速滑动，可能只得到三个数据，50，400，700，而如果缓慢的
+                 * 滑动，则30，35，39，41...696,700,显然我们想得到的是后面的数据，否则跨度很大会出现闪速的现象
+                 * */
+                int diff = moveY - downY;
+                /**这里是为了降低跨度存在的，尽量的让数值跨度不要那么大*/
+                int paddingTop = diff  / RATIO;
+
                 if (paddingTop > 0 && isTop) {
                     //向下滑动多少后开始启动刷新,Margin判断是为了限制快速用力滑动的时候导致头部侵入的高度不够就开始加载了
                     if (paddingTop >= mHeadHeight && (listParam.topMargin >= mHeadHeight) && currentState == DOWN_REFRESH) { // 完全显示了.
@@ -166,7 +173,6 @@ public class RefreshLayout extends FrameLayout {
                         if (callBack != null)
                             callBack.pullListener(paddingTop);
                     }
-
                 } else if (isBottom) {
                     //限制上滑时不能超过底部的宽度，不然会超出边界
                     //mHeadHeight+20 上滑设置的margin要超过headheight，不然下面判断的大于headheight不成立，下面的margin基础上面设置后的参数
