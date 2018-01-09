@@ -35,8 +35,6 @@ import butterknife.OnClick;
 
 public class HomeFragment extends LazyFragment implements IArticleView {
 
-    @BindView(R.id.root)
-    View root;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
@@ -136,7 +134,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void error() {
-        emptyLayout.showEmpty((ViewGroup) root,"error");
+        emptyLayout.showEmpty((ViewGroup) getView(),"error");
         Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 
