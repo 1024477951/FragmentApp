@@ -25,15 +25,16 @@ public class ArticlePresenter extends BasePresenter {
     }
 
     public void getArticleList(int page){
+        view.loading();
         model.getArticleList(observer,page);
     }
 
     BaseObserver<BaseResponses<ArticleDataBean>> observer = new BaseObserver<BaseResponses<ArticleDataBean>>() {
         @Override
         public void onNextResponse(BaseResponses<ArticleDataBean> articleDataBeanBaseResponses) {
+            view.loadStop();
             if (articleDataBeanBaseResponses.getData() != null && articleDataBeanBaseResponses.getData().getList() != null)
                 view.success(articleDataBeanBaseResponses.getData().getList());
-            view.loadStop();
         }
 
         @Override

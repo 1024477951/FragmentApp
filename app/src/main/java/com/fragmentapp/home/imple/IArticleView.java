@@ -12,5 +12,7 @@ public interface IArticleView {
 
     void success(List<ArticleDataBean.ListBean> list);
     void error();
+
+    void loading();
     void loadStop();
 }

@@ -2,9 +2,9 @@ package com.fragmentapp.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.fragmentapp.helper.EmptyLayout;
+import com.fragmentapp.view.progress.Loadding;
 
 /**
  * Created by liuzhen on 2017/11/10.
@@ -15,6 +15,7 @@ public abstract class LazyFragment extends BaseFragment {
     protected boolean isLoad = false;//是否加载完
 
     protected EmptyLayout emptyLayout;
+    protected Loadding loadding;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -41,9 +42,21 @@ public abstract class LazyFragment extends BaseFragment {
             return;
         }
         emptyLayout = new EmptyLayout(getActivity());//初始化空页面布局
+        loadding = new Loadding(getActivity());
         init();
         isLoad = true;//加载完后更改状态，只限定加载一次
 //        Log.e("tag","onVisible");
+    }
+
+    protected void showDialog(){
+        if (!loadding.isShowing()){
+            loadding.show();
+        }
+    }
+    protected void dismissDialog(){
+        if (loadding.isShowing()){
+            loadding.dismiss();
+        }
     }
 
     @Override
@@ -51,5 +64,6 @@ public abstract class LazyFragment extends BaseFragment {
         super.onDestroy();
         emptyLayout.clear();
         emptyLayout = null;
+        loadding = null;
     }
 }

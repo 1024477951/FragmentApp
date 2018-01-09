@@ -15,13 +15,13 @@ public class TimeUtil {
 
     public static void startTime(){
         clear();
-        Logger.d("tag","startTime");
+//        Logger.d("tag","startTime");
         if (startTime == null)
             startTime = new Date();
     }
 
     public static void endTime(){
-        Logger.d("tag","endTime");
+//        Logger.d("tag","endTime");
         if (endTime == null)
             endTime = new Date();
     }

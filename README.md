@@ -36,5 +36,6 @@
 博客地址：http://www.cnblogs.com/LiuZhen/p/8143411.html
 
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/empty.gif)
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/loading.gif)
 
 具体介绍请到博客查看详情，有意见可以在博客发表评论

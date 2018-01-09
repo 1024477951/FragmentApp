@@ -395,7 +395,7 @@ public class RefreshLayout extends FrameLayout {
     public void stop() {
         TimeUtil.endTime();
         long loadTime = TimeUtil.getDateMillis();//大于0表示小于默认的加载时间
-        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
         if (loadTime > 0) {//最小限制2秒的动画加载效果
             postDelayed(new Runnable() {//没有网络访问时固定2秒加载完成
                 @Override

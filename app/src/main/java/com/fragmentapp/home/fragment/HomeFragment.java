@@ -91,7 +91,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                                     lastPage = -1;
                                 }
                                 presenter.getArticleList(page);
-                                Logger.e("----------loading");
+//                                Logger.e("----------loading");
                                 break;
                         }
                     }
@@ -131,7 +131,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                     adapter.setList(list);
             }
             lastPage = page;
-            Toast.makeText(getActivity(), "success"+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "success"+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -142,7 +142,13 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     }
 
     @Override
+    public void loading() {
+        showDialog();
+    }
+
+    @Override
     public void loadStop() {
+        dismissDialog();
         refreshLayout.stop();
     }
 }
