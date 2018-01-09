@@ -74,7 +74,6 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                 .setHeaderView(textHeadView)
                 .setHeaderView(new DefHeaderView(getActivity()))
                 .setHeaderView(stickyHeadView)
-//                .setHeaderView(new WaterHeadView(getActivity()))
                 .setFootView(new DefFootView(getActivity()))
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
