@@ -62,7 +62,8 @@ public abstract class LazyFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        emptyLayout.clear();
+        if (emptyLayout != null)
+            emptyLayout.clear();
         emptyLayout = null;
         loadding = null;
     }

@@ -38,4 +38,9 @@ public class App extends Application {
         return instance;
     }
 
+    @Override
+    public void onTrimMemory(int level) {
+        Logger.d("end----"+level);
+        super.onTrimMemory(level);
+    }
 }
