@@ -3,6 +3,12 @@
 
 欢迎收藏
 
+--洒豆子--
+
+博客地址：http://www.cnblogs.com/LiuZhen/p/8337101.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/beans.gif)
+
 --首页菜单--
 
 博客地址：http://www.cnblogs.com/LiuZhen/p/7865625.html
