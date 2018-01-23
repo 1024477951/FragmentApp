@@ -36,6 +36,11 @@ public class Loadding extends ProgressDialog {
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(params);
+
     }
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
+    }
 }

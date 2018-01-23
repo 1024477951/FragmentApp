@@ -145,7 +145,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void loadStop() {
-        dismissDialog();
+//        dismissDialog();
         refreshLayout.stop();
     }
 }

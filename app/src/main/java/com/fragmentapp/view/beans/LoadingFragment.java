@@ -1,6 +1,7 @@
-package com.fragmentapp.home.fragment;
+package com.fragmentapp.view.beans;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -17,18 +18,19 @@ import butterknife.OnClick;
  * Created by liuzhen on 2017/11/17.
  */
 
-public class EmptyFragment extends BaseDialogFragment {
+public class LoadingFragment extends BaseDialogFragment {
 
     @BindView(R.id.tv_val)
     TextView tv_val;
+    @BindView(R.id.beans)
+    BeansView beans;
 
-    public static EmptyFragment newInstance(Bundle bundle) {
-        EmptyFragment fragment = new EmptyFragment();
-        fragment.setArguments(bundle);
+    public static LoadingFragment newInstance() {
+        LoadingFragment fragment = new LoadingFragment();
         return fragment;
     }
-    public static EmptyFragment newInstance(String val) {
-        EmptyFragment fragment = new EmptyFragment();
+    public static LoadingFragment newInstance(String val) {
+        LoadingFragment fragment = new LoadingFragment();
         Bundle bundle = new Bundle();
         bundle.putString("val",val);
         fragment.setArguments(bundle);
@@ -37,7 +39,7 @@ public class EmptyFragment extends BaseDialogFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_error;
+        return R.layout.fragment_loading;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class EmptyFragment extends BaseDialogFragment {
             String val = bundle.getString("val");
             tv_val.setText(val);
         }
+        beans.startAnim();
     }
 
     @OnClick({R.id.root})
@@ -61,14 +64,20 @@ public class EmptyFragment extends BaseDialogFragment {
     }
 
     @Override
+    public void dismiss() {
+        super.dismiss();
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         if (getDialog() != null) {
             Window window = getDialog().getWindow();
             WindowManager.LayoutParams params = window.getAttributes();
             params.gravity = Gravity.CENTER;
-            params.width = WindowManager.LayoutParams.MATCH_PARENT;
-            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
             window.setAttributes(params);
             window.setBackgroundDrawableResource(android.R.color.transparent);
@@ -76,4 +85,9 @@ public class EmptyFragment extends BaseDialogFragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        beans.stopAnim();
+    }
 }

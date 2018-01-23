@@ -19,7 +19,7 @@ public abstract class BaseDecoration extends RecyclerView.ItemDecoration {
 
     public BaseDecoration(Context context){
         paint = new Paint();
-        paint.setColor(context.getResources().getColor(R.color.colorAccent));
+        paint.setColor(context.getResources().getColor(R.color.color_8b90af));
         height = DensityUtil.dp2px(context,1);
     }
 

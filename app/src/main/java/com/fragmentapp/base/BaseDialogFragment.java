@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by liuzhen on 2017/11/20.
@@ -21,7 +20,6 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment {
 
     protected View contentView;
     protected String TAG = getClass().getSimpleName();
-    protected Unbinder unbinder;
 
     protected abstract int getLayoutId();
     protected abstract void init();
@@ -33,7 +31,7 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         if (contentView == null) {
             contentView = inflater.inflate(getLayoutId(), container);
-            unbinder = ButterKnife.bind(this, contentView);
+            ButterKnife.bind(this, contentView);
         } else {
             ViewGroup parent = (ViewGroup) contentView.getParent();
             if (parent != null) {
@@ -46,8 +44,8 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void dismiss() {
+        super.dismiss();
     }
+
 }

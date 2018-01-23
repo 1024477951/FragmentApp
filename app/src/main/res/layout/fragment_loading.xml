@@ -3,21 +3,26 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_dialog_bg"
     android:padding="@dimen/d20.0"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/root">
 
-    <ProgressBar
+    <com.fragmentapp.view.beans.BeansView
+        android:id="@+id/beans"
         android:layout_width="@dimen/d350.0"
         android:layout_height="@dimen/d300.0"
-        android:layout_gravity="center_horizontal"
-        android:indeterminateDrawable="@drawable/rotate_progress"
-        android:indeterminate="false" />
+        android:layout_gravity="center_horizontal" />
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/d1.0"-->
+        <!--android:background="@color/white"/>-->
 
     <TextView
         android:id="@+id/tv_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/d10.0"
+        android:layout_marginTop="@dimen/d20.0"
         android:text="加载中..."
         android:textColor="@color/color_cccccc"
         android:textSize="@dimen/d43.0" />

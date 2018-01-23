@@ -47,7 +47,6 @@ public class FragmentFactory extends BaseActivity {
             BaseFragment fragment = null;
             switch (fragmentId){
                 case SEARCH:
-//                    fragment = new EmptyFragment();
                     break;
             }
             if (fragment != null)
