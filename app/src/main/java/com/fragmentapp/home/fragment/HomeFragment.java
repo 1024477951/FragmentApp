@@ -1,5 +1,6 @@
 package com.fragmentapp.home.fragment;
 
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.fragmentapp.view.refresh.DefHeaderView;
 import com.fragmentapp.view.refresh.DownHeadView;
 import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
+import com.fragmentapp.view.refresh.SunHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
 import com.fragmentapp.view.sticky.DividerDecoration;
 import com.orhanobut.logger.Logger;
@@ -42,6 +44,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     private TextHeadView textHeadView;
     private DownHeadView downHeadView;//扇形头部
     private StickyHeadView stickyHeadView;//粘性头部
+    private SunHeadView sunHeadView;
     private List<ArticleDataBean.ListBean> list = new ArrayList<>();
     private ArticleAdapter adapter;
 
@@ -59,20 +62,22 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         page = 1;
         presenter.getArticleList(page);
 
-        adapter = new ArticleAdapter(getActivity(), R.layout.item_home, list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new ArticleAdapter(getContext(), R.layout.item_home, list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerDecoration(getActivity()));
+        recyclerView.addItemDecoration(new DividerDecoration(getContext()));
 
-        textHeadView = new TextHeadView(getActivity());
-        downHeadView = new DownHeadView(getActivity());
-        stickyHeadView = new StickyHeadView(getActivity());
+        textHeadView = new TextHeadView(getContext());
+        downHeadView = new DownHeadView(getContext());
+        stickyHeadView = new StickyHeadView(getContext());
+        sunHeadView = new SunHeadView(getContext());
         refreshLayout
-                .setHeaderView(downHeadView)
+//                .setHeaderView(downHeadView)
                 .setHeaderView(textHeadView)
-                .setHeaderView(new DefHeaderView(getActivity()))
-                .setHeaderView(stickyHeadView)
-                .setFootView(new DefFootView(getActivity()))
+//                .setHeaderView(new DefHeaderView(getContext()))
+//                .setHeaderView(stickyHeadView)
+                .setHeaderView(sunHeadView)
+                .setFootView(new DefFootView(getContext()))
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
                     public void refreshHeaderView(int state, String stateVal) {
@@ -88,7 +93,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                                     lastPage = -1;
                                 }
                                 presenter.getArticleList(page);
-//                                Logger.e("----------loading");
+                                sunHeadView.upAnim();
                                 break;
                         }
                     }
@@ -96,9 +101,8 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                     @Override
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
-                        downHeadView.setPull_height(pullHeight);
-                        stickyHeadView.move(pullHeight);
-//                        Log.e("tag", pullHeight + "");
+//                        downHeadView.setPull_height(pullHeight);
+//                        stickyHeadView.move(pullHeight);
                     }
                 });
 
@@ -118,7 +122,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     @Override
     public void success(List<ArticleDataBean.ListBean> list) {
         if (list.size() == 0){
-            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
+//            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
         }else {
             page++;//如果有数据则+1下一页
             if (lastPage != page) {
@@ -134,8 +138,8 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void error() {
-        emptyLayout.showEmpty((ViewGroup) getView(),"error");
-        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
+//        emptyLayout.showEmpty((ViewGroup) getView(),"error");
+//        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -145,7 +149,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void loadStop() {
-//        dismissDialog();
+        dismissDialog();
         refreshLayout.stop();
     }
 }

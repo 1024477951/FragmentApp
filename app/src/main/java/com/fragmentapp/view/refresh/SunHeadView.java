@@ -1,18 +1,27 @@
 package com.fragmentapp.view.refresh;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathDashPathEffect;
+import android.graphics.PathEffect;
+import android.graphics.PointF;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.fragmentapp.R;
+import com.fragmentapp.helper.TimeUtil;
+import com.fragmentapp.view.PathEvaluator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liuzhen on 2018/1/24.
@@ -23,18 +32,24 @@ public class SunHeadView extends View implements IHeadView{
     private int mWidth;
     private int mHeight;
 
-    private Paint paint;
+    private Paint effectPaint,facePaint,clearPaint,defPaint;//这里定义多个属性都是为了能够自定义不同的样式
     private RectF rectF = null;
 
     private float angle,loadAngle = 45;
 
-    private ValueAnimator va;
+    private ValueAnimator faceVa,arcVa;
 
     private int left,top;
 
-    private int off = 1;
+    private boolean isDraw = false;
 
-    private Path path;
+    private Path path,foodPath;
+    private PointF startPoint = null,movePoint1 = null,movePoint2 = null,endPoint = null;
+    private List<PointF> clears = null;
+
+    private PathEffect effect = null;
+
+    private int faceRadius = 30,foodRadius = 3;
 
     public SunHeadView(Context context) {
         this(context, null, 0);
@@ -53,13 +68,39 @@ public class SunHeadView extends View implements IHeadView{
 
         path = new Path();
 
-        paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(getResources().getColor(R.color.color_a9a05c));
+        foodPath = new Path();
+        foodPath.addCircle(0, 0, foodRadius, Path.Direction.CCW);
+
+        effectPaint = new Paint();
+        effectPaint.setAntiAlias(true);
+        effectPaint.setStyle(Paint.Style.STROKE);
+        effectPaint.setColor(getResources().getColor(R.color.color_a9a05c));
+
+        effect = new PathDashPathEffect(foodPath, 12, -1, PathDashPathEffect.Style.ROTATE);
+        effectPaint.setPathEffect(effect);
+
+        facePaint = new Paint();
+        facePaint.setAntiAlias(true);
+        facePaint.setStyle(Paint.Style.FILL);
+        facePaint.setColor(getResources().getColor(R.color.color_a9a05c));
+
+        defPaint = new Paint();
+        defPaint.setAntiAlias(true);
+        defPaint.setStyle(Paint.Style.FILL);
+        defPaint.setColor(getResources().getColor(R.color.color_a9a05c));
 
         rectF = new RectF(0,0,0,0);
+        startPoint = new PointF();
+        movePoint1 = new PointF();
+        movePoint2 = new PointF();
+        endPoint = new PointF();
 
+        clearPaint = new Paint();
+        clearPaint.setAntiAlias(true);
+        clearPaint.setStyle(Paint.Style.FILL);
+        clearPaint.setColor(getResources().getColor(R.color.white));
+
+        clears = new ArrayList<>();
     }
 
     @Override
@@ -72,20 +113,31 @@ public class SunHeadView extends View implements IHeadView{
             this.left = mWidth / 2;
             this.top = mHeight / 3;
 
-            rectF.set(this.left,this.top,this.left + 50,this.top + 50);
+            rectF.set(startPoint.x - faceRadius/2,startPoint.y - faceRadius,startPoint.x + faceRadius/2,startPoint.y);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        if (!isDraw) return;
+        //绘制“食物”
+        foodPath.reset();
+        foodPath.moveTo(startPoint.x,startPoint.y);
+        foodPath.cubicTo(movePoint1.x,movePoint1.y,movePoint2.x,movePoint2.y,endPoint.x,endPoint.y);
+        canvas.drawPath(foodPath, effectPaint);
+        //绘制大球
         path.reset();
-        path.moveTo(mWidth/3,mHeight);
-        path.quadTo(mWidth/2,0,mWidth*2/3,mHeight);
-        canvas.drawPath(path, paint);
+        path.moveTo(startPoint.x + faceRadius/2,startPoint.y);
+        path.cubicTo(movePoint1.x,movePoint1.y + faceRadius/2,movePoint2.x,movePoint2.y + faceRadius/2,endPoint.x - faceRadius/2,endPoint.y);
+        canvas.drawPath(path, defPaint);
+        //吃掉“食物”
+        for (PointF f : clears) {
+            RectF rectF = new RectF(f.x-foodRadius*2,f.y-foodRadius*2,f.x+foodRadius*2,f.y+foodRadius*2);
+            canvas.drawOval(rectF,clearPaint);
+        }
 
-        canvas.drawArc(rectF, angle, 360 - angle * 2, true, paint);
-
+        //绘制小球,需要在最后面绘制
+        canvas.drawArc(rectF, angle, 360 - angle * 2, true, facePaint);
 
     }
 
@@ -94,35 +146,97 @@ public class SunHeadView extends View implements IHeadView{
         return this;
     }
 
-    @Override
-    public void startAnim() {
+    /**开始动画*/
+    public void upAnim(){
+        if (faceVa != null)
+            faceVa.cancel();
+        faceVa = null;
 
-        this.left = mWidth / 2;
-        rectF.set(left,top,left + 50,top + 50);
-        angle = loadAngle;
+        effectPaint.setColor(getResources().getColor(R.color.color_a9a05c));
+        facePaint.setColor(getResources().getColor(R.color.color_a9a05c));
+        clearPaint.setColor(getResources().getColor(R.color.white));
+        defPaint.setColor(getResources().getColor(R.color.color_a9a05c));
 
-        va = ValueAnimator.ofFloat(loadAngle , 0);
+        startPoint.set(mWidth*1/2 + faceRadius*2,mHeight + faceRadius);
+        movePoint1.set(mWidth*2/3, 0);
+        movePoint2.set(mWidth*5/6, 0);
+        endPoint.set(mWidth - faceRadius*2,mHeight + faceRadius);
 
-        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        clears.clear();
+
+        PathEvaluator bezierEvaluator = new PathEvaluator(movePoint1,movePoint2);
+        arcVa = ValueAnimator.ofObject(bezierEvaluator, startPoint, endPoint);
+        arcVa.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//饶球移动
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                angle = (float)valueAnimator.getAnimatedValue();
+                PointF point = (PointF) valueAnimator.getAnimatedValue();
+//                if (point.x + faceRadius <= endPoint.x)
+                clears.add(new PointF(point.x,point.y));//保存移动的坐标
+                //faceRadius/2是为了让小球的中心点刚好在大球的中间
+                rectF.set(point.x - faceRadius/2,point.y - faceRadius/2,point.x + faceRadius/2,point.y + faceRadius/2);
 
-                left -= off;
-                rectF.set(left,top,left + 50,top + 50);
                 postInvalidate();
             }
         });
-        va.setInterpolator(new LinearInterpolator());//重力差值器
-        va.setDuration(2500);
-        va.setRepeatMode(ValueAnimator.RESTART);
-        va.start();
+        arcVa.setInterpolator(new LinearInterpolator());
+        arcVa.setDuration(2000);
+        arcVa.setRepeatMode(ValueAnimator.RESTART);
+        arcVa.start();
+
+        rectF.set(startPoint.x - faceRadius/2,startPoint.y - faceRadius,startPoint.x + faceRadius/2,startPoint.y);
+        angle = loadAngle;
+        faceVa = ValueAnimator.ofFloat(loadAngle , 0);
+
+        faceVa.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//吃食物动作
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                angle = (float)valueAnimator.getAnimatedValue();
+                postInvalidate();
+            }
+        });
+        faceVa.setInterpolator(new LinearInterpolator());
+        faceVa.setDuration(500);
+        faceVa.setRepeatMode(ValueAnimator.RESTART);
+        faceVa.setRepeatCount(-1);
+        faceVa.start();
+    }
+
+    @Override
+    public void startAnim() {//前奏
+        effectPaint.setColor(getResources().getColor(R.color.transparent));
+        facePaint.setColor(getResources().getColor(R.color.transparent));
+        clearPaint.setColor(getResources().getColor(R.color.transparent));
+
+        isDraw = true;
+        faceVa = ValueAnimator.ofFloat(0 , mHeight + faceRadius);//大球落下
+
+        faceVa.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//吃食物动作
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float val = (float)valueAnimator.getAnimatedValue();
+
+                startPoint.set(mWidth*1/2 + faceRadius*2,val);
+                movePoint1.set(mWidth*2/3, 0);
+                movePoint2.set(mWidth*5/6, 0);
+                endPoint.set(mWidth - faceRadius*2,val);
+
+                postInvalidate();
+            }
+        });
+        faceVa.setInterpolator(new LinearInterpolator());
+        faceVa.setDuration(1000);
+        faceVa.setRepeatMode(ValueAnimator.RESTART);
+        faceVa.start();
     }
 
     @Override
     public void stopAnim() {
-        if (va != null)
-            va.cancel();
-        va = null;
+        if (arcVa != null)
+            arcVa.cancel();
+        if (faceVa != null)
+            faceVa.cancel();
+        arcVa = null;
+        faceVa = null;
+        isDraw = false;
     }
 }

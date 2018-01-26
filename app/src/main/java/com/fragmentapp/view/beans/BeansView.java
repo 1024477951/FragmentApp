@@ -3,14 +3,18 @@ package com.fragmentapp.view.beans;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 
 import com.fragmentapp.R;
+import com.fragmentapp.helper.DensityUtil;
 import com.fragmentapp.helper.RandomUtil;
 
 /**
@@ -27,6 +31,8 @@ public class BeansView extends View {
     private ValueAnimator va;
 
     private Beans beans1,beans2,beans3,beans4,beans5,beans6;
+
+    private Bitmap bean;
 
     public BeansView(Context context) {
         this(context, null);
@@ -49,12 +55,20 @@ public class BeansView extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(getResources().getColor(R.color.color_ff9c19));
         //随机生成球体的大小、
-        beans1 = new Beans(RandomUtil.random(5,15));
-        beans2 = new Beans(RandomUtil.random(5,15));
-        beans3 = new Beans(RandomUtil.random(5,15));
-        beans4 = new Beans(RandomUtil.random(5,15));
-        beans5 = new Beans(RandomUtil.random(5,15));
-        beans6 = new Beans(RandomUtil.random(5,15));
+//        beans1 = new Beans(RandomUtil.random(5,15));
+//        beans2 = new Beans(RandomUtil.random(5,15));
+//        beans3 = new Beans(RandomUtil.random(5,15));
+//        beans4 = new Beans(RandomUtil.random(5,15));
+//        beans5 = new Beans(RandomUtil.random(5,15));
+//        beans6 = new Beans(RandomUtil.random(5,15));
+
+        bean = ((BitmapDrawable)(getResources().getDrawable(R.mipmap.aqua_ball))).getBitmap();
+        beans1 = new Beans(bean.getHeight());
+        beans2 = new Beans(bean.getHeight());
+        beans3 = new Beans(bean.getHeight());
+        beans4 = new Beans(bean.getHeight());
+        beans5 = new Beans(bean.getHeight());
+        beans6 = new Beans(bean.getHeight());
     }
 
     @Override
@@ -71,13 +85,21 @@ public class BeansView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         //正常向右掉落，这里也可以利用随机生成方向，这里就固定左边三个右边三个
-        canvas.drawCircle(beans1.getCx(), beans1.getCy(), beans1.getRadius(), paint);
-        canvas.drawCircle(beans2.getCx(), beans2.getCy(), beans2.getRadius(), paint);
-        canvas.drawCircle(beans3.getCx(), beans3.getCy(), beans3.getRadius(), paint);
-        //让球往左边掉落
-        canvas.drawCircle(-beans4.getCx()+mWidth, beans4.getCy(), beans4.getRadius(), paint);
-        canvas.drawCircle(-beans5.getCx()+mWidth, beans5.getCy(), beans5.getRadius(), paint);
-        canvas.drawCircle(-beans6.getCx()+mWidth, beans6.getCy(), beans6.getRadius(), paint);
+//        canvas.drawCircle(beans1.getCx(), beans1.getCy(), beans1.getRadius(), paint);
+//        canvas.drawCircle(beans2.getCx(), beans2.getCy(), beans2.getRadius(), paint);
+//        canvas.drawCircle(beans3.getCx(), beans3.getCy(), beans3.getRadius(), paint);
+//        //让球往左边掉落
+//        canvas.drawCircle(-beans4.getCx()+mWidth, beans4.getCy(), beans4.getRadius(), paint);
+//        canvas.drawCircle(-beans5.getCx()+mWidth, beans5.getCy(), beans5.getRadius(), paint);
+//        canvas.drawCircle(-beans6.getCx()+mWidth, beans6.getCy(), beans6.getRadius(), paint);
+
+        canvas.drawBitmap(bean,beans1.getCx(),beans1.getCy(),null);
+        canvas.drawBitmap(bean,beans2.getCx(),beans2.getCy(),null);
+        canvas.drawBitmap(bean,beans3.getCx(),beans3.getCy(),null);
+
+        canvas.drawBitmap(bean,-beans4.getCx()+mWidth,beans4.getCy(),null);
+        canvas.drawBitmap(bean,-beans5.getCx()+mWidth,beans5.getCy(),null);
+        canvas.drawBitmap(bean,-beans6.getCx()+mWidth,beans6.getCy(),null);
 
     }
 
@@ -108,7 +130,8 @@ public class BeansView extends View {
         beans6.setOff(0);
         beans6.setRand(RandomUtil.random(20));
 
-        va = ValueAnimator.ofFloat(top, mHeight - top);
+//        va = ValueAnimator.ofFloat(top, mHeight - top);
+        va = ValueAnimator.ofFloat(top, mHeight - bean.getHeight());
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
