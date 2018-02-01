@@ -72,11 +72,11 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         stickyHeadView = new StickyHeadView(getContext());
         sunHeadView = new SunHeadView(getContext());
         refreshLayout
+                .setHeaderView(sunHeadView)
 //                .setHeaderView(downHeadView)
-                .setHeaderView(textHeadView)
+//                .setHeaderView(textHeadView)
 //                .setHeaderView(new DefHeaderView(getContext()))
 //                .setHeaderView(stickyHeadView)
-                .setHeaderView(sunHeadView)
                 .setFootView(new DefFootView(getContext()))
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
@@ -138,7 +138,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void error() {
-//        emptyLayout.showEmpty((ViewGroup) getView(),"error");
+        emptyLayout.showEmpty((ViewGroup) getView(),"error");
 //        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 
@@ -149,7 +149,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void loadStop() {
-        dismissDialog();
+//        dismissDialog();
         refreshLayout.stop();
     }
 }

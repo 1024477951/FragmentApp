@@ -1,5 +1,6 @@
 package com.fragmentapp.view.beans;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 /**
@@ -14,6 +15,10 @@ public class Beans {
         this.radius = radius;
     }
 
+    public static final int Left = 0;
+    public static final int Right = 1;
+
+    private int direction;
     /**X坐标*/
     private float cx;
     /**Y坐标*/
@@ -26,6 +31,7 @@ public class Beans {
     private int state;
     /**圆球的大小*/
     private float radius;
+    public Bitmap bitmap;
 
     /**移动 X 坐标，并且碰到边界后回弹*/
     public void move(int width){
@@ -88,5 +94,13 @@ public class Beans {
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 }
