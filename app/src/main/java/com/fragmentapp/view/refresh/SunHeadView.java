@@ -3,8 +3,6 @@ package com.fragmentapp.view.refresh;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.DashPathEffect;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
@@ -12,13 +10,11 @@ import android.graphics.PathEffect;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.fragmentapp.R;
-import com.fragmentapp.helper.TimeUtil;
-import com.fragmentapp.view.PathEvaluator;
+import com.fragmentapp.view.CubicEvaluator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,7 +160,7 @@ public class SunHeadView extends View implements IHeadView{
 
         clears.clear();
 
-        PathEvaluator bezierEvaluator = new PathEvaluator(movePoint1,movePoint2);
+        CubicEvaluator bezierEvaluator = new CubicEvaluator(movePoint1,movePoint2);
         arcVa = ValueAnimator.ofObject(bezierEvaluator, startPoint, endPoint);
         arcVa.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {//饶球移动
             @Override

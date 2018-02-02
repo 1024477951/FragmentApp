@@ -10,7 +10,7 @@ public class BezierUtil {
 
     /**
      * B(t) = (1 - t)^2 * P0 + 2t * (1 - t) * P1 + t^2 * P2, t ∈ [0,1]
-     *
+     *  quad，二级贝塞尔
      * @param t  曲线长度比例
      * @param p0 起始点
      * @param p1 控制点
@@ -27,7 +27,7 @@ public class BezierUtil {
 
     /**
      * B(t) = P0 * (1-t)^3 + 3 * P1 * t * (1-t)^2 + 3 * P2 * t^2 * (1-t) + P3 * t^3, t ∈ [0,1]
-     *
+     *  cubic，三级贝塞尔
      * @param t  曲线长度比例
      * @param p0 起始点
      * @param p1 控制点1

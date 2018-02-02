@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.animation.BounceInterpolator;
 
 import com.fragmentapp.R;
 import com.fragmentapp.helper.RandomUtil;
+import com.fragmentapp.view.MyBounceInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,14 @@ import java.util.List;
 public class BeansView extends View {
 
     private Paint paint;
+
+    private Paint jumpPaint;
+    private Path path;
     private int mWidth;
     private int mHeight;
     private int top;
+
+    private int jump;
 
     private ValueAnimator va;
 
@@ -50,10 +57,15 @@ public class BeansView extends View {
     private void init() {
         Log.e("tag","init");
         setWillNotDraw(false);
+        path = new Path();
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(getResources().getColor(R.color.color_ff9c19));
+
+        jumpPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        jumpPaint.setAntiAlias(true);
+        jumpPaint.setStyle(Paint.Style.STROKE);
+        jumpPaint.setColor(getResources().getColor(R.color.white));
 
         beans = new ArrayList<>();
 
@@ -76,12 +88,19 @@ public class BeansView extends View {
             mWidth = getWidth();
             mHeight = getHeight();
             this.top = top;
+            jump = mHeight - 2;
             startAnim();
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        path.reset();
+        path.moveTo(0,mHeight - 2);
+        path.quadTo(mWidth/2, jump,mWidth, mHeight - 2);
+        path.close();
+        canvas.drawPath(path, jumpPaint);
 
         for (Beans b : beans) {
             if (b.bitmap != null) {
@@ -97,6 +116,7 @@ public class BeansView extends View {
 
     public void startAnim() {
         if (mWidth == 0 || beans.size() == 0) return;
+
         for (Beans b : beans) {
             b.setState(0);
             b.setOff(0);
@@ -115,11 +135,14 @@ public class BeansView extends View {
                     b.move(mWidth);//先移动坐标，实际上是改变了off 偏移量的值
                     b.setCx(mWidth / 2 + b.getOff());//刷新X轴坐标
                 }
-
+//                Log.e("tag",val+" height "+mHeight);
+                if (val >= mHeight){
+                    Log.e("tag",val+"---------------------------");
+                }
                 postInvalidate();
             }
         });
-        va.setInterpolator(new BounceInterpolator());//重力差值器
+        va.setInterpolator(new MyBounceInterpolator());//重力差值器
         va.setDuration(3500);
         va.setRepeatMode(ValueAnimator.RESTART);
         va.start();
