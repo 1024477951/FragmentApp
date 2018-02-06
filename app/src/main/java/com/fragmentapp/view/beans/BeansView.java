@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import com.fragmentapp.R;
 import com.fragmentapp.helper.RandomUtil;
@@ -32,10 +33,10 @@ public class BeansView extends View {
     private Paint jumpPaint;
     private Path path;
     private int mWidth;
-    private int mHeight;
+    private int mHeight,height;
     private int top;
 
-    private int jump;
+    private float jump;
 
     private ValueAnimator va;
 
@@ -88,7 +89,8 @@ public class BeansView extends View {
             mWidth = getWidth();
             mHeight = getHeight();
             this.top = top;
-            jump = mHeight - 2;
+            height = mHeight*7/8;
+            jump = height;
             startAnim();
         }
     }
@@ -97,9 +99,9 @@ public class BeansView extends View {
     protected void onDraw(Canvas canvas) {
 
         path.reset();
-        path.moveTo(0,mHeight - 2);
-        path.quadTo(mWidth/2, jump,mWidth, mHeight - 2);
-        path.close();
+        path.moveTo(0,height-2);
+        path.quadTo(mWidth/2, jump-2,mWidth, height-2);
+//        path.close();
         canvas.drawPath(path, jumpPaint);
 
         for (Beans b : beans) {
@@ -123,7 +125,7 @@ public class BeansView extends View {
             b.setRand(RandomUtil.random(20));//随机生成抛出的速度值
         }
 
-        va = ValueAnimator.ofFloat(top, mHeight);
+        va = ValueAnimator.ofFloat(top, height);
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -135,16 +137,35 @@ public class BeansView extends View {
                     b.move(mWidth);//先移动坐标，实际上是改变了off 偏移量的值
                     b.setCx(mWidth / 2 + b.getOff());//刷新X轴坐标
                 }
-//                Log.e("tag",val+" height "+mHeight);
-                if (val >= mHeight){
-                    Log.e("tag",val+"---------------------------");
-                }
+
                 postInvalidate();
             }
         });
-        va.setInterpolator(new MyBounceInterpolator());//重力差值器
+        va.setInterpolator(new MyBounceInterpolator(new MyBounceInterpolator.CallBack() {
+            @Override
+            public void toLast() {
+                toLastAnimator();
+            }
+        }));//重力差值器
         va.setDuration(3500);
-        va.setRepeatMode(ValueAnimator.RESTART);
+        va.setRepeatMode(ValueAnimator.REVERSE);
+        va.start();
+    }
+
+    private void toLastAnimator(){
+        jump = height;
+        ValueAnimator va = ValueAnimator.ofFloat(height + 10,height,height - 10,height);
+        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+
+                jump = (float)animation.getAnimatedValue();
+                postInvalidate();
+            }
+        });
+        va.setInterpolator(new BounceInterpolator());
+        va.setDuration(1000);
+        va.setRepeatMode(ValueAnimator.REVERSE);
         va.start();
     }
 
