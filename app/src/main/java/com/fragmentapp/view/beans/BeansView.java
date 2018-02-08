@@ -99,9 +99,8 @@ public class BeansView extends View {
     protected void onDraw(Canvas canvas) {
 
         path.reset();
-        path.moveTo(0,height-2);
-        path.quadTo(mWidth/2, jump-2,mWidth, height-2);
-//        path.close();
+        path.moveTo(0,height);
+        path.quadTo(mWidth/2, jump,mWidth, height);
         canvas.drawPath(path, jumpPaint);
 
         for (Beans b : beans) {
@@ -158,7 +157,6 @@ public class BeansView extends View {
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-
                 jump = (float)animation.getAnimatedValue();
                 postInvalidate();
             }

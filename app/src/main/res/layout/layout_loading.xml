@@ -2,12 +2,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_dialog_bg"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:padding="@dimen/d20.0"
+    android:alpha="0.65"
     android:orientation="vertical">
 
     <ProgressBar
-        android:layout_width="@dimen/d350.0"
-        android:layout_height="@dimen/d300.0"
+        android:layout_width="@dimen/d88.0"
+        android:layout_height="@dimen/d88.0"
         android:layout_gravity="center_horizontal"
         android:indeterminateDrawable="@drawable/rotate_progress"
         android:indeterminate="false" />
@@ -17,9 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/d10.0"
+        android:layout_marginTop="@dimen/d30.0"
         android:text="加载中..."
-        android:textColor="@color/color_cccccc"
-        android:textSize="@dimen/d43.0" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/d46.0" />
 
 </LinearLayout>

@@ -38,21 +38,21 @@ public class MyBounceInterpolator implements Interpolator {
                 t_7 = true;
                 callBack.toLast();
             }
-            return bounce(t - 0.54719f) + 0.7f;
+            return bounce(t - 0.54719f) + 0.76f;
         } else if (t < 0.9644f) {
 //            Log.e("tag","----3");7=0.8 8=0.9 9=1
             if (t_9 == false){
                 t_9 = true;
                 callBack.toLast();
             }
-            return bounce(t - 0.8526f) + 0.9f;
+            return bounce(t - 0.8526f) + 0.92f;
         } else {
 //            Log.e("tag","----4");
             if (t_1 == false){
                 t_1 = true;
                 callBack.toLast();
             }
-            return bounce(t - 1.0435f) + 0.95f;
+            return bounce(t - 1.0435f) + 0.955f;
         }
     }
 
