@@ -73,8 +73,8 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         sunHeadView = new SunHeadView(getContext());
         refreshLayout
                 .setHeaderView(sunHeadView)
-//                .setHeaderView(downHeadView)
-//                .setHeaderView(textHeadView)
+                .setHeaderView(downHeadView)
+                .setHeaderView(textHeadView)
 //                .setHeaderView(new DefHeaderView(getContext()))
 //                .setHeaderView(stickyHeadView)
                 .setFootView(new DefFootView(getContext()))
@@ -101,7 +101,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                     @Override
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
-//                        downHeadView.setPull_height(pullHeight);
+                        downHeadView.setPull_height(pullHeight);
 //                        stickyHeadView.move(pullHeight);
                     }
                 });
@@ -149,7 +149,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void loadStop() {
-//        dismissDialog();
+        dismissDialog();
         refreshLayout.stop();
     }
 }

@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.fragmentapp.R;
@@ -24,7 +23,6 @@ public class DownHeadView extends View implements IHeadView{
     private int backColor;
     private int mWidth;
     private int mHeight;
-    private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(10);//先快后慢差值器
 
     public DownHeadView(Context context) {
         this(context, null);
@@ -80,12 +78,11 @@ public class DownHeadView extends View implements IHeadView{
     public void startAnim() {
         backColor = getResources().getColor(R.color.color_8babaf);
         mBackPaint.setColor(backColor);
-        ValueAnimator va = ValueAnimator.ofFloat(mHeight, mHeight/2);
+        ValueAnimator va = ValueAnimator.ofFloat(mHeight*3/5, mHeight/3);
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float val = (float) animation.getAnimatedValue();
-                val = decelerateInterpolator.getInterpolation(val / mHeight) * val;
                 pull_height = (int)val;
                 requestLayout();
             }

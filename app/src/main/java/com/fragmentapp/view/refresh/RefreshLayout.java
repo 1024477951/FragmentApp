@@ -209,6 +209,8 @@ public class RefreshLayout extends FrameLayout {
                         footParam.setMargins(0, 0, 0, -mHeadHeight);
                         list.setLayoutParams(listParam);
                     }
+                    if (callBack != null)
+                        callBack.pullListener(0);
                 }
 //                Log.i(TAG, "松开 REFRESHING");
                 break;
@@ -399,6 +401,8 @@ public class RefreshLayout extends FrameLayout {
      * 结束加载
      **/
     public void stop() {
+        if (callBack != null)
+            callBack.pullListener(0);
         TimeUtil.endTime();
         long loadTime = TimeUtil.getDateMillis();//大于0表示小于默认的加载时间
 //        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
