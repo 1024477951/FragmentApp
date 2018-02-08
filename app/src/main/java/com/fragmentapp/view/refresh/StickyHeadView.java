@@ -37,6 +37,8 @@ public class StickyHeadView extends View implements IHeadView {
     // 移动点
     private PointF movewCenterPointF = null;
 
+    private boolean isStart = false;
+
     public StickyHeadView(Context context) {
         this(context, null, 0);
     }
@@ -67,45 +69,43 @@ public class StickyHeadView extends View implements IHeadView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // 1、获得偏移量
-        float yOffset = staticCenterPointF.y - movewCenterPointF.y;
-        float xOffset = staticCenterPointF.x - movewCenterPointF.x;
-        // 2、有了偏移量就可以求出两点斜率了
-        Double lineK = 0.0;
-        if (xOffset != 0f) {
-            lineK = (double) (yOffset / xOffset);
-        }
-        // 3、通过工具求得两个点的集合
-        mMovewPointFs = getIntersectionPoints(movewCenterPointF, mMoveRadius, lineK);
-        mStaticPointFs = getIntersectionPoints(staticCenterPointF, mStaicRadius, lineK);
-        // 4、通过公式求得控制点
-        mControlPointF = getMiddlePoint(staticCenterPointF, movewCenterPointF);
+        if (isStart) {
+            // 1、获得偏移量
+            float yOffset = staticCenterPointF.y - movewCenterPointF.y;
+            float xOffset = staticCenterPointF.x - movewCenterPointF.x;
+            // 2、有了偏移量就可以求出两点斜率了
+            Double lineK = 0.0;
+            if (xOffset != 0f) {
+                lineK = (double) (yOffset / xOffset);
+            }
+            // 3、通过工具求得两个点的集合
+            mMovewPointFs = getIntersectionPoints(movewCenterPointF, mMoveRadius, lineK);
+            mStaticPointFs = getIntersectionPoints(staticCenterPointF, mStaicRadius, lineK);
+            // 4、通过公式求得控制点
+            mControlPointF = getMiddlePoint(staticCenterPointF, movewCenterPointF);
 
-        // 保存画布状态，保存方法之后的代码，能够调用Canvas的平移、放缩、旋转、裁剪等操作
+            // 保存画布状态，保存方法之后的代码，能够调用Canvas的平移、放缩、旋转、裁剪等操作
 //        canvas.save();
 
-        // 工型绘制
-        Path path = new Path();
-        // 左上角点
-        path.moveTo(mStaticPointFs[0].x, mStaticPointFs[0].y);
-        // 上一边的弯度和右上角点
-        path.quadTo(mControlPointF.x, mControlPointF.y, mMovewPointFs[0].x, mMovewPointFs[0].y);
-        // 右下角点
-        path.lineTo(mMovewPointFs[1].x, mMovewPointFs[1].y);
-        // 下一边的弯度和左下角点
-        path.quadTo(mControlPointF.x, mControlPointF.y, mStaticPointFs[1].x, mStaticPointFs[1].y);
-        // 关闭后，会回到最开始的地方，形成封闭的图形
-        path.close();
+            // 工型绘制
+            Path path = new Path();
+            // 左上角点
+            path.moveTo(mStaticPointFs[0].x, mStaticPointFs[0].y);
+            // 上一边的弯度和右上角点
+            path.quadTo(mControlPointF.x, mControlPointF.y, mMovewPointFs[0].x, mMovewPointFs[0].y);
+            // 右下角点
+            path.lineTo(mMovewPointFs[1].x, mMovewPointFs[1].y);
+            // 下一边的弯度和左下角点
+            path.quadTo(mControlPointF.x, mControlPointF.y, mStaticPointFs[1].x, mStaticPointFs[1].y);
+            // 关闭后，会回到最开始的地方，形成封闭的图形
+            path.close();
 
-        canvas.drawPath(path, mPaint);
+            canvas.drawPath(path, mPaint);
 
-        canvas.drawCircle(staticCenterPointF.x, staticCenterPointF.y, mStaicRadius, mPaint);
+            canvas.drawCircle(staticCenterPointF.x, staticCenterPointF.y, mStaicRadius, mPaint);
 //        // 画移动的大圆
-        canvas.drawCircle(movewCenterPointF.x, movewCenterPointF.y, mMoveRadius, mPaint);
-
-        // 恢复上次的保存状态
-//        canvas.restore();
-
+            canvas.drawCircle(movewCenterPointF.x, movewCenterPointF.y, mMoveRadius, mPaint);
+        }
     }
     /**拉扯移动点*/
     public void move(float downY) {
@@ -135,6 +135,7 @@ public class StickyHeadView extends View implements IHeadView {
 
     @Override
     public void startAnim() {
+        isStart = true;
         bg = getResources().getColor(R.color.color_8b90af);
         mPaint.setColor(bg);
         //甩动动画
@@ -156,8 +157,10 @@ public class StickyHeadView extends View implements IHeadView {
 
     @Override
     public void stopAnim() {
+        isStart = false;
         bg = getResources().getColor(R.color.color_8babaf);
         mPaint.setColor(bg);
+        invalidate();
     }
 
     /**
