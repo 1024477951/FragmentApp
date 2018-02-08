@@ -28,6 +28,8 @@ public class DefHeaderView extends View implements IHeadView{
 
     public int height,width;
 
+    private boolean isStart = false;
+
     public DefHeaderView(Context context) {
         this(context, null, 0);
     }
@@ -119,63 +121,65 @@ public class DefHeaderView extends View implements IHeadView{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int w = getMeasuredWidth() / num - 10;
-        for (int i = 0; i < num; i++) {
-            if (animating) {
-                switch (i) {
-                    case 0:
-                        mPath.setAlpha(105);
-                        mPath.setColor(getResources().getColor(R.color.color_4b4b4b));
-                        canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 2 - 2 * w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
-                        break;
-                    case 1:
-                        mPath.setAlpha(145);
-                        mPath.setColor(getResources().getColor(R.color.color_4b9c74));
-                        canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 1 - w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
-                        break;
-                    case 2:
-                        mPath.setAlpha(255);
-                        mPath.setColor(getResources().getColor(R.color.color_c69393));
-                        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, r * fraction1, mPath);
-                        break;
-                    case 3:
-                        mPath.setAlpha(145);
-                        mPath.setColor(getResources().getColor(R.color.color_e1e1e1));
-                        canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 1 + w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
-                        break;
-                    case 4:
-                        mPath.setAlpha(105);
-                        mPath.setColor(getResources().getColor(R.color.color_a9a05c));
-                        canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 2 + 2 * w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
-                        break;
-                }
-            } else {
-                switch (i) {
-                    case 0:
-                        mPath.setAlpha(105);
-                        mPath.setColor(getResources().getColor(R.color.color_4b4b4b));
-                        canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 2 - 2 * w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
-                        break;
-                    case 1:
-                        mPath.setAlpha(145);
-                        mPath.setColor(getResources().getColor(R.color.color_4b9c74));
-                        canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 1 - w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
-                        break;
-                    case 2:
-                        mPath.setAlpha(255);
-                        mPath.setColor(getResources().getColor(R.color.color_c69393));
-                        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, r, mPath);
-                        break;
-                    case 3:
-                        mPath.setAlpha(145);
-                        mPath.setColor(getResources().getColor(R.color.color_e1e1e1));
-                        canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 1 + w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
-                        break;
-                    case 4:
-                        mPath.setAlpha(105);
-                        mPath.setColor(getResources().getColor(R.color.color_a9a05c));
-                        canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 2 + 2 * w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
-                        break;
+        if (isStart) {
+            int w = getMeasuredWidth() / num - 10;
+            for (int i = 0; i < num; i++) {
+                if (animating) {
+                    switch (i) {
+                        case 0:
+                            mPath.setAlpha(105);
+                            mPath.setColor(getResources().getColor(R.color.color_4b4b4b));
+                            canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 2 - 2 * w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
+                            break;
+                        case 1:
+                            mPath.setAlpha(145);
+                            mPath.setColor(getResources().getColor(R.color.color_4b9c74));
+                            canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 1 - w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
+                            break;
+                        case 2:
+                            mPath.setAlpha(255);
+                            mPath.setColor(getResources().getColor(R.color.color_c69393));
+                            canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, r * fraction1, mPath);
+                            break;
+                        case 3:
+                            mPath.setAlpha(145);
+                            mPath.setColor(getResources().getColor(R.color.color_e1e1e1));
+                            canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 1 + w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
+                            break;
+                        case 4:
+                            mPath.setAlpha(105);
+                            mPath.setColor(getResources().getColor(R.color.color_a9a05c));
+                            canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 2 + 2 * w / 3 * 2, getMeasuredHeight() / 2, r * fraction2, mPath);
+                            break;
+                    }
+                } else {
+                    switch (i) {
+                        case 0:
+                            mPath.setAlpha(105);
+                            mPath.setColor(getResources().getColor(R.color.color_4b4b4b));
+                            canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 2 - 2 * w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
+                            break;
+                        case 1:
+                            mPath.setAlpha(145);
+                            mPath.setColor(getResources().getColor(R.color.color_4b9c74));
+                            canvas.drawCircle(getMeasuredWidth() / 2 - cir_x * 1 - w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
+                            break;
+                        case 2:
+                            mPath.setAlpha(255);
+                            mPath.setColor(getResources().getColor(R.color.color_c69393));
+                            canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, r, mPath);
+                            break;
+                        case 3:
+                            mPath.setAlpha(145);
+                            mPath.setColor(getResources().getColor(R.color.color_e1e1e1));
+                            canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 1 + w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
+                            break;
+                        case 4:
+                            mPath.setAlpha(105);
+                            mPath.setColor(getResources().getColor(R.color.color_a9a05c));
+                            canvas.drawCircle(getMeasuredWidth() / 2 + cir_x * 2 + 2 * w / 3 * 2, getMeasuredHeight() / 2, r, mPath);
+                            break;
+                    }
                 }
             }
         }
@@ -195,9 +199,9 @@ public class DefHeaderView extends View implements IHeadView{
 
     @Override
     public void startAnim() {
+        isStart = true;
         setScaleX(1 + 0 / 2);
         setScaleY(1 + 0 / 2);
-        animating = false;
         if (animator1.isRunning()) {
             animator1.cancel();
             invalidate();
@@ -213,6 +217,7 @@ public class DefHeaderView extends View implements IHeadView{
 
     @Override
     public void stopAnim() {
+        isStart = false;
         animating = false;
         if (animator1.isRunning()) animator1.cancel();
         if (animator2.isRunning()) animator2.cancel();
