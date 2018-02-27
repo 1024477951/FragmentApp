@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitHelper {
 
     private static final String BASE_URL_USER = "http://testapi.hanmaker.com";
+//    private static final String BASE_URL_USER = "https://api.hanmaker.com";
     private static final String BASE_URL_PAY = "https://www.222.com/";
 
     private static final long TIME_OUT = 5000;

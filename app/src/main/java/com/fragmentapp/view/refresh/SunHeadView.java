@@ -2,14 +2,19 @@ package com.fragmentapp.view.refresh;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
 import android.graphics.PathEffect;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -47,6 +52,9 @@ public class SunHeadView extends View implements IHeadView{
 
     private int faceRadius = 30,foodRadius = 3;
 
+    private Bitmap mBitmap;
+    private Canvas mCanvas;
+
     public SunHeadView(Context context) {
         this(context, null, 0);
     }
@@ -70,7 +78,7 @@ public class SunHeadView extends View implements IHeadView{
         effectPaint = new Paint();
         effectPaint.setAntiAlias(true);
         effectPaint.setStyle(Paint.Style.STROKE);
-        effectPaint.setColor(getResources().getColor(R.color.color_a9a05c));
+
 
         effect = new PathDashPathEffect(foodPath, 12, -1, PathDashPathEffect.Style.ROTATE);
         effectPaint.setPathEffect(effect);
@@ -78,12 +86,14 @@ public class SunHeadView extends View implements IHeadView{
         facePaint = new Paint();
         facePaint.setAntiAlias(true);
         facePaint.setStyle(Paint.Style.FILL);
-        facePaint.setColor(getResources().getColor(R.color.color_a9a05c));
+        facePaint.setColor(getResources().getColor(R.color.transparent));
 
         defPaint = new Paint();
         defPaint.setAntiAlias(true);
         defPaint.setStyle(Paint.Style.FILL);
-        defPaint.setColor(getResources().getColor(R.color.color_a9a05c));
+
+        defPaint.setStrokeCap(Paint.Cap.ROUND);
+        defPaint.setStrokeJoin(Paint.Join.ROUND);
 
         rectF = new RectF(0,0,0,0);
         startPoint = new PointF();
@@ -91,12 +101,17 @@ public class SunHeadView extends View implements IHeadView{
         movePoint2 = new PointF();
         endPoint = new PointF();
 
+        PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
         clearPaint = new Paint();
         clearPaint.setAntiAlias(true);
         clearPaint.setStyle(Paint.Style.FILL);
-        clearPaint.setColor(getResources().getColor(R.color.white));
+        clearPaint.setStrokeJoin(Paint.Join.ROUND);
+        clearPaint.setDither(true);
+        clearPaint.setXfermode(porterDuffXfermode);
+        clearPaint.setAlpha(0);
 
         clears = new ArrayList<>();
+
     }
 
     @Override
@@ -110,31 +125,44 @@ public class SunHeadView extends View implements IHeadView{
             this.top = mHeight / 3;
 
             rectF.set(startPoint.x - faceRadius/2,startPoint.y - faceRadius,startPoint.x + faceRadius/2,startPoint.y);
+
+            mBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+            mCanvas = new Canvas(mBitmap);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if (!isDraw) return;
-        //绘制“食物”
-        foodPath.reset();
-        foodPath.moveTo(startPoint.x,startPoint.y);
-        foodPath.cubicTo(movePoint1.x,movePoint1.y,movePoint2.x,movePoint2.y,endPoint.x,endPoint.y);
-        canvas.drawPath(foodPath, effectPaint);
+
         //绘制大球
         path.reset();
         path.moveTo(startPoint.x + faceRadius/2,startPoint.y);
         path.cubicTo(movePoint1.x,movePoint1.y + faceRadius/2,movePoint2.x,movePoint2.y + faceRadius/2,endPoint.x - faceRadius/2,endPoint.y);
-        canvas.drawPath(path, defPaint);
-        //吃掉“食物”
-        for (PointF f : clears) {
-            RectF rectF = new RectF(f.x-foodRadius*2,f.y-foodRadius*2,f.x+foodRadius*2,f.y+foodRadius*2);
-            canvas.drawOval(rectF,clearPaint);
-        }
+        canvas.drawPath(path, facePaint);
 
         //绘制小球,需要在最后面绘制
         canvas.drawArc(rectF, angle, 360 - angle * 2, true, facePaint);
 
+        if (mBitmap != null) {
+            canvas.drawBitmap(mBitmap, 0, 0, defPaint);
+        }
+    }
+
+    private void draw(){
+
+        //绘制“食物”
+        foodPath.reset();
+        foodPath.moveTo(startPoint.x,startPoint.y);
+        foodPath.cubicTo(movePoint1.x,movePoint1.y,movePoint2.x,movePoint2.y,endPoint.x,endPoint.y);
+        mCanvas.drawPath(foodPath, effectPaint);
+        //吃掉“食物”
+        for (PointF f : clears) {
+            RectF rectF = new RectF(f.x-foodRadius*2,f.y-foodRadius*2,f.x+foodRadius*2,f.y+foodRadius*2);
+            mCanvas.drawOval(rectF,clearPaint);
+        }
+
+        postInvalidate();
     }
 
     @Override
@@ -150,8 +178,6 @@ public class SunHeadView extends View implements IHeadView{
 
         effectPaint.setColor(getResources().getColor(R.color.color_a9a05c));
         facePaint.setColor(getResources().getColor(R.color.color_a9a05c));
-        clearPaint.setColor(getResources().getColor(R.color.white));
-        defPaint.setColor(getResources().getColor(R.color.color_a9a05c));
 
         startPoint.set(mWidth*1/2 + faceRadius*2,mHeight + faceRadius);
         movePoint1.set(mWidth*2/3, 0);
@@ -170,8 +196,7 @@ public class SunHeadView extends View implements IHeadView{
                 clears.add(new PointF(point.x,point.y));//保存移动的坐标
                 //faceRadius/2是为了让小球的中心点刚好在大球的中间
                 rectF.set(point.x - faceRadius/2,point.y - faceRadius/2,point.x + faceRadius/2,point.y + faceRadius/2);
-
-                postInvalidate();
+                draw();
             }
         });
         arcVa.setInterpolator(new LinearInterpolator());
@@ -187,7 +212,7 @@ public class SunHeadView extends View implements IHeadView{
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 angle = (float)valueAnimator.getAnimatedValue();
-                postInvalidate();
+                draw();
             }
         });
         faceVa.setInterpolator(new LinearInterpolator());
@@ -199,9 +224,8 @@ public class SunHeadView extends View implements IHeadView{
 
     @Override
     public void startAnim() {//前奏
+        facePaint.setColor(getResources().getColor(R.color.color_a9a05c));
         effectPaint.setColor(getResources().getColor(R.color.transparent));
-        facePaint.setColor(getResources().getColor(R.color.transparent));
-        clearPaint.setColor(getResources().getColor(R.color.transparent));
 
         isDraw = true;
         faceVa = ValueAnimator.ofFloat(0 , mHeight + faceRadius);//大球落下
@@ -215,8 +239,7 @@ public class SunHeadView extends View implements IHeadView{
                 movePoint1.set(mWidth*2/3, 0);
                 movePoint2.set(mWidth*5/6, 0);
                 endPoint.set(mWidth - faceRadius*2,val);
-
-                postInvalidate();
+                draw();
             }
         });
         faceVa.setInterpolator(new LinearInterpolator());
