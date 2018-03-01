@@ -44,12 +44,14 @@ public class RefreshLayout extends FrameLayout {
     public static final int DOWN_REFRESH = 0;// 下拉刷新状态
     public static final int RELEASE_REFRESH = 1;// 松开刷新
     public static final int LOADING = 2;// 正在刷新中
+    public static final int END = 3;// 正在刷新中
     private int currentState = DOWN_REFRESH;// 头布局的状态: 默认为下拉刷新状态
 
     private View list;//子节点中的 recyclerview 视图
     private LayoutParams listParam, footParam;//用于控制下拉动画展示
     private boolean isLoadingMore = false;// 是否进入加载状态，防止多次重复的启动
     private boolean isStart = false;//表示正在加载刷新中，还没停止
+    private boolean isAllow = true;//是否进行加载操作
     private boolean isTop = false, isBottom = false;
     private int mTouchSlop;
     private CallBack callBack;
@@ -135,87 +137,82 @@ public class RefreshLayout extends FrameLayout {
     }
 
     public boolean onFingerTouch(MotionEvent ev) {
-        isTop = isViewToTop(list, mTouchSlop);
-        isBottom = isViewToBottom(list, mTouchSlop);
-//        Log.e(TAG,"isTop "+isTop+" isBottom "+isBottom);
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                currentState = LOADING;
-                downY = (int) ev.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!isTop && !isBottom)//没有到顶，无需计算操作
+        if (isAllow == true) {
+
+            isTop = isViewToTop(list, mTouchSlop);
+            isBottom = isViewToBottom(list, mTouchSlop);
+
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    currentState = END;
+                    downY = (int) ev.getY();
                     break;
-                int moveY = (int) ev.getY();
-                /**
-                 * 得到滑动的距离，可以打印出日志查看，如果滑动的速度很快，那么得到距离的跨度会很大，比如快速滑动，可能只得到三个数据，50，400，700，而如果缓慢的
-                 * 滑动，则30，35，39，41...696,700,显然我们想得到的是后面的数据，否则跨度很大会出现闪速的现象
-                 * */
-                int diff = moveY - downY;
-                /**这里是为了降低跨度存在的，尽量的让数值跨度不要那么大*/
-                int paddingTop = diff  / RATIO;
+                case MotionEvent.ACTION_MOVE:
+                    if (!isTop && !isBottom)//没有到顶，无需计算操作
+                        break;
+                    int moveY = (int) ev.getY();
+                    /**
+                     * 得到滑动的距离，可以打印出日志查看，如果滑动的速度很快，那么得到距离的跨度会很大，比如快速滑动，可能只得到三个数据，50，400，700，而如果缓慢的
+                     * 滑动，则30，35，39，41...696,700,显然我们想得到的是后面的数据，否则跨度很大会出现闪速的现象
+                     * */
+                    int diff = moveY - downY;
+                    /**这里是为了降低跨度存在的，尽量的让数值跨度不要那么大*/
+                    int paddingTop = diff / RATIO;
 
-                if (paddingTop > 0 && isTop) {
-                    //向下滑动多少后开始启动刷新,Margin判断是为了限制快速用力滑动的时候导致头部侵入的高度不够就开始加载了
-                    if (paddingTop >= mHeadHeight && (listParam.topMargin >= mHeadHeight) && currentState == DOWN_REFRESH) { // 完全显示了.
+                    if (paddingTop > 0 && isTop) {
+                        //向下滑动多少后开始启动刷新,Margin判断是为了限制快速用力滑动的时候导致头部侵入的高度不够就开始加载了
+                        if (paddingTop >= mHeadHeight && (listParam.topMargin >= mHeadHeight) && currentState == DOWN_REFRESH) { // 完全显示了.
 //                        Log.i(TAG, "松开刷新 RELEASE_REFRESH");
-                        currentState = RELEASE_REFRESH;
-                        refreshHeaderView();
-                        start();
-                    } else if (currentState == LOADING) { // 没有显示完全
+                            currentState = RELEASE_REFRESH;
+                            refreshHeaderView();
+                            start();
+                        } else if (currentState == END) { // 没有显示完全
 //                        Log.i(TAG, "下拉刷新 DOWN_PULL_REFRESH");
-                        currentState = DOWN_REFRESH;
-                        refreshHeaderView();
-                    }
-                    if (paddingTop <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
-                        listParam.setMargins(0, paddingTop, 0, 0);
-                        list.setLayoutParams(listParam);
-                        if (callBack != null)
-                            callBack.pullListener(paddingTop);
-                    }
-                } else if (isBottom) {
-                    //限制上滑时不能超过底部的宽度，不然会超出边界
-                    //mHeadHeight+20 上滑设置的margin要超过headheight，不然下面判断的大于headheight不成立，下面的margin基础上面设置后的参数
-                    if (Math.abs(paddingTop) <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
-                        listParam.setMargins(0, 0, 0, -paddingTop);
-                        footParam.setMargins(0, 0, 0, -paddingTop - mHeadHeight);
-                        list.setLayoutParams(listParam);
-                    }
-                    //如果滑动的距离大于头部或者底部的高度，并且设置的margin也大于headheight
-                    //listParam用来限制recyclerview列表迅速滑动，footParam用来限制bottom foothead迅速滑动导致没有达到head的高度就开始加载了
-                    if (Math.abs(paddingTop) >= mHeadHeight && (listParam.bottomMargin >= mHeadHeight || footParam.bottomMargin >= 0))
-                        isLoadingMore = true;//头部是否拉取到位，然后执行加载动画
+                            currentState = DOWN_REFRESH;
+                            refreshHeaderView();
+                        }
+                        if (paddingTop <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
+                            listParam.setMargins(0, paddingTop, 0, 0);
+                            list.setLayoutParams(listParam);
+                            if (callBack != null)
+                                callBack.pullListener(paddingTop);
+                        }
+                    } else if (isBottom) {
+                        //限制上滑时不能超过底部的宽度，不然会超出边界
+                        //mHeadHeight+20 上滑设置的margin要超过headheight，不然下面判断的大于headheight不成立，下面的margin基础上面设置后的参数
+                        if (Math.abs(paddingTop) <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
+                            listParam.setMargins(0, 0, 0, -paddingTop);
+                            footParam.setMargins(0, 0, 0, -paddingTop - mHeadHeight);
+                            list.setLayoutParams(listParam);
+                        }
+                        //如果滑动的距离大于头部或者底部的高度，并且设置的margin也大于headheight
+                        //listParam用来限制recyclerview列表迅速滑动，footParam用来限制bottom foothead迅速滑动导致没有达到head的高度就开始加载了
+                        if (Math.abs(paddingTop) >= mHeadHeight && (listParam.bottomMargin >= mHeadHeight || footParam.bottomMargin >= 0))
+                            isLoadingMore = true;//头部是否拉取到位，然后执行加载动画
 
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (isLoadingMore) {//是否开始加载
-                    currentState = LOADING;
-                    refreshHeaderView();
-                    isLoadingMore = false;
-                    isStart = true;//是否开始加载
-//                    postDelayed(new Runnable() {//没有网络访问时固定2秒加载完成
-//                        @Override
-//                        public void run() {
-////                            Log.i(TAG, "停止 END");
-////                            currentState = END;
-//                            stop();
-//                        }
-//                    },2000);
-                } else {
-                    if (!isStart) {
-                        // 隐藏头布局
-                        listParam.setMargins(0, 0, 0, 0);
-                        footParam.setMargins(0, 0, 0, -mHeadHeight);
-                        list.setLayoutParams(listParam);
                     }
-                    if (callBack != null)
-                        callBack.pullListener(0);
-                }
-//                Log.i(TAG, "松开 REFRESHING");
-                break;
-            default:
-                break;
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (isLoadingMore) {//是否开始加载
+                        currentState = LOADING;
+                        refreshHeaderView();
+                        isLoadingMore = false;
+                        isStart = true;//是否开始加载
+                        isAllow = false;
+                    } else {
+                        if (!isStart) {
+                            // 隐藏头布局
+                            listParam.setMargins(0, 0, 0, 0);
+                            footParam.setMargins(0, 0, 0, -mHeadHeight);
+                            list.setLayoutParams(listParam);
+                        }
+                        if (callBack != null)
+                            callBack.pullListener(0);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         return super.onTouchEvent(ev);
     }
@@ -237,6 +234,9 @@ public class RefreshLayout extends FrameLayout {
             case LOADING: // 正在刷新中状态
                 val = "刷新中...";
                 TimeUtil.startTime();
+                break;
+            case END:
+                val = "完成";
                 break;
         }
         callBack.refreshHeaderView(currentState, val);
@@ -403,6 +403,7 @@ public class RefreshLayout extends FrameLayout {
     public void stop() {
         if (callBack != null)
             callBack.pullListener(0);
+        currentState = END;
         TimeUtil.endTime();
         long loadTime = TimeUtil.getDateMillis();//大于0表示小于默认的加载时间
 //        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
@@ -416,6 +417,7 @@ public class RefreshLayout extends FrameLayout {
                     list.setLayoutParams(listParam);
                     isLoadingMore = false;
                     isStart = false;
+                    isAllow = true;
                     for (IHeadView head : heads) {
                         head.stopAnim();
                     }
@@ -428,6 +430,7 @@ public class RefreshLayout extends FrameLayout {
             list.setLayoutParams(listParam);
             isLoadingMore = false;
             isStart = false;
+            isAllow = true;
             for (IHeadView head : heads) {
                 head.stopAnim();
             }

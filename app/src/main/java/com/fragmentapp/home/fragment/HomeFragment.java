@@ -102,7 +102,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
                         downHeadView.setPull_height(pullHeight);
-//                        stickyHeadView.move(pullHeight);
+                        stickyHeadView.move(pullHeight);
                     }
                 });
 
@@ -122,7 +122,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
     @Override
     public void success(List<ArticleDataBean.ListBean> list) {
         if (list.size() == 0){
-//            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
+            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
         }else {
             page++;//如果有数据则+1下一页
             if (lastPage != page) {
@@ -138,7 +138,7 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     public void error() {
-//        emptyLayout.showEmpty((ViewGroup) getView(),"error");
+        emptyLayout.showEmpty((ViewGroup) getView(),"error");
 //        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 
