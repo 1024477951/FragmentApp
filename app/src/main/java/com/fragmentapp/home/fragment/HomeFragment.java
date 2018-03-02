@@ -1,15 +1,14 @@
 package com.fragmentapp.home.fragment;
 
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
+import com.fragmentapp.helper.DensityUtil;
 import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.home.adapter.ArticleAdapter;
 import com.fragmentapp.home.bean.ArticleDataBean;
@@ -22,8 +21,8 @@ import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.SunHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
-import com.fragmentapp.view.sticky.DividerDecoration;
-import com.orhanobut.logger.Logger;
+import com.fragmentapp.view.sticky.PowerGroupListener;
+import com.fragmentapp.view.sticky.PowerfulStickyDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,23 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         adapter = new ArticleAdapter(getContext(), R.layout.item_home, list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerDecoration(getContext()));
+
+        PowerfulStickyDecoration decoration = PowerfulStickyDecoration.Builder.init(new PowerGroupListener() {
+            @Override
+            public String getGroupName(int position) {
+                return adapter.getItemText(position);
+            }
+
+            @Override
+            public View getGroupView(int position) {
+                View view = getLayoutInflater().inflate(R.layout.item_recyclerview_over_group, null, false);
+                TextView tv_name = view.findViewById(R.id.tv_name);
+                tv_name.setText(adapter.getItemText(position));
+                return view;
+            }
+        }).setGroupHeight(DensityUtil.dp2px(getActivity(), 34))
+        .build();
+        recyclerView.addItemDecoration(decoration);
 
         textHeadView = new TextHeadView(getContext());
         downHeadView = new DownHeadView(getContext());

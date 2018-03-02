@@ -77,6 +77,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public String getItemText(int position){
+        return list.get(position).getArticle_name();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder
     {
 
