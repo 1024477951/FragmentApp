@@ -195,11 +195,11 @@ public class RefreshLayout extends FrameLayout {
                 case MotionEvent.ACTION_UP:
                     if (isLoadingMore) {//是否开始加载
                         currentState = LOADING;
-                        refreshHeaderView();
                         isLoadingMore = false;
                         isStart = true;//是否开始加载
                         isAllow = false;
                     } else {
+                        currentState = END;
                         if (!isStart) {
                             // 隐藏头布局
                             listParam.setMargins(0, 0, 0, 0);
@@ -209,6 +209,7 @@ public class RefreshLayout extends FrameLayout {
                         if (callBack != null)
                             callBack.pullListener(0);
                     }
+                    refreshHeaderView();
                     break;
                 default:
                     break;
@@ -221,7 +222,7 @@ public class RefreshLayout extends FrameLayout {
      * 根据currentState刷新头布局的状态
      */
     private void refreshHeaderView() {
-        if (callBack == null || isStart)
+        if (callBack == null)
             return;
         String val;
         switch (currentState) {
@@ -235,10 +236,12 @@ public class RefreshLayout extends FrameLayout {
                 val = "刷新中...";
                 TimeUtil.startTime();
                 break;
-            default: END:
+            case END:
+            default:
                 val = "";
                 break;
         }
+
         callBack.refreshHeaderView(currentState, val);
     }
 
