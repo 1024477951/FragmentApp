@@ -56,6 +56,8 @@ dependencies {
     //leakcanary内存泄漏
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
+    //日志打印
     compile 'com.orhanobut:logger:2.1.1'
+    //recyclerview adapter
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.helper.DensityUtil;
@@ -61,7 +62,8 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         page = 1;
         presenter.getArticleList(page);
 
-        adapter = new ArticleAdapter(getContext(), R.layout.item_home, list);
+        adapter = new ArticleAdapter(R.layout.item_home,getContext());
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
@@ -142,9 +144,9 @@ public class HomeFragment extends LazyFragment implements IArticleView {
             page++;//如果有数据则+1下一页
             if (lastPage != page) {
                 if (refreshLayout.isBottom())
-                    adapter.addList(list);
+                    adapter.addData(list);
                 else
-                    adapter.setList(list);
+                    adapter.setNewData(list);
             }
             lastPage = page;
 //            Toast.makeText(getActivity(), "success"+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
