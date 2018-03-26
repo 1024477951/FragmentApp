@@ -1,10 +1,10 @@
-package com.fragmentapp.home.model;
+package com.fragmentapp.def.home.model;
 
 import android.util.Log;
 
+import com.fragmentapp.def.home.bean.ArticleDataBean;
+import com.fragmentapp.def.home.imple.IArticleModel;
 import com.fragmentapp.helper.SharedPreferencesUtils;
-import com.fragmentapp.home.bean.ArticleDataBean;
-import com.fragmentapp.home.imple.IArticleModel;
 import com.fragmentapp.http.BaseObserver;
 import com.fragmentapp.http.BaseResponses;
 import com.fragmentapp.http.RetrofitHelper;
@@ -12,10 +12,7 @@ import com.fragmentapp.http.RetrofitHelper;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -25,14 +22,14 @@ import io.reactivex.schedulers.Schedulers;
 public class ArticleModel implements IArticleModel {
 
     @Override
-    public void getArticleList(BaseObserver<BaseResponses<ArticleDataBean>> observer,int page) {
+    public void getArticleList(BaseObserver<BaseResponses<ArticleDataBean>> observer, int page) {
         Map<String, Integer> map = new HashMap<>();
         map.put("id", 2);
         map.put("p", page);
 
         String token = SharedPreferencesUtils.getParam("token");
         if (token == null) {
-            Log.e("ArticleModel","token is null");
+            Log.e("HomeModel","token is null");
             observer.onErrorResponse(null);
             return;
         }

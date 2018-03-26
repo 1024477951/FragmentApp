@@ -1,6 +1,6 @@
-package com.fragmentapp.home.imple;
+package com.fragmentapp.def.home.imple;
 
-import com.fragmentapp.home.bean.ArticleDataBean;
+import com.fragmentapp.def.home.bean.ArticleDataBean;
 
 import java.util.List;
 

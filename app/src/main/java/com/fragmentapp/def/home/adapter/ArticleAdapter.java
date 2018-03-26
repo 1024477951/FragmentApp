@@ -1,21 +1,13 @@
-package com.fragmentapp.home.adapter;
+package com.fragmentapp.def.home.adapter;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.fragmentapp.R;
-import com.fragmentapp.home.bean.ArticleDataBean;
-
-import java.util.List;
+import com.fragmentapp.def.home.bean.ArticleDataBean;
 
 /**
  * Created by liuzhen on 2017/11/20.
@@ -47,6 +39,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleDataBean.ListBean, A
     }
 
     public String getItemText(int position){
+        if (getData() == null || getData().size() <= position) return null;
         return getData().get(position).getArticle_name();
     }
 

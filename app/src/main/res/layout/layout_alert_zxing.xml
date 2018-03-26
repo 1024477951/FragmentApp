@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/d35.0"
+        android:layout_height="@dimen/d35.0"
+        android:layout_marginRight="@dimen/d80.0"
+        android:layout_marginTop="@dimen/d144.0"
+        android:layout_gravity="right|bottom"
+        android:src="@drawable/shape_small_triangle"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="@dimen/d43.0"
+        android:paddingTop="@dimen/d20.0"
+        android:paddingBottom="@dimen/d15.0"
+        android:background="@drawable/shape_ffffff_16"
+        android:orientation="vertical">
+
+
+        <LinearLayout android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/d55.0"
+            android:paddingRight="@dimen/d75.0"
+            android:paddingTop="@dimen/d25.0"
+            android:paddingBottom="@dimen/d15.0"
+            android:layout_gravity="center_horizontal|left"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_add"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d25.0"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/color_111111"
+                android:layout_gravity="center_vertical"
+                android:text="创建群组"/>
+
+        </LinearLayout>
+        <LinearLayout android:id="@+id/zxing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|left"
+            android:paddingLeft="@dimen/d55.0"
+            android:paddingRight="@dimen/d75.0"
+            android:paddingTop="@dimen/d15.0"
+            android:paddingBottom="@dimen/d25.0"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_zxing"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d25.0"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/color_111111"
+                android:layout_gravity="center_vertical"
+                android:text="扫一扫"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

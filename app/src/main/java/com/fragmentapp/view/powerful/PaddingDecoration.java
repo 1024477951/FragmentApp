@@ -1,4 +1,4 @@
-package com.fragmentapp.view.sticky;
+package com.fragmentapp.view.powerful;
 
 import android.content.Context;
 import android.graphics.Rect;

@@ -1,4 +1,4 @@
-package com.fragmentapp.home.bean;
+package com.fragmentapp.def.home.bean;
 
 import java.util.List;
 

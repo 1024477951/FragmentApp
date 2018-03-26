@@ -1,4 +1,4 @@
-package com.fragmentapp.view.sticky;
+package com.fragmentapp.view.powerful;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -32,8 +32,6 @@ public class PowerfulStickyDecoration extends  BaseDecoration{
         super.onDrawOver(c, parent, state);
         int itemCount = state.getItemCount();
         int childCount = parent.getChildCount();
-//        int left = parent.getPaddingLeft();
-//        int right = parent.getWidth() - parent.getPaddingRight();
 
         String preGroupName;
         String currentGroupName = null;
@@ -58,7 +56,9 @@ public class PowerfulStickyDecoration extends  BaseDecoration{
                 }
             } else {
                 int viewBottom = view.getBottom();
-                int top = Math.max(mGroupHeight, view.getTop());//top 决定当前顶部第一个悬浮Group的位置
+                int top = Math.max(mGroupHeight, view.getTop() + view.getPaddingTop());//top 决定当前顶部第一个悬浮Group的位置
+//                if (position == 0)
+//                    top += getHeadHeight();
                 if (position + 1 < itemCount) {
                     //获取下个GroupName
                     String nextGroupName = getGroupName(position + 1);
@@ -116,6 +116,17 @@ public class PowerfulStickyDecoration extends  BaseDecoration{
             return mGroupListener.getGroupView(position);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * 当添加了头部view的高度
+     */
+    private int getHeadHeight() {
+        if (mGroupListener != null) {
+            return mGroupListener.getHeadViewHeight();
+        } else {
+            return 0;
         }
     }
 

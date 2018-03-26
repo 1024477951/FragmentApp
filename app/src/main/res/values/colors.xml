@@ -32,4 +32,11 @@
     <color name="color_111111">#111111</color>
     <color name="color_444444">#444444</color>
     <color name="color_f6f6f6">#f6f6f6</color>
+    <color name="color_ff4036">#FF4036</color>
+    <color name="color_bbbbbb">#BBBBBB</color>
+    <color name="color_dddddd">#DDDDDD</color>
+    <color name="color_82deff">#82DEFF</color>
+    <color name="color_338eff">#338EFF</color>
+    <color name="color_BCBCBC">#BCBCBC</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
 </resources>

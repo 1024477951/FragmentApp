@@ -1,16 +1,11 @@
-package com.fragmentapp.home.view;
+package com.fragmentapp.def.home.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.CompoundButton;
-
-import com.fragmentapp.R;
 
 /**
  * Created by liuzhen on 2017/11/14.
@@ -44,9 +39,7 @@ public class BounceView extends android.support.v7.widget.AppCompatCheckBox{
     }
 
     public void startAnimation() {
-        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) getLayoutParams();
-        int topMargin = lp.topMargin;
-        ValueAnimator anim = ValueAnimator.ofInt(-10,0+topMargin,6,0+topMargin);
+        ValueAnimator anim = ValueAnimator.ofInt(-10,0,6,0);
 
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

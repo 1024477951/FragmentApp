@@ -6,7 +6,7 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
+    <com.fragmentapp.view.viewpager.ScrollerViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,8 +18,9 @@
         android:orientation="horizontal"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:background="@color/color_dddddd"
         android:weightSum="4">
-        <LinearLayout android:id="@+id/home"
+        <RelativeLayout android:id="@+id/home"
             android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
@@ -30,118 +31,234 @@
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <com.fragmentapp.home.view.BounceView
+            <FrameLayout
+                android:id="@+id/fl_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selected_main_home"
-                android:clickable="false"
-                android:checked="true"
-                android:button="@null"
-                android:layout_gravity="center"/>
+                android:layout_centerHorizontal="true" >
+
+                <com.fragmentapp.home.view.BounceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selected_main_home"
+                    android:layout_marginTop="@dimen/d15.0"
+                    android:layout_marginLeft="@dimen/d35.0"
+                    android:layout_marginRight="@dimen/d35.0"
+                    android:clickable="false"
+                    android:checked="true"
+                    android:button="@null"
+                    android:tag="check"
+                    android:layout_centerHorizontal="true"/>
+                <TextView android:id="@+id/home_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_ff4038_30"
+                    android:layout_gravity="right"
+                    android:maxWidth="@dimen/d80.0"
+                    android:minHeight="@dimen/d58.0"
+                    android:minWidth="@dimen/d58.0"
+                    android:paddingLeft="@dimen/d15.0"
+                    android:paddingRight="@dimen/d15.0"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:layout_alignRight="@+id/bv_home"
+                    android:textSize="@dimen/d34.0"
+                    android:text="22"
+                    android:textColor="@color/white"/>
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11"
-                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/d30.0"
+                android:tag="tv"
+                android:layout_below="@+id/fl_home"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/d4.0"
                 android:text="首页"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout android:id="@+id/contact"
+        <RelativeLayout android:id="@+id/contact"
             android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/d4.0"
+            android:padding="@dimen/d10.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <com.fragmentapp.home.view.BounceView
+            <FrameLayout
+                android:id="@+id/fl_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selected_main_contact"
-                android:clickable="false"
-                android:checked="false"
-                android:button="@null"
-                android:layout_gravity="center"/>
+                android:layout_centerHorizontal="true" >
+
+                <com.fragmentapp.home.view.BounceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selected_main_contact"
+                    android:layout_marginTop="@dimen/d15.0"
+                    android:layout_marginLeft="@dimen/d35.0"
+                    android:layout_marginRight="@dimen/d35.0"
+                    android:clickable="false"
+                    android:checked="false"
+                    android:button="@null"
+                    android:tag="check"
+                    android:layout_centerHorizontal="true"/>
+                <TextView android:id="@+id/contact_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_ff4038_30"
+                    android:layout_gravity="right"
+                    android:maxWidth="@dimen/d80.0"
+                    android:minHeight="@dimen/d58.0"
+                    android:minWidth="@dimen/d58.0"
+                    android:paddingLeft="@dimen/d15.0"
+                    android:paddingRight="@dimen/d15.0"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:layout_alignRight="@+id/bv_contact"
+                    android:textSize="@dimen/d34.0"
+                    android:text="99"
+                    android:textColor="@color/white"/>
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11"
-                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/d30.0"
+                android:tag="tv"
+                android:layout_below="@+id/fl_contact"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/d4.0"
                 android:text="通讯录"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout android:id="@+id/community"
+        <RelativeLayout android:id="@+id/community"
             android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/d4.0"
+            android:padding="@dimen/d10.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <com.fragmentapp.home.view.BounceView
+            <FrameLayout
+                android:id="@+id/fl_community"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selected_main_community"
-                android:clickable="false"
-                android:checked="false"
-                android:button="@null"
-                android:layout_gravity="center"/>
+                android:layout_centerHorizontal="true" >
+
+                <com.fragmentapp.home.view.BounceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selected_main_community"
+                    android:layout_marginTop="@dimen/d15.0"
+                    android:layout_marginLeft="@dimen/d35.0"
+                    android:layout_marginRight="@dimen/d35.0"
+                    android:clickable="false"
+                    android:checked="false"
+                    android:button="@null"
+                    android:tag="check"
+                    android:layout_centerHorizontal="true"/>
+                <TextView android:id="@+id/community_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_ff4038_30"
+                    android:layout_gravity="right"
+                    android:maxWidth="@dimen/d80.0"
+                    android:minHeight="@dimen/d58.0"
+                    android:minWidth="@dimen/d58.0"
+                    android:paddingLeft="@dimen/d15.0"
+                    android:paddingRight="@dimen/d15.0"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:layout_alignRight="@+id/bv_community"
+                    android:textSize="@dimen/d34.0"
+                    android:text="9"
+                    android:textColor="@color/white"/>
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11"
-                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/d30.0"
+                android:tag="tv"
+                android:layout_below="@+id/fl_community"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/d4.0"
-                android:text="消息"/>
+                android:text="社区"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout android:id="@+id/me"
+        <RelativeLayout android:id="@+id/me"
             android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
-            android:padding="@dimen/d4.0"
+            android:padding="@dimen/d10.0"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:onClick="click"
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <com.fragmentapp.home.view.BounceView
+            <FrameLayout
+                android:id="@+id/fl_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selected_main_me"
-                android:clickable="false"
-                android:checked="false"
-                android:button="@null"
-                android:layout_gravity="center"/>
+                android:layout_centerHorizontal="true" >
+
+                <com.fragmentapp.home.view.BounceView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selected_main_me"
+                    android:layout_marginTop="@dimen/d15.0"
+                    android:layout_marginLeft="@dimen/d35.0"
+                    android:layout_marginRight="@dimen/d35.0"
+                    android:clickable="false"
+                    android:checked="false"
+                    android:button="@null"
+                    android:tag="check"
+                    android:layout_centerHorizontal="true"/>
+                <TextView android:id="@+id/me_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_ff4038_30"
+                    android:layout_gravity="right"
+                    android:maxWidth="@dimen/d80.0"
+                    android:minHeight="@dimen/d58.0"
+                    android:minWidth="@dimen/d58.0"
+                    android:paddingLeft="@dimen/d15.0"
+                    android:paddingRight="@dimen/d15.0"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:layout_alignRight="@+id/bv_me"
+                    android:textSize="@dimen/d34.0"
+                    android:text="2"
+                    android:textColor="@color/white"/>
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#696868"
-                android:textSize="@dimen/sp_11"
-                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/d30.0"
+                android:tag="tv"
+                android:layout_below="@+id/fl_me"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/d4.0"
-                android:text="我的"/>
+                android:text="社区"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

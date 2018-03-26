@@ -60,4 +60,11 @@ dependencies {
     compile 'com.orhanobut:logger:2.1.1'
     //recyclerview adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    compile 'com.oushangfeng:PinnedSectionItemDecoration:1.2.4'
+
+
+    //圆形控件
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    //沉浸式
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
 }

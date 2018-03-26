@@ -3,8 +3,8 @@ package com.fragmentapp.helper;
 import android.os.Bundle;
 import android.util.SparseArray;
 
-import com.fragmentapp.home.fragment.HomeFragment;
 import com.fragmentapp.base.LazyFragment;
+import com.fragmentapp.home.fragment.HomeFragment;
 
 import java.lang.ref.SoftReference;
 

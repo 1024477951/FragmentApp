@@ -1,14 +1,12 @@
-package com.fragmentapp.home.presenter;
+package com.fragmentapp.def.home.presenter;
 
 import com.fragmentapp.base.BasePresenter;
-import com.fragmentapp.home.bean.ArticleDataBean;
-import com.fragmentapp.home.imple.IArticleModel;
-import com.fragmentapp.home.imple.IArticleView;
-import com.fragmentapp.home.model.ArticleModel;
+import com.fragmentapp.def.home.bean.ArticleDataBean;
+import com.fragmentapp.def.home.imple.IArticleModel;
+import com.fragmentapp.def.home.imple.IArticleView;
+import com.fragmentapp.def.home.model.ArticleModel;
 import com.fragmentapp.http.BaseObserver;
 import com.fragmentapp.http.BaseResponses;
-
-import io.reactivex.Observable;
 
 /**
  * Created by liuzhen on 2017/12/20.

@@ -1,113 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.fragmentapp.view.remove.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/d30.0"
-    android:background="@drawable/shape_ffffff_bottom" >
+    app:bga_sil_bottomMode="pullOut"
+    app:bga_sil_springDistance="@dimen/d0.0"
+    app:bga_sil_swipeDirection="left"
+    android:id="@+id/item_layout">
 
     <LinearLayout
-        android:id="@+id/root"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/d228.0">
+
+        <TextView
+            android:id="@+id/item_contact_top"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/d250.0"
+            android:maxWidth="@dimen/d270.0"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:background="@color/color_BCBCBC"
+            android:textColor="@color/white"
+            android:text="置顶"
+            android:textSize="@dimen/d46.0" />
+
+        <TextView
+            android:id="@+id/item_contact_delete"
+            android:layout_width="@dimen/d250.0"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="删除"
+            android:background="@color/color_ff4036"
+            android:textColor="@color/white"
+            android:textSize="@dimen/d46.0" />
+    </LinearLayout>
+
+    <RelativeLayout android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="@dimen/d42.0">
+        android:padding="@dimen/d40.0">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="基于装逼系统app方向探索"
-            android:textColor="@color/color_111111"
-            android:textSize="@dimen/d49.0" />
-
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d35.0"
-            android:maxLines="3"
-            android:text="明确分析目的通过分析竞品的发展方向，为内部系统 app和PC客户端提供战略发展，分析思路企业办公应 用明确分析目的。通过分析竞品的发展方向，为内..."
-            android:textColor="@color/color_444444"
-            android:textSize="@dimen/d43.0" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="@dimen/d150.0"
+            android:layout_height="@dimen/d150.0"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="@color/color_ffffff"
+            app:civ_border_width="@dimen/d1.0" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d35.0"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/d15.0"
+            android:layout_toRightOf="@+id/profile_image"
+            android:orientation="vertical"
             android:weightSum="2">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/doc_icon_time" />
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d15.0"
-                    android:maxLines="1"
-                    android:text="7天前"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/d49.0" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@mipmap/doc_icon_read" />
-
-                <TextView
-                    android:id="@+id/tv_read"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d15.0"
-                    android:text="59"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/d49.0" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d0.0"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <ImageView
+                <TextView android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/doc_icon_web" />
+                    android:text="昵称"
+                    android:textColor="@color/color_111111"
+                    android:textSize="@dimen/d46.0" />
 
-                <TextView
-                    android:id="@+id/tv_home"
+                <TextView android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d15.0"
-                    android:maxLines="1"
-                    android:text="装逼网"
+                    android:layout_gravity="center_vertical|right"
+                    android:text="时间"
+                    android:textColor="@color/color_bbbbbb"
+                    android:textSize="@dimen/d36.0" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d0.0"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView android:id="@+id/tv_content"
+                    android:layout_width="@dimen/d0.0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="我是一段消息我是一段消息我是一我是一段消息我是一"
                     android:textColor="@color/color_999999"
-                    android:textSize="@dimen/d49.0" />
+                    android:textSize="@dimen/d40.0" />
+
+                <TextView
+                    android:id="@+id/tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/d90.0"
+                    android:background="@drawable/shape_ff4038_30"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxWidth="@dimen/d90.0"
+                    android:minHeight="@dimen/d58.0"
+                    android:minWidth="@dimen/d58.0"
+                    android:paddingLeft="@dimen/d15.0"
+                    android:paddingRight="@dimen/d15.0"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/d34.0" />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+</com.fragmentapp.view.remove.SwipeItemLayout>

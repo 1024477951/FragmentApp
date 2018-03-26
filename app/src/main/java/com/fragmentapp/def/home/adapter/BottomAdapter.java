@@ -1,10 +1,10 @@
-package com.fragmentapp.home.adapter;
+package com.fragmentapp.def.home.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.fragmentapp.home.fragment.HomeFragment;
+import com.fragmentapp.def.home.fragment.DefFragment;
 
 /**
  * Created by liuzhen on 2017/11/8.
@@ -20,7 +20,7 @@ public class BottomAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new HomeFragment();
+        return new DefFragment();
     }
 
     @Override

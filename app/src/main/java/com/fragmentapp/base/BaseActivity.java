@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.fragmentapp.R;
 import com.fragmentapp.helper.AppManager;
 import com.fragmentapp.helper.EmptyLayout;
+import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.ButterKnife;
 
@@ -23,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void init();
 
     protected Context context;
+    private ImmersionBar mImmersionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +35,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         context = this;
         ButterKnife.bind(this);
         emptyLayout = new EmptyLayout(this);
+        mImmersionBar = ImmersionBar.with(this)
+                .fitsSystemWindows(true)
+                .statusBarColor(R.color.color_3399ff);
+        mImmersionBar.init();
         init();
     }
 
@@ -41,6 +48,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         AppManager.getAppManager().finishActivity(this);
         emptyLayout.clear();
         emptyLayout = null;
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();
     }
 
     protected <T> T cover(Object t){

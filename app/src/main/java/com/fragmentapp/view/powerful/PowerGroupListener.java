@@ -1,4 +1,4 @@
-package com.fragmentapp.view.sticky;
+package com.fragmentapp.view.powerful;
 
 import android.view.View;
 
@@ -10,4 +10,6 @@ public interface PowerGroupListener {
     String getGroupName(int position);
 
     View getGroupView(int position);
+
+    int getHeadViewHeight();
 }

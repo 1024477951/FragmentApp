@@ -1,21 +1,18 @@
-package com.fragmentapp.home;
+package com.fragmentapp.def.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
+import com.fragmentapp.def.home.adapter.MainAdapter;
 import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.helper.FragmentHelper;
-import com.fragmentapp.home.adapter.MainAdapter;
 
 import butterknife.BindView;
 
@@ -133,10 +130,4 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        menus.clear();
-        menus = null;
-    }
 }

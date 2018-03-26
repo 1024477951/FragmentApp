@@ -5,14 +5,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" >
 
-    <include layout="@layout/toolbar" />
+    <TextView android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_search"
+        android:padding="@dimen/d22.0"
+        android:text="搜索"
+        android:background="@drawable/shape_ffffff_30"
+        android:drawablePadding="@dimen/d15.0"
+        android:textColor="#000000"
+        android:layout_gravity="center"
+        android:textSize="@dimen/sp_17"
+        android:visibility="gone"/>
 
-    <include layout="@layout/item_head_search" />
-
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.fragmentapp.view.refresh.RefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/d5.0"
+        app:_height="@dimen/d140.0"
         android:id="@+id/refreshLayout" >
 
         <android.support.v7.widget.RecyclerView
@@ -20,7 +30,6 @@
             android:divider="@color/color_e1e1e1"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.fragmentapp.view.refresh.RefreshLayout>
 
 </LinearLayout>
