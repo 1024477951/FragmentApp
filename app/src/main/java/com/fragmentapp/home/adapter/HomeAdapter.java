@@ -81,9 +81,7 @@ public class HomeAdapter extends ArrayRecyclerAdapter<ChatBean, HomeAdapter.View
         holder.del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (topPosition == -1) {
-                    holder.item_layout.closeWithAnim();
-                }
+                holder.item_layout.closeWithAnim();
             }
         });
         holder.top.setOnClickListener(new View.OnClickListener() {
