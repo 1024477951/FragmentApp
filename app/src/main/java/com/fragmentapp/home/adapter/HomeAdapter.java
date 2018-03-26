@@ -2,13 +2,13 @@ package com.fragmentapp.home.adapter;
 
 import android.view.View;
 import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.fragmentapp.R;
-import com.fragmentapp.base.ArrayRecyclerAdapter;
 import com.fragmentapp.home.bean.ChatBean;
 import com.fragmentapp.view.remove.SwipeItemLayout;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by liuzhen on 2017/11/20.
  */
 
-public class HomeAdapter extends ArrayRecyclerAdapter<ChatBean, HomeAdapter.ViewHolder> {
+public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHolder> {
 
     private int topPosition = -1;
 
@@ -109,6 +109,7 @@ public class HomeAdapter extends ArrayRecyclerAdapter<ChatBean, HomeAdapter.View
 
     public List<ChatBean> sortList(List<ChatBean> list){
         Collections.sort(list);
+        setNewData(list);
         return list;
     }
 

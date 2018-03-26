@@ -83,7 +83,6 @@ public class HomeFragment extends LazyFragment implements IHomeView {
             }
             lastPage = page;
             adapter.sortList(list);
-            adapter.addAll(list);
         }
 
     }
