@@ -68,20 +68,16 @@ public class AlertFragment extends BaseDialogFragment {
         });
     }
 
-//    @OnClick({R.id.zxing,R.id.root,R.id.group})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.zxing:
-//
-//                break;
-//            case R.id.group:
-//
-//                break;
-//            case R.id.root:
-//                break;
-//                default:
-//                    break;
-//        }
-//        dismiss();
-//    }
+    @OnClick({R.id.zxing,R.id.group})
+    public void click(View view) {
+        switch (view.getId()) {
+            case R.id.zxing:
+
+                break;
+            case R.id.group:
+
+                break;
+        }
+        dismiss();
+    }
 }

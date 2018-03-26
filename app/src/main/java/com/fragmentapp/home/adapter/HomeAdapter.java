@@ -63,8 +63,8 @@ public class HomeAdapter extends ArrayRecyclerAdapter<ChatBean, HomeAdapter.View
             public void onSwipeItemLayoutClosed(SwipeItemLayout swipeItemLayout) {
                 if (topPosition >= 0) {
                     if (bean.getTop() == 0){
-                        setTop(position,1);
                         bean.setTime(System.currentTimeMillis());
+                        setTop(position,1);
                     }else{
                         setTop(position,0);
                     }
