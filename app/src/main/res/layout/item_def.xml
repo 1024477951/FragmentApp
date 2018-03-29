@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/d30.0"
-    android:background="@drawable/shape_ffffff_bottom" >
+    android:background="@drawable/shape_radius_ffffff_bottom" >
 
     <LinearLayout
         android:id="@+id/root"

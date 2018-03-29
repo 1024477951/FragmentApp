@@ -1,6 +1,7 @@
 package com.fragmentapp.home.bean;
 
 import android.support.annotation.NonNull;
+
 import java.util.Calendar;
 
 /**
@@ -9,6 +10,12 @@ import java.util.Calendar;
 
 public class ChatBean implements Comparable<ChatBean> {
 
+    public static final int Group = 1;
+    public static final int Single = 2;
+    public static final int Meet = 3;
+    public static final int Leaves = 4;
+    public static final int File = 5;
+
     private int id;
 
     private int top;
@@ -16,7 +23,11 @@ public class ChatBean implements Comparable<ChatBean> {
     /**
      * 置顶时间
      **/
-    public long time;
+    private long time;
+
+    private String tag;
+
+    private int type;
 
     public int getTop() {
         return top;
@@ -42,9 +53,25 @@ public class ChatBean implements Comparable<ChatBean> {
         this.id = id;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     /**
      * 根据时间对比
-     * */
+     */
     public int compareToTime(long lhs, long rhs) {
         Calendar cLhs = Calendar.getInstance();
         Calendar cRhs = Calendar.getInstance();
@@ -61,8 +88,10 @@ public class ChatBean implements Comparable<ChatBean> {
         /** 判断是否置顶 */
         int result = 0 - (top - chatBean.getTop());
         if (result == 0) {
-            /** 按时间排序 */
-            result = 0 - compareToTime(time, chatBean.getTime());
+            if (result == 0) {
+                /** 按时间排序 */
+                result = 0 - compareToTime(time, chatBean.getTime());
+            }
         }
         return result;
     }

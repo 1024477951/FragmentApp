@@ -51,7 +51,8 @@ public abstract class LazyFragment extends BaseFragment {
     public ImageView img_menu_icon;
     //-------toolbar-------
 
-    protected boolean isLoad = false;//是否加载完
+    private boolean isLoad = false;//是否加载完
+    private boolean isLazyLoad = true;
 
     protected EmptyLayout emptyLayout;
 //    protected Loadding loadding;
@@ -82,7 +83,7 @@ public abstract class LazyFragment extends BaseFragment {
     }
     /**可见时调用*/
     protected void onVisible(){
-        if(!isPrepared || !isVisible || isLoad || !isLazyLoad()) {
+        if(isPrepared == false || isVisible == false || isLoad || isLazyLoad() == false) {
             return;
         }
         emptyLayout = new EmptyLayout(getActivity());//初始化空页面布局
@@ -104,7 +105,11 @@ public abstract class LazyFragment extends BaseFragment {
      * 是否懒加载
      */
     protected boolean isLazyLoad() {
-        return true;
+        return isLazyLoad;
+    }
+
+    protected void setLazyLoad(boolean b){
+        isLazyLoad = b;
     }
 
     protected void showDialog(){

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/aurora_msgitem_send_style">
+
+    <cn.jiguang.imui.view.RoundTextView
+        android:id="@+id/aurora_tv_msgitem_date"
+        style="@style/aurora_msgitem_date_style" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <cn.jiguang.imui.view.RoundImageView
+            android:id="@+id/aurora_iv_msgitem_avatar"
+            android:contentDescription="@string/aurora_avatar_desc"
+            style="@style/aurora_msgitem_sender_avatar_style" />
+
+        <TextView
+            android:id="@+id/aurora_tv_msgitem_sender_display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="safds"
+            android:textAlignment="textEnd"
+            style="@style/aurora_msgitem_sender_display_name_style"
+            android:layout_toLeftOf="@+id/aurora_iv_msgitem_avatar"
+            android:layout_toStartOf="@+id/aurora_iv_msgitem_avatar"/>
+
+        <FrameLayout
+            android:id="@+id/aurora_fl_msgitem_video_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/aurora_tv_msgitem_sender_display_name"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/aurora_iv_msgitem_avatar"
+            android:layout_toStartOf="@+id/aurora_iv_msgitem_avatar"
+            android:background="@drawable/aurora_bg_video">
+
+            <cn.jiguang.imui.view.RoundImageView
+                android:id="@+id/aurora_iv_msgitem_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:videoMessageRadius="8dp" />
+
+            <ImageView
+                android:id="@+id/aurora_iv_msgitem_play"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/aurora_videomessage_play" />
+
+            <TextView
+                android:id="@+id/aurora_tv_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/aurora_video_message_duration_text_color"
+                android:textSize="@dimen/aurora_size_video_message_duration_text"
+                tools:text="00:02" />
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/aurora_ib_msgitem_resend"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/aurora_fl_msgitem_video_container"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/aurora_send_msg_error"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/aurora_pb_msgitem_sending"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:layout_toLeftOf="@id/aurora_fl_msgitem_video_container"
+            android:layout_alignTop="@+id/aurora_fl_msgitem_video_container"
+            android:layout_alignBottom="@+id/aurora_fl_msgitem_video_container"
+            android:visibility="visible"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

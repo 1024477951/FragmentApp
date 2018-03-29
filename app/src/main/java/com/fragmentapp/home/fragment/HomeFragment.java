@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
+import com.fragmentapp.chat.MessageListActivity;
 import com.fragmentapp.home.adapter.HomeAdapter;
 import com.fragmentapp.home.bean.ChatBean;
 import com.fragmentapp.home.imple.IHomeView;
 import com.fragmentapp.home.presenter.HomePresenter;
 import com.oushangfeng.pinnedsectionitemdecoration.PinnedHeaderItemDecoration;
 
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,6 +62,7 @@ public class HomeFragment extends LazyFragment implements IHomeView {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+//                MessageListActivity.start(getContext());
                 adapter.click(i);
             }
         });

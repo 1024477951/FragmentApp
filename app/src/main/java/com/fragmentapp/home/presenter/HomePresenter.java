@@ -27,9 +27,19 @@ public class HomePresenter extends BasePresenter {
         List<ChatBean> list = new ArrayList<>();
         for (int i = 0;i<20;i++){
             ChatBean bean = new ChatBean();
-            bean.setTop(i==5 ? 1 : 0);
+            bean.setTop(0);
             bean.setId(i);
-            bean.setTime(System.currentTimeMillis());
+            bean.setTime(System.currentTimeMillis()-i);
+            if (i == 1)
+                bean.setType(ChatBean.Group);
+            else if (i == 2)
+                bean.setType(ChatBean.File);
+            else if (i == 3)
+                bean.setType(ChatBean.Meet);
+            else if (i == 4)
+                bean.setType(ChatBean.Leaves);
+            else
+                bean.setType(ChatBean.Single);
             list.add(bean);
         }
         view.success(list);

@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">App</string>
+    <string name="input_hint">Send message</string>
+    <string name="message_click_hint">Message click event</string>
+    <string name="message_long_click_hint">Message long press event</string>
+    <string name="avatar_click_hint">Avatar click event</string>
+
+    <!-- Request permission start -->
+    <string name="rationale_record_voice">This app needs access microphone to record voice.</string>
+    <string name="rationale_photo">This app needs access photos.</string>
+    <string name="rationale_camera">This app needs access camera.</string>
+    <!-- Request permission end -->
+
+    <string-array name="messages_array">
+        <item>How are you</item>
+        <item>Fine. And you?</item>
+        <item>Me, too. Is there any news today?</item>
+        <item>Yep! I got a news here: boom! Tomorrow is the end of The Walking Dead!</item>
+        <item>Are you kidding me?</item>
+        <item>Absolutely not!</item>
+        <item>Jesus, that\'s crazy</item>
+        <item>I thought no one would gonna to make it</item>
+        <item>That\'s cruel, I don\'t like it, maybe there is a favourable turn</item>
+        <item>Hope so</item>
+    </string-array>
+
+    <string-array name="conversation">
+        <item>test</item>
+        <item>History message 1</item>
+        <item>History message 2</item>
+        <item>History message 3</item>
+        <item>History message 4</item>
+        <item>History message 5</item>
+        <item>History message 6</item>
+        <item>History message 7</item>
+        <item>History message 8</item>
+        <item>History message 9</item>
+        <item>History message 10</item>
+    </string-array>
 </resources>

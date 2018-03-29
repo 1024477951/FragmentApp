@@ -1,6 +1,6 @@
 package com.fragmentapp.http;
 
-import com.fragmentapp.def.home.bean.ArticleDataBean;
+import com.fragmentapp.home.bean.ArticleDataBean;
 import com.fragmentapp.login.bean.LoginDataBean;
 
 import java.util.Map;

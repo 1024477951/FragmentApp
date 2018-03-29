@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- chat input start -->
+    <dimen name="aurora_elevation_send_btn">8dp</dimen>
+    <dimen name="aurora_size_send_btn_default">24dp</dimen>
+    <dimen name="aurora_radius_btn_default">8dp</dimen>
+
+    <dimen name="aurora_margin_input_left">20dp</dimen>
+    <dimen name="aurora_margin_input_right">20dp</dimen>
+
+    <dimen name="aurora_textsize_input">17sp</dimen>
+
+    <dimen name="aurora_padding_input_left">5dp</dimen>
+    <dimen name="aurora_padding_input_right">5dp</dimen>
+    <dimen name="aurora_padding_input_top">0dp</dimen>
+    <dimen name="aurora_padding_input_bottom">0dp</dimen>
+
+    <dimen name="aurora_textsize_chronometer">20sp</dimen>
+    <dimen name="aurora_size_record_button">70dp</dimen>
+    <dimen name="aurora_size_album_button">60dp</dimen>
+
+    <dimen name="aurora_horizontalspit_view_height">0.6dp</dimen>
+    <dimen name="item_emoticon_size_default">32dp</dimen>
+    <dimen name="bar_tool_btn_width">56dp</dimen>
+    <dimen name="bar_height">32dp</dimen>
+    <dimen name="indicator_margin">10dp</dimen>
+    <dimen name="verticalspit_view_width">0.6dp</dimen>
+    <!-- chat input end -->
+
+</resources>

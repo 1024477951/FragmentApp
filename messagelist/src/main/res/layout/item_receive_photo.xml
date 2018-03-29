@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              style="@style/aurora_msgitem_receive_style">
+
+    <cn.jiguang.imui.view.RoundTextView
+        android:id="@+id/aurora_tv_msgitem_date"
+        style="@style/aurora_msgitem_date_style"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <cn.jiguang.imui.view.RoundImageView
+            android:id="@+id/aurora_iv_msgitem_avatar"
+            android:contentDescription="@string/aurora_avatar_desc"
+            style="@style/aurora_msgitem_receiver_avatar_style"/>
+
+        <TextView
+            android:id="@+id/aurora_tv_msgitem_receiver_display_name"
+            style="@style/aurora_msgitem_receiver_display_name_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/aurora_iv_msgitem_avatar"
+            />
+
+        <cn.jiguang.imui.view.ShapeImageView
+            android:id="@+id/aurora_iv_msgitem_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="200dp"
+            android:maxWidth="200dp"
+            android:layout_below="@id/aurora_tv_msgitem_receiver_display_name"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/aurora_iv_msgitem_avatar"
+            android:src="@drawable/aurora_picture_not_found"
+            app:photoMessageRadius="8dp"
+            />
+
+        <ImageButton
+            android:id="@+id/aurora_ib_msgitem_resend"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/aurora_iv_msgitem_photo"
+            android:scaleType="fitCenter"
+            android:background="@drawable/aurora_send_msg_error"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>

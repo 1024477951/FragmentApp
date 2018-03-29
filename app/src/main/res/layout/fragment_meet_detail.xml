@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="18dp">
+
+        <LinearLayout android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_meet_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="新兵训练营第十期新兵训练营第十期新兵训练营第十期"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/d46.0" />
+
+            <TextView android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_radius_ffa126_6"
+                android:layout_gravity="center_vertical|top"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/d10.0"
+                android:layout_marginRight="@dimen/d20.0"
+
+                android:paddingTop="@dimen/d6.0"
+                android:paddingBottom="@dimen/d6.0"
+                android:paddingLeft="@dimen/d10.0"
+                android:paddingRight="@dimen/d10.0"
+                android:textSize="@dimen/d28.0"
+                android:textColor="@color/color_FFA126"
+                android:text="未签到"/>
+        </LinearLayout>
+
+        <View android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_fafafa"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:layout_marginTop="10dp"
+            android:text="陈杰"
+            android:textColor="@color/color_3399ff"
+            android:textSize="@dimen/d40.0" />
+
+        <TextView android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_name"
+            android:layout_marginLeft="@dimen/d15.0"
+            android:layout_marginTop="@dimen/d15.0"
+            android:layout_toRightOf="@+id/tv_name"
+            android:text="发起于 11月24日"
+            android:textColor="@color/color_a6a6a6"
+            android:textSize="@dimen/d40.0" />
+
+        <TextView
+            android:id="@+id/tv_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:text="时间："
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/d46.0" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_time_title"
+            android:layout_marginLeft="@dimen/d15.0"
+            android:layout_marginTop="@dimen/d15.0"
+            android:layout_toRightOf="@+id/tv_time_title"
+            android:text="11月24号 11:00 - 11:00"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/d46.0" />
+
+        <TextView android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/d10.0"
+            android:layout_alignBottom="@+id/tv_time_title"
+            android:layout_toRightOf="@+id/tv_time"
+            android:text="(尚未开始)"
+            android:paddingTop="@dimen/d10.0"
+            android:paddingBottom="@dimen/d10.0"
+            android:paddingLeft="@dimen/d10.0"
+            android:paddingRight="@dimen/d10.0"
+            android:textColor="#ffb833"
+            android:textSize="@dimen/d34.0" />
+
+        <TextView
+            android:id="@+id/tv_location_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time_title"
+            android:layout_marginTop="@dimen/d15.0"
+            android:text="地点："
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/d46.0" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_location_title"
+            android:layout_marginLeft="@dimen/d15.0"
+            android:layout_marginTop="@dimen/d15.0"
+            android:layout_toRightOf="@+id/tv_location_title"
+            android:text="301会议室"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/d46.0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_location_title"
+            android:layout_marginTop="@dimen/d15.0"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="说明："
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/d46.0" />
+
+            <TextView
+                android:id="@+id/tv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d15.0"
+               android:text="1111111111111111111111111111111111111111111111111111111111111111111111"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/d46.0" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

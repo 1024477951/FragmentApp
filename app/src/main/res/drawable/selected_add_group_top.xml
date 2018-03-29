@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true" android:drawable="@drawable/shape_eeeeee_18_top"/>
-    <item android:state_focused="true" android:drawable="@drawable/shape_eeeeee_18_top"/>
-    <item android:drawable="@drawable/shape_ffffff_18_top"/>
+    <item android:state_pressed="true" android:drawable="@drawable/shape_radius_eeeeee_18_top"/>
+    <item android:state_focused="true" android:drawable="@drawable/shape_radius_eeeeee_18_top"/>
+    <item android:drawable="@drawable/shape_radius_ffffff_18_top"/>
 
 </selector>

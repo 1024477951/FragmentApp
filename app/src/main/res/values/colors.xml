@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="google_red">#FFC93437</color>
+    <color name="google_blue">#FF375BF1</color>
+    <color name="google_yellow">#FFF7D23E</color>
+    <color name="google_green">#FF34A350</color>
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
@@ -39,4 +44,5 @@
     <color name="color_338eff">#338EFF</color>
     <color name="color_BCBCBC">#BCBCBC</color>
     <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_FFA126">#FFA126</color>
 </resources>

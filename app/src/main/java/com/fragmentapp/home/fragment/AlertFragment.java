@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
+import com.fragmentapp.home.FragmentFactory;
 
 import butterknife.OnClick;
 
@@ -72,7 +73,7 @@ public class AlertFragment extends BaseDialogFragment {
     public void click(View view) {
         switch (view.getId()) {
             case R.id.zxing:
-
+                FragmentFactory.newInstance(getContext(),FragmentFactory.Zxing);
                 break;
             case R.id.group:
 

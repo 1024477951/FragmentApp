@@ -1,16 +1,20 @@
 package com.fragmentapp.home.adapter;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.fragmentapp.R;
+import com.fragmentapp.helper.GlideApp;
 import com.fragmentapp.home.bean.ChatBean;
 import com.fragmentapp.view.remove.SwipeItemLayout;
 
 import java.util.Collections;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by liuzhen on 2017/11/20.
@@ -36,7 +40,17 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
         holder.tv_title.setText("00"+bean.getId()+"号");
         holder.tv_content.setText("大家好，我是00"+bean.getId()+"号,我的top是"+bean.getTop());
         holder.tv_time.setText(bean.getTime()+"");
-        //        GlideApp.with(AndroidApplication.getInstance().getApplicationContext())
+        if (bean.getTag() == null || bean.getTag().isEmpty()) {
+            holder.tv_tag.setText("");
+            holder.tv_tag.setVisibility(View.INVISIBLE);
+        }
+        else {
+            holder.tv_tag.setText(bean.getTag());
+            holder.tv_tag.setVisibility(View.VISIBLE);
+        }
+        setTypeIcon(holder.profile_image,bean.getType());
+
+//                GlideApp.with(AndroidApplication.getInstance().getApplicationContext())
 //                .load(item.path)
 //                .skipMemoryCache(true)
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -63,7 +77,6 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
             public void onSwipeItemLayoutClosed(SwipeItemLayout swipeItemLayout) {
                 if (topPosition >= 0) {
                     if (bean.getTop() == 0){
-                        bean.setTime(System.currentTimeMillis());
                         setTop(position,1);
                     }else{
                         setTop(position,0);
@@ -101,6 +114,28 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    private void setTypeIcon(ImageView img,int type){
+        int resId = 0;
+        switch (type){
+            case ChatBean.Single:
+                resId = R.mipmap.icon_chat_single;
+                break;
+            case ChatBean.Group:
+                resId = R.mipmap.icon_chat_group;
+                break;
+            case ChatBean.File:
+                resId = R.mipmap.icon_chat_file;
+                break;
+            case ChatBean.Leaves:
+                resId = R.mipmap.icon_chat_leaves;
+                break;
+            case ChatBean.Meet:
+                resId = R.mipmap.icon_chat_meet;
+                break;
+        }
+        img.setImageResource(resId);
+    }
+
     public void click(int position){
         mData.get(position).setTime(System.currentTimeMillis());
         Collections.sort(mData);
@@ -116,9 +151,10 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
     static class ViewHolder extends BaseViewHolder
     {
 
-        TextView tv_title,tv_content,tv_time,tv_home,tv_read,del,top;
+        TextView tv_title,tv_content,tv_time,tv_tag,del,top;
         SwipeItemLayout item_layout;
         View root;
+        CircleImageView profile_image;
 
         public ViewHolder(View view)
         {
@@ -126,8 +162,7 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
             tv_title = getView(R.id.tv_title);
             tv_content = getView(R.id.tv_content);
             tv_time = getView(R.id.tv_time);
-            tv_home = getView(R.id.tv_home);
-            tv_read = getView(R.id.tv_read);
+            tv_tag = getView(R.id.tv_tag);
 
             item_layout = getView(R.id.item_layout);
 
@@ -135,7 +170,7 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
 
             del = getView(R.id.item_contact_delete);
             top = getView(R.id.item_contact_top);
-
+            profile_image = getView(R.id.profile_image);
         }
     }
 

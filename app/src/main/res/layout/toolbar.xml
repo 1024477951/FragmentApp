@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/d150.0"
     android:background="@color/color_3399ff"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/title_container">
 
     <FrameLayout
         android:id="@+id/fl_left"

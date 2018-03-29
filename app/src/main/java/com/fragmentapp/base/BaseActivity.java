@@ -4,13 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.helper.AppManager;
 import com.fragmentapp.helper.EmptyLayout;
 import com.gyf.barlibrary.ImmersionBar;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by liuzhen on 2017/11/1.

@@ -4,6 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FragmentApp.iml" filepath="$PROJECT_DIR$/FragmentApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chatinput/chatinput.iml" filepath="$PROJECT_DIR$/chatinput/chatinput.iml" />
+      <module fileurl="file://$PROJECT_DIR$/easypermissions/easypermissions.iml" filepath="$PROJECT_DIR$/easypermissions/easypermissions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-zxing/lib-zxing.iml" filepath="$PROJECT_DIR$/lib-zxing/lib-zxing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messagelist/messagelist.iml" filepath="$PROJECT_DIR$/messagelist/messagelist.iml" />
     </modules>
   </component>
 </project>

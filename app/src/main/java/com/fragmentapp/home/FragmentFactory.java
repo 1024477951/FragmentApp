@@ -2,6 +2,7 @@ package com.fragmentapp.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.widget.FrameLayout;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.base.BaseFragment;
+import com.fragmentapp.home.fragment.MeetZxintFragment;
 
 import java.util.List;
 
@@ -25,9 +27,12 @@ public class FragmentFactory extends BaseActivity {
     @BindView(R.id.fragments)
     FrameLayout fragments;
 
-    public static final int SEARCH = 0;
+    private Bundle mBundle;
 
-    public static void start(Context context, int key) {
+    public static final int SEARCH = 0;
+    public static final int Zxing = 0;
+
+    public static void newInstance(Context context, int key) {
         Intent intent = new Intent();
         intent.setClass(context, FragmentFactory.class);
         intent.putExtra("key",key);
@@ -42,11 +47,13 @@ public class FragmentFactory extends BaseActivity {
     @Override
     public void init() {
         Intent intent = getIntent();
+        mBundle = intent.getExtras();
         if (intent != null){
             int fragmentId = intent.getIntExtra("key",-1);
             BaseFragment fragment = null;
             switch (fragmentId){
-                case SEARCH:
+                case Zxing:
+                    fragment = MeetZxintFragment.newInstance(mBundle);
                     break;
             }
             if (fragment != null)
@@ -58,41 +65,68 @@ public class FragmentFactory extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.push_left_in, R.anim.push_left_out, R.anim.push_right_in, R.anim.push_right_out);
-
+        boolean existing = false;
         List<Fragment> fragments = fragmentManager.getFragments();
-        Log.e("tag",fragment.TAG);
+        Log.e("showFragment",fragment.TAG);
 
         if (fragments != null) {
             for (Fragment FRAGMENT : fragments) {
                 BaseFragment baseFragment = (BaseFragment) FRAGMENT;
                 if (baseFragment != null) {
-                    if (null != fragmentManager.findFragmentByTag(fragment.TAG)) {
-                        if (baseFragment != null) {
+                    if (null != fragmentManager.findFragmentByTag(fragment.getTag())) {
+                        existing = true;
+                    }
 
-                            if (!baseFragment.isAdded()) {
-                                fragmentTransaction.add(LayoutId, baseFragment, baseFragment.TAG);
-                            } else {
-                                fragmentTransaction.show(baseFragment);
-                            }
-                        }
-                    } else {
-                        if (!fragment.isAdded()) {
-                            fragmentTransaction.add(LayoutId, fragment, fragment.TAG);
-                        } else {
-                            fragmentTransaction.show(fragment);
-                        }
+                    if (baseFragment.isVisible()) {
+                        fragmentTransaction.hide(baseFragment);
+                        baseFragment.setMenuVisibility(false);
+                        baseFragment.setUserVisibleHint(false);
                     }
                 } else {
-                    Log.e("fragmentManager", "null");
+
                 }
+
 
             }
         }
+        BaseFragment baseFragment = (BaseFragment) fragmentManager.findFragmentByTag(fragment.getTag());
+
+        if (existing) {
+            if (baseFragment != null) {
+                if (!baseFragment.isAdded()) {
+                    fragmentTransaction.add(LayoutId, baseFragment, baseFragment.getTag());
+
+                } else {
+                    fragmentTransaction.show(baseFragment);
+                }
+            }
+
+        } else {
+            if (!fragment.isAdded()) {
+                fragmentTransaction.add(LayoutId, fragment, fragment.getTag());
+
+
+            } else {
+                fragmentTransaction.show(fragment);
+            }
+        }
+
+        fragment.setUserVisibleHint(true);
+        fragment.setMenuVisibility(true);
 
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(fragment.getTag());
         }
         fragmentTransaction.commitAllowingStateLoss();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBundle != null) {
+            mBundle.clear();
+        }
 
     }
 
