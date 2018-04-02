@@ -11,13 +11,48 @@
         android:layout_width="@dimen/d200.0"
         android:layout_height="match_parent">
 
-        <ImageView android:id="@+id/img_left_icon"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/d43.0"
-            android:src="@mipmap/title_back"
-            android:visibility="gone"/>
+            android:layout_height="match_parent" >
+
+            <ImageView android:id="@+id/img_left_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d43.0"
+                android:src="@mipmap/title_back"
+                android:visibility="invisible"/>
+            <View android:id="@+id/circle_read"
+                android:layout_width="@dimen/d58.0"
+                android:layout_height="@dimen/d58.0"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_left_icon"
+                android:layout_marginLeft="@dimen/d10.0"
+                android:background="@drawable/shape_radius_ffffff_30"
+                android:alpha="0.3"
+                android:paddingLeft="@dimen/d15.0"
+                android:paddingRight="@dimen/d15.0"
+                android:textColor="@color/white"
+                android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/tv_read"
+                android:layout_width="@dimen/d58.0"
+                android:layout_height="@dimen/d58.0"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_left_icon"
+                android:layout_marginLeft="@dimen/d10.0"
+                android:background="@null"
+                android:gravity="center"
+                android:lines="1"
+                android:maxWidth="@dimen/d90.0"
+                android:minHeight="@dimen/d58.0"
+                android:minWidth="@dimen/d58.0"
+                android:paddingLeft="@dimen/d15.0"
+                android:paddingRight="@dimen/d15.0"
+                android:textColor="@color/color_FFFEFE"
+                android:textSize="@dimen/d36.0"
+                android:visibility="invisible"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_left_title"
@@ -39,31 +74,47 @@
         android:gravity="center"
         android:lines="1"
         android:maxWidth="@dimen/d900.0"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:textColor="@color/white"
         android:textSize="@dimen/d45.0">
 
-        <TextView
-            android:id="@+id/tv_title"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:lines="1"
-            android:maxWidth="@dimen/d600.0"
-            android:textColor="@color/white"
-            android:textSize="@dimen/d52.0" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:lines="1"
+                android:maxLength="6"
+                android:maxWidth="@dimen/d600.0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/d52.0" />
+            <ImageView
+                android:id="@+id/img_triangle"
+                android:layout_width="@dimen/d35.0"
+                android:layout_height="@dimen/d35.0"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/d10.0"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/analysis_more_normal"
+                android:visibility="gone" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_triangle"
-            android:layout_width="@dimen/d35.0"
-            android:layout_height="@dimen/d35.0"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/d10.0"
-            android:gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/analysis_more_normal"
-            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/d28.0" />
+
     </LinearLayout>
 
     <RelativeLayout

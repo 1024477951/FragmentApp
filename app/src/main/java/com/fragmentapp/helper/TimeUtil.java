@@ -59,6 +59,11 @@ public class TimeUtil {
         return China_FORMAT.format(date);
     }
 
+    public static String getLocationMonthDayHourTime() throws ParseException {
+        DateFormat China_FORMAT = new SimpleDateFormat("MM月dd日 HH:mm", Locale.getDefault());
+        return China_FORMAT.format(new Date());
+    }
+
     public static String getHourTime(String timeStamp) throws ParseException {
         long lt = new Long(timeStamp);
         Date date = new Date(lt * 1000);

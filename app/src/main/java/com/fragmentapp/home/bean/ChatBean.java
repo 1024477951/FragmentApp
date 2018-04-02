@@ -2,6 +2,8 @@ package com.fragmentapp.home.bean;
 
 import android.support.annotation.NonNull;
 
+import com.fragmentapp.chat.models.MyMessage;
+
 import java.util.Calendar;
 
 /**
@@ -28,6 +30,8 @@ public class ChatBean implements Comparable<ChatBean> {
     private String tag;
 
     private int type;
+
+    private MyMessage lastMsg;
 
     public int getTop() {
         return top;
@@ -67,6 +71,14 @@ public class ChatBean implements Comparable<ChatBean> {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public MyMessage getLastMsg() {
+        return lastMsg;
+    }
+
+    public void setLastMsg(MyMessage lastMsg) {
+        this.lastMsg = lastMsg;
     }
 
     /**

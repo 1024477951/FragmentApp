@@ -26,6 +26,7 @@ import cn.jiguang.imui.commons.models.IMessage;
 public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapter<ViewHolder>
         implements ScrollMoreListener.OnLoadMoreListener {
 
+    private final int Type_Count = 11;
     // Text message
     private final int TYPE_RECEIVE_TXT = 0;
     private final int TYPE_SEND_TXT = 1;
@@ -48,6 +49,9 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
 
     // Group change message
     private final int TYPE_EVENT = 10;
+
+    // Date change message
+    private final int TYPE_DATE = 11;
 
     // Custom message
     private final int TYPE_CUSTOM_SEND_MSG = 11;
@@ -149,6 +153,8 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
                 return getHolder(parent, mHolders.mReceiveVideoLayout, mHolders.mReceiveVideoHolder, false);
             case TYPE_EVENT:
                 return getHolder(parent, mHolders.mEventLayout, mHolders.mEventMsgHolder, true);
+            case TYPE_DATE:
+                return getHolder(parent, mHolders.mDateLayout, mHolders.mDateMsgHolder, true);
             default:
                 if (mCustomMsgList != null && mCustomMsgList.size() > 0) {
                     return getHolder(parent, mCustomMsgList.get(viewType).getResourceId(),
@@ -182,7 +188,9 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
             IMessage message = (IMessage) wrapper.item;
             if (message.getType() == IMessage.MessageType.EVENT.ordinal()) {
                 return TYPE_EVENT;
-            } else if (message.getType() == IMessage.MessageType.SEND_TEXT.ordinal()) {
+            } else if (message.getType() == IMessage.MessageType.DATE.ordinal()) {
+                return TYPE_DATE;
+            }else if (message.getType() == IMessage.MessageType.SEND_TEXT.ordinal()) {
                 return TYPE_SEND_TXT;
             } else if (message.getType() == IMessage.MessageType.RECEIVE_TEXT.ordinal()) {
                 return TYPE_RECEIVE_TXT;
@@ -688,6 +696,8 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
 
         private Class<? extends BaseMessageViewHolder<? extends IMessage>> mEventMsgHolder;
 
+        private Class<? extends BaseMessageViewHolder<? extends IMessage>> mDateMsgHolder;
+
         private int mSendTxtLayout;
         private int mReceiveTxtLayout;
 
@@ -707,6 +717,8 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
         private int mCustomReceiveMsgLayout;
 
         private int mEventLayout;
+
+        private int mDateLayout;
 
         public HoldersConfig() {
             mSendTxtHolder = DefaultTxtViewHolder.class;
@@ -735,6 +747,9 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
 
             mEventMsgHolder = DefaultEventMsgViewHolder.class;
             mEventLayout = R.layout.item_event_message;
+
+            mDateMsgHolder = DefaultDateMsgViewHolder.class;
+            mDateLayout = R.layout.item_date_message;
         }
 
         /**
@@ -971,6 +986,12 @@ public class MsgListAdapter<MESSAGE extends IMessage> extends RecyclerView.Adapt
 
     private static class DefaultEventMsgViewHolder extends EventViewHolder<IMessage> {
         public DefaultEventMsgViewHolder(View itemView, boolean isSender) {
+            super(itemView, isSender);
+        }
+    }
+
+    private static class DefaultDateMsgViewHolder extends DateViewHolder<IMessage> {
+        public DefaultDateMsgViewHolder(View itemView, boolean isSender) {
             super(itemView, isSender);
         }
     }

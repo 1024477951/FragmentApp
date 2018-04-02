@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
     <include layout="@layout/item_head_search" />
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/d5.0"
-        android:id="@+id/refreshLayout" >
+        android:layout_marginTop="@dimen/d5.0">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:divider="@color/color_e1e1e1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@color/color_e1e1e1" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

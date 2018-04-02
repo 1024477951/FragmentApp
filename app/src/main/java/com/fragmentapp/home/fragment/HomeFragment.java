@@ -1,5 +1,6 @@
 package com.fragmentapp.home.fragment;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,8 +63,10 @@ public class HomeFragment extends LazyFragment implements IHomeView {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-//                MessageListActivity.start(getContext());
-                adapter.click(i);
+                Intent intent = new Intent();
+                intent.putExtra("type",adapter.getType(i));
+                MessageListActivity.start(getContext(),intent);
+//                adapter.click(i);
             }
         });
     }

@@ -33,12 +33,18 @@ public abstract class LazyFragment extends BaseFragment {
     public View fl_left;
     @BindView(R.id.tv_left_title)
     public TextView tv_left_title;
+    @BindView(R.id.tv_read)
+    public TextView tv_read;
+    @BindView(R.id.circle_read)
+    public View circle_read;
     @BindView(R.id.img_left_icon)
     public ImageView img_left_icon;
 
     /** center */
     @BindView(R.id.tv_title)
     public TextView tv_title;
+    @BindView(R.id.tv_status)
+    public TextView tv_status;
     @BindView(R.id.img_triangle)
     public ImageView img_triangle;
 

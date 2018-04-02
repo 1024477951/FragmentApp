@@ -38,8 +38,11 @@ import com.fragmentapp.chat.models.DefaultUser;
 import com.fragmentapp.chat.models.MyMessage;
 import com.fragmentapp.chat.views.ChatView;
 import com.fragmentapp.helper.GlideApp;
+import com.fragmentapp.helper.TimeUtil;
+import com.fragmentapp.home.bean.ChatBean;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,29 +76,35 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
      * left
      */
     @BindView(R.id.fl_left)
-    public View fl_left;
+    View fl_left;
     @BindView(R.id.tv_left_title)
-    public TextView tv_left_title;
+    TextView tv_left_title;
+    @BindView(R.id.tv_read)
+    TextView tv_read;
+    @BindView(R.id.circle_read)
+    View circle_read;
     @BindView(R.id.img_left_icon)
-    public ImageView img_left_icon;
+    ImageView img_left_icon;
 
     /**
      * center
      */
     @BindView(R.id.tv_title)
-    public TextView tv_title;
+    TextView tv_title;
+    @BindView(R.id.tv_status)
+    TextView tv_status;
     @BindView(R.id.img_triangle)
-    public ImageView img_triangle;
+    ImageView img_triangle;
 
     /**
      * right
      */
     @BindView(R.id.tv_right_title)
-    public TextView tv_right_title;
+    TextView tv_right_title;
     @BindView(R.id.menu)
-    public FrameLayout menu;
+    FrameLayout menu;
     @BindView(R.id.img_menu_icon)
-    public ImageView img_menu_icon;
+    ImageView img_menu_icon;
     //-------toolbar-------
 
     public static void start(Context context) {
@@ -135,6 +144,8 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
     private ArrayList<String> mPathList = new ArrayList<>();
     private ArrayList<String> mMsgIdList = new ArrayList<>();
 
+    private int type;
+
     @Override
     public int layoutID() {
         return R.layout.activity_chat;
@@ -146,10 +157,21 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         mWindow = getWindow();
         registerProximitySensorListener();
 
+        type = getIntent().getIntExtra("type",0);
+
         mChatView.initModule();
         tv_title.setText("Deadpool");
         img_left_icon.setVisibility(View.VISIBLE);
-        img_menu_icon.setImageResource(R.mipmap.icon_chat_right_single);
+
+        if (type == ChatBean.Group)
+            img_menu_icon.setImageResource(R.mipmap.icon_chat_right_group);
+        else
+            img_menu_icon.setImageResource(R.mipmap.icon_chat_right_single);
+
+        tv_status.setText("在线");
+        tv_read.setText("2");
+        tv_read.setVisibility(View.VISIBLE);
+        circle_read.setVisibility(View.VISIBLE);
 
         mData = getMessages();
         initMsgAdapter();
@@ -469,7 +491,12 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                 message = new MyMessage(messages[i], IMessage.MessageType.SEND_TEXT.ordinal());
                 message.setUserInfo(new DefaultUser("1", "IronMan", "R.drawable.aurora_headicon_default"));
             }
-            message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+            try {
+                message.setTimeString(TimeUtil.getLocationMonthDayHourTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             list.add(message);
         }
         Collections.reverse(list);
@@ -573,6 +600,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT.ordinal());
         message.setUserInfo(new DefaultUser("0", "Deadpool", "R.drawable.aurora_headicon_default"));
         mAdapter.addToStart(message, true);
+
         MyMessage voiceMessage = new MyMessage("", IMessage.MessageType.RECEIVE_VOICE.ordinal());
         voiceMessage.setUserInfo(new DefaultUser("0", "Deadpool", "R.drawable.aurora_headicon_default"));
         voiceMessage.setMediaFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/voice/2018-02-28-105103.m4a");
@@ -584,14 +612,24 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         sendVoiceMsg.setMediaFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/voice/2018-02-28-105103.m4a");
         sendVoiceMsg.setDuration(4);
         mAdapter.addToStart(sendVoiceMsg, true);
-        MyMessage eventMsg = new MyMessage("haha", IMessage.MessageType.EVENT.ordinal());
+
+        MyMessage eventMsg = new MyMessage("你撤回了一条消息", IMessage.MessageType.EVENT.ordinal());
         mAdapter.addToStart(eventMsg, true);
+
+//        MyMessage dateMsg = new MyMessage("10月9日 16:14", IMessage.MessageType.DATE.ordinal());
+//        mAdapter.addToStart(dateMsg, true);
 
         MyMessage receiveVideo = new MyMessage("", IMessage.MessageType.RECEIVE_VIDEO.ordinal());
         receiveVideo.setMediaFilePath(Environment.getExternalStorageDirectory().getPath() + "/Pictures/Hangouts/video-20170407_135638.3gp");
         receiveVideo.setDuration(4);
         receiveVideo.setUserInfo(new DefaultUser("0", "Deadpool", "R.drawable.aurora_headicon_default"));
+        try {
+            receiveVideo.setTimeString(TimeUtil.getLocationMonthDayHourTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         mAdapter.addToStart(receiveVideo, true);
+
         mAdapter.addToEnd(mData);
         PullToRefreshLayout layout = mChatView.getPtrLayout();
         layout.setPtrHandler(new PtrHandler() {
@@ -685,11 +723,14 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         return false;
     }
 
-    @OnClick({R.id.fl_left})
+    @OnClick({R.id.fl_left,R.id.readNum})
     public void back(View view) {
         switch (view.getId()) {
             case R.id.fl_left:
                 finish();
+                break;
+            case R.id.readNum:
+                Toast.makeText(context,"readNum",Toast.LENGTH_SHORT).show();finish();
                 break;
         }
     }
@@ -699,5 +740,6 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         super.onDestroy();
         unregisterReceiver(mReceiver);
         mSensorManager.unregisterListener(this);
+        ViewHolderController.getInstance().clear();
     }
 }

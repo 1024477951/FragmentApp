@@ -44,6 +44,35 @@
 
     </cn.jiguang.imui.messages.ptr.PullToRefreshLayout>
 
+    <LinearLayout android:id="@+id/readNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/title_container"
+        android:layout_marginTop="@dimen/d80.0"
+        android:background="@drawable/shape_radius_ffffff_100"
+        android:padding="@dimen/d20.0"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_chat_right_read"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/color_338EFF"
+            android:layout_marginLeft="@dimen/d23.0"
+            android:textSize="@dimen/d34.0"
+            android:text="2条新消息"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/d28.0"
+            android:src="@mipmap/icon_chat_right_arrow"/>
+    </LinearLayout>
 
     <cn.jiguang.imui.chatinput.ChatInputView
         android:id="@+id/chat_input"

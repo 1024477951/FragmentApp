@@ -14,6 +14,7 @@ import com.fragmentapp.view.remove.SwipeItemLayout;
 import java.util.Collections;
 import java.util.List;
 
+import cn.jiguang.imui.commons.models.IMessage;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -40,13 +41,14 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
         holder.tv_title.setText("00"+bean.getId()+"号");
         holder.tv_content.setText("大家好，我是00"+bean.getId()+"号,我的top是"+bean.getTop());
         holder.tv_time.setText(bean.getTime()+"");
+
         if (bean.getTag() == null || bean.getTag().isEmpty()) {
-            holder.tv_tag.setText("");
-            holder.tv_tag.setVisibility(View.INVISIBLE);
+            holder.tv_read.setText("");
+            holder.tv_read.setVisibility(View.INVISIBLE);
         }
         else {
-            holder.tv_tag.setText(bean.getTag());
-            holder.tv_tag.setVisibility(View.VISIBLE);
+            holder.tv_read.setText(bean.getTag());
+            holder.tv_read.setVisibility(View.VISIBLE);
         }
         setTypeIcon(holder.profile_image,bean.getType());
 
@@ -65,6 +67,11 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
 
         final ChatBean bean = getItem(position);
 
+        IMessage message = bean.getLastMsg();
+        if (message != null && message.getType() == IMessage.MessageType.EVENT.ordinal()){
+            if (message.getText() != null)
+                holder.tv_tag.setText("["+message.getText().toString()+"]");
+        }
         holder.item_layout.setSwipeAble(true);
         holder.item_layout.setDelegate(new SwipeItemLayout.SwipeItemLayoutDelegate() {
             @Override
@@ -90,6 +97,7 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
 
             }
         });
+
 
         holder.del.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +150,10 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public int getType(int position){
+        return getItem(position).getType();
+    }
+
     public List<ChatBean> sortList(List<ChatBean> list){
         Collections.sort(list);
         setNewData(list);
@@ -151,7 +163,7 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
     static class ViewHolder extends BaseViewHolder
     {
 
-        TextView tv_title,tv_content,tv_time,tv_tag,del,top;
+        TextView tv_title,tv_content,tv_time,tv_tag,tv_read,del,top;
         SwipeItemLayout item_layout;
         View root;
         CircleImageView profile_image;
@@ -163,6 +175,7 @@ public class HomeAdapter extends BaseQuickAdapter<ChatBean, HomeAdapter.ViewHold
             tv_content = getView(R.id.tv_content);
             tv_time = getView(R.id.tv_time);
             tv_tag = getView(R.id.tv_tag);
+            tv_read = getView(R.id.tv_read);
 
             item_layout = getView(R.id.item_layout);
 
