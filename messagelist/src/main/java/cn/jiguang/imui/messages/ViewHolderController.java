@@ -93,6 +93,14 @@ public class ViewHolderController {
         mReceiveDrawable = receiveDrawable;
     }
 
+    public void clear(){
+        if (mData != null)
+            mData.clear();
+        mData = null;
+        mListener = null;
+        mMsg = null;
+    }
+
     interface ReplayVoiceListener{
         public void replayVoice();
     }
