@@ -87,15 +87,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
 
+            <!--此处滑动取消录音和滑动试听录音-->
             <cn.jiguang.imui.chatinput.record.RecordControllerView
                 android:id="@+id/aurora_rcv_recordvoice_controller"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <cn.jiguang.imui.chatinput.record.RecordVoiceButton
                 android:id="@+id/aurora_rvb_recordvoice_record"
-                android:layout_width="@dimen/aurora_size_record_button"
-                android:layout_height="@dimen/aurora_size_record_button"
+                android:layout_width="@dimen/d310.0"
+                android:layout_height="@dimen/d310.0"
                 android:layout_gravity="center"
                 android:background="@drawable/aurora_recordvoice_record_mic_pres" />
         </FrameLayout>

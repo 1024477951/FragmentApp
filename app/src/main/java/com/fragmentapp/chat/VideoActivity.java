@@ -23,7 +23,7 @@ public class VideoActivity extends Activity {
 
         String videoPath = getIntent().getStringExtra(VIDEO_PATH);
 
-        mVideoView = findViewById(R.id.videoview_video);
+        mVideoView = (VideoView) findViewById(R.id.videoview_video);
 
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(mVideoView);

@@ -726,6 +726,7 @@ public class ChatInputView extends LinearLayout
                     mp.stop();
                     mSetData = false;
                     mChronometer.stop();
+                    mChronometer.setText("00:00");
                     mPlaying = false;
                     mPreviewPlayBtn.finishPlay();
                 }
@@ -1021,11 +1022,10 @@ public class ChatInputView extends LinearLayout
     }
 
     /**
-     * Set menu container's height, invoke this method once the menu was initialized.
-     *
-     * @param height Height of menu, set same height as soft keyboard so that display to perfection.
+     * 设置菜单容器的高度，初始化菜单后调用此方法。**@Param高度菜单高度，设置与软键盘相同的高度，以使显示达到完美。
      */
     public void setMenuContainerHeight(int height) {
+        height = getDistanceFromInputToBottom();
         if (height > 0) {
             sMenuHeight = height;
             ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);

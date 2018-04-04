@@ -120,7 +120,6 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         context.startActivity(intent);
     }
 
-    private final static String TAG = "MessageListActivity";
     private final int RC_RECORD_VOICE = 0x0001;
     private final int RC_CAMERA = 0x0002;
     private final int RC_PHOTO = 0x0003;
@@ -692,6 +691,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 ChatInputView chatInputView = mChatView.getChatInputView();
+
 //                if (view.getId() == chatInputView.getInputView().getId()) {
 //                    scrollToBottom();
 //                    if (chatInputView.getMenuState() == View.VISIBLE
@@ -702,6 +702,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 //                        return false;
 //                    }
 //                }
+
                 if (chatInputView.getMenuState() == View.VISIBLE) {
                     chatInputView.dismissMenuLayout();
                 }
