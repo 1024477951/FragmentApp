@@ -35,6 +35,8 @@ public class RecordControllerView extends View {
     private final static int MOVE_ON_LEFT = 2;
     private final static int MOVING_RIGHT = 3;
     private final static int MOVE_ON_RIGHT = 4;
+    private final static int MOVING_TOP = 5;
+    private final static int MOVE_ON_TOP = 6;
 
     private Bitmap mCancelBmp;
     private Bitmap mPreviewBmp;
@@ -140,13 +142,25 @@ public class RecordControllerView extends View {
     }
 
     public void onActionMove(float x, float y) {
+//        Log.e("tag","x "+(int)x+" y "+(int)y +" mRecordBtnBottom "+mRecordBtnBottom +" mRecordBtnTop "+-mRecordBtnTop);
         mNowX = x;
-        if (x <= 150 + MAX_RADIUS && y >= 200 - mRecordBtnTop - MAX_RADIUS
+        if (y < 0 && Math.abs(y) < mRecordBtnTop){
+            mCurrentState = MOVE_ON_TOP;
+            if (mListener != null) {
+                mListener.onMovedTop();
+            }
+        } else if (y < 0 && Math.abs(y) > mRecordBtnTop){
+            mCurrentState = MOVING_TOP;
+            if (mListener != null) {
+                mListener.onMoving();
+            }
+        }else
+            if (x <= 150 + MAX_RADIUS && y >= 200 - mRecordBtnTop - MAX_RADIUS
                 && y <= 200 + MAX_RADIUS - mRecordBtnTop) {
             mCurrentState = MOVE_ON_LEFT;
-            if (mListener != null) {
-                mListener.onMovedLeft();
-            }
+//            if (mListener != null) {
+//                mListener.onMovedLeft();
+//            }
         } else if (x > 200 + MAX_RADIUS && x < mRecordBtnLeft) {
             mCurrentState = MOVING_LEFT;
             if (mListener != null) {
@@ -165,10 +179,11 @@ public class RecordControllerView extends View {
         } else if (x >= mWidth - 150 - MAX_RADIUS && y > 200 - mRecordBtnTop - MAX_RADIUS
                 && y < 200 + MAX_RADIUS - mRecordBtnTop) {
             mCurrentState = MOVE_ON_RIGHT;
-            if (mListener != null) {
-                mListener.onMovedRight();
-            }
+//            if (mListener != null) {
+//                mListener.onMovedRight();
+//            }
         }
+
         postInvalidate();
     }
 
@@ -183,15 +198,21 @@ public class RecordControllerView extends View {
     public void onActionUp() {
         switch (mCurrentState) {
             case MOVE_ON_LEFT:
-                mRecordVoiceBtn.finishRecord(true);
-                if (mListener != null) {
-                    mListener.onLeftUpTapped();
-                }
+//                mRecordVoiceBtn.finishRecord(true);
+//                if (mListener != null) {
+//                    mListener.onLeftUpTapped();
+//                }
                 break;
             case MOVE_ON_RIGHT:
+//                mRecordVoiceBtn.cancelRecord();
+//                if (mListener != null) {
+//                    mListener.onRightUpTapped();
+//                }
+                break;
+            case MOVE_ON_TOP:
                 mRecordVoiceBtn.cancelRecord();
                 if (mListener != null) {
-                    mListener.onRightUpTapped();
+                    mListener.onTopUpTapped();
                 }
                 break;
             default:
@@ -226,5 +247,9 @@ public class RecordControllerView extends View {
         void onRightUpTapped();
 
         void onLeftUpTapped();
+
+        void onMovedTop();
+
+        void onTopUpTapped();
     }
 }

@@ -1025,7 +1025,6 @@ public class ChatInputView extends LinearLayout
      * 设置菜单容器的高度，初始化菜单后调用此方法。**@Param高度菜单高度，设置与软键盘相同的高度，以使显示达到完美。
      */
     public void setMenuContainerHeight(int height) {
-        height = getDistanceFromInputToBottom();
         if (height > 0) {
             sMenuHeight = height;
             ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
@@ -1179,10 +1178,17 @@ public class ChatInputView extends LinearLayout
     @Override
     public void onStart() {
         Log.e("ChatInputView", "starting chronometer");
-        mChronometer.setBase(SystemClock.elapsedRealtime());
-        mChronometer.start();
-        mChronometer.setVisibility(VISIBLE);
-        mRecordHintTv.setVisibility(INVISIBLE);
+        mRecordHintTv.setVisibility(VISIBLE);
+        mRecordHintTv.setText("准备中");
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+                mChronometer.start();
+                mChronometer.setVisibility(VISIBLE);
+                mRecordHintTv.setVisibility(INVISIBLE);
+            }
+        },200);
     }
 
     /**
@@ -1226,6 +1232,21 @@ public class ChatInputView extends LinearLayout
         mRecordHintTv.setVisibility(INVISIBLE);
         mPreviewPlayLl.setVisibility(VISIBLE);
         mRecordContentLl.setVisibility(GONE);
+    }
+
+    @Override
+    public void onMovedTop() {
+        mChronometer.setVisibility(INVISIBLE);
+        mRecordHintTv.setVisibility(VISIBLE);
+        mRecordHintTv.setText(getContext().getString(R.string.cancel_record_voice_hint));
+    }
+
+    @Override
+    public void onTopUpTapped() {
+        mChronometer.stop();
+        mChronometer.setVisibility(INVISIBLE);
+        mRecordHintTv.setText(getContext().getString(R.string.record_voice_hint));
+        mRecordHintTv.setVisibility(VISIBLE);
     }
 
     /**

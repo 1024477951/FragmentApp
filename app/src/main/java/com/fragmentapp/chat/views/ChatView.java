@@ -56,7 +56,6 @@ public class ChatView extends RelativeLayout {
          * 应在初始化ChatInputView之后设置菜单容器高度。
          * 为使显示器显示完美，高度应与软输入高度相等。
          */
-//        mChatInput.setMenuContainerHeight((int) getResources().getDimension(R.dimen.d660_0));
         mChatInput.setMenuContainerHeight((int) getResources().getDimension(R.dimen.d660_0));
         mRecordVoiceBtn = mChatInput.getRecordVoiceButton();
         mSelectAlbumIb = mChatInput.getSelectAlbumBtn();

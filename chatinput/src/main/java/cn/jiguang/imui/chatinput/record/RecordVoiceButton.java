@@ -178,10 +178,13 @@ public class RecordVoiceButton extends AppCompatImageButton {
                     mControllerView.onActionMove(event.getRawX(), event.getY());
                 }
                 break;
-//            case MotionEvent.ACTION_CANCEL:// 当手指移动到view外面，会cancel
-////                this.setText(mStyle.getVoiceBtnText());
-//                cancelRecord();
-//                break;
+            case MotionEvent.ACTION_CANCEL:// 当手指移动到view外面，会cancel
+//                this.setText(mStyle.getVoiceBtnText());
+                cancelRecord();
+                if (mControllerView != null) {
+                    mControllerView.onActionUp();
+                }
+                break;
         }
 
         return true;
