@@ -47,12 +47,12 @@ public class EmojiView extends AutoHeightLayout implements EmoticonsFuncView.OnE
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.layout_chatinput_emoji, this);
+        inflate(context, R.layout.layout_chatinput_emoji,this);
         mContext = context;
 
         mEmoticonsFuncView = ((EmoticonsFuncView) findViewById(R.id.view_epv));
         mEmoticonsIndicatorView = ((EmoticonsIndicatorView) findViewById(R.id.view_eiv));
-        mEmoticonsToolBarView = ((EmoticonsToolBarView) findViewById(R.id.view_etv));
+        mEmoticonsToolBarView = findViewById(R.id.view_etv);
         mEmoticonsFuncView.setOnIndicatorListener(this);
         mEmoticonsToolBarView.setOnToolBarItemClickListener(this);
     }

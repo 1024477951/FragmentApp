@@ -92,7 +92,9 @@ public class SimpleCommonUtils {
      */
     public static void addEmojiPageSetEntity(PageSetAdapter pageSetAdapter, Context context, final EmoticonClickListener emoticonClickListener) {
         ArrayList<EmojiBean> emojiArray = new ArrayList<>();
+        ArrayList<EmojiBean> bxtArray = new ArrayList<>();
         Collections.addAll(emojiArray, DefEmoticons.sEmojiArray);
+        Collections.addAll(bxtArray, DefEmoticons.sBaoXiaoTuArray);
         EmoticonPageSetEntity emojiPageSetEntity
                 = new EmoticonPageSetEntity.Builder()
                 .setLine(3)
@@ -127,7 +129,42 @@ public class SimpleCommonUtils {
                 .setShowDelBtn(EmoticonPageEntity.DelBtnStatus.LAST)
                 .setIconUri(ImageBase.Scheme.DRAWABLE.toUri("icon_emoji"))
                 .build();
+        EmoticonPageSetEntity bxtPageSetEntity
+                = new EmoticonPageSetEntity.Builder()
+                .setLine(3)
+                .setRow(7)
+                .setEmoticonList(bxtArray)
+                .setIPageViewInstantiateItem(getDefaultEmoticonPageViewInstantiateItem(new EmoticonDisplayListener<Object>() {
+                    @Override
+                    public void onBindView(int position, ViewGroup parent, EmoticonsAdapter.ViewHolder viewHolder, Object object, final boolean isDelBtn) {
+                        final EmojiBean emojiBean = (EmojiBean) object;
+                        if (emojiBean == null && !isDelBtn) {
+                            return;
+                        }
+
+                        viewHolder.ly_root.setBackgroundResource(R.drawable.bg_emoticon);
+
+                        if (isDelBtn) {
+                            viewHolder.iv_emoticon.setImageResource(R.drawable.icon_del);
+                        } else {
+                            viewHolder.iv_emoticon.setImageResource(emojiBean.icon);
+                        }
+
+                        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (emoticonClickListener != null) {
+                                    emoticonClickListener.onEmoticonClick(emojiBean, Constants.EMOTICON_CLICK_TEXT, isDelBtn);
+                                }
+                            }
+                        });
+                    }
+                }))
+                .setShowDelBtn(EmoticonPageEntity.DelBtnStatus.LAST)
+                .setIconUri(ImageBase.Scheme.DRAWABLE.toUri("icon_baoxiaotu"))
+                .build();
         pageSetAdapter.add(emojiPageSetEntity);
+        pageSetAdapter.add(bxtPageSetEntity);
     }
 
 

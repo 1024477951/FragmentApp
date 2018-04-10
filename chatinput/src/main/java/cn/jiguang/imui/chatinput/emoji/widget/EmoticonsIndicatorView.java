@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -49,7 +50,8 @@ public class EmoticonsIndicatorView extends LinearLayout {
             mDrawableSelect = getResources().getDrawable(R.drawable.indicator_point_select);
         }
 
-        mLeftLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        mLeftLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        mLeftLayoutParams.gravity = Gravity.CENTER_VERTICAL;
         mLeftLayoutParams.leftMargin = EmoticonsKeyboardUtils.dip2px(context, MARGIN_LEFT);
     }
 

@@ -20,8 +20,7 @@ import cn.jiguang.imui.chatinput.emoji.ImageLoader;
 import cn.jiguang.imui.chatinput.emoji.data.PageSetEntity;
 
 /**
- * use XhsEmotionsKeyboard(https://github.com/w446108264/XhsEmoticonsKeyboard)
- * author: sj
+ * 表情底层的toolbar
  */
 public class EmoticonsToolBarView extends RelativeLayout {
 
@@ -81,8 +80,8 @@ public class EmoticonsToolBarView extends RelativeLayout {
         if (rec > 0) {
             iv_icon.setImageResource(rec);
         }
-        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(mBtnWidth, LayoutParams.MATCH_PARENT);
-        iv_icon.setLayoutParams(imgParams);
+//        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(mBtnWidth, LayoutParams.MATCH_PARENT);
+//        iv_icon.setLayoutParams(imgParams);
         if (pageSetEntity != null) {
             iv_icon.setTag(R.id.id_tag_pageset, pageSetEntity);
             try {
@@ -135,8 +134,15 @@ public class EmoticonsToolBarView extends RelativeLayout {
     public void addToolItemView(int rec, final PageSetEntity pageSetEntity, OnClickListener onClickListener) {
         View toolBtnView = getCommonItemToolBtn();
         initItemToolBtn(toolBtnView, rec, pageSetEntity, onClickListener);
-        ly_tool.addView(toolBtnView);
+        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        ly_tool.addView(toolBtnView,imgParams);
         mToolBtnList.add(getToolBgBtn(toolBtnView));
+    }
+
+    public int  getResource(String imageName){
+        int resId = getResources().getIdentifier(imageName, "drawable", getContext().getPackageName());
+        //如果没有在"drawable"下找到imageName,将会返回0
+        return resId;
     }
 
     public void setToolBtnSelect(String uuid) {

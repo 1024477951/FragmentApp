@@ -9,8 +9,10 @@
         android:id="@+id/iv_icon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp" />
+        android:paddingLeft="@dimen/d35.0"
+        android:paddingRight="@dimen/d35.0"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/icon_emoji"/>
 
-    <include layout="@layout/view_spitview_horizontal" />
+    <!--<include layout="@layout/view_spitview_horizontal" />-->
 </LinearLayout>
