@@ -69,7 +69,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     }
 
     @Override
-    public void onBindViewHolder(final PhotoViewHolder holder, int position) {
+    public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
         if (holder.container.getHeight() != ChatInputView.sMenuHeight) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                     ChatInputView.sMenuHeight, ChatInputView.sMenuHeight);
@@ -82,12 +82,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 .into(holder.ivPhoto);
 
         if (mSelectedItems.contains(position)) {    // Current photo is selected
-            holder.ivTick.setVisibility(VISIBLE);
             holder.ivShadow.setVisibility(VISIBLE);
             addSelectedAnimation(holder.container);
 
-        } else if (holder.ivTick.getVisibility() == View.VISIBLE) { // Selected before, now have not been selected
-            holder.ivTick.setVisibility(View.GONE);
+        } else if (holder.ivShadow.getVisibility() == View.VISIBLE) { // Selected before, now have not been selected
             holder.ivShadow.setVisibility(View.GONE);
             addDeselectedAnimation(holder.container);
         }
@@ -105,18 +103,25 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             holder.tvDuration.setText(durationStr);
         }
 
+        if (item.isCheck()  == true){
+            holder.tvTick.setText(item.getIndex()+"");
+        }else{
+            holder.tvTick.setText("");
+        }
+
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int p = holder.getAdapterPosition();
 
-                if (holder.ivTick.getVisibility() == GONE && !mSelectedItems.contains(p)) {
+                if (mSelectedItems.size() >= 9)
+                    return;
+                if (!mSelectedItems.contains(p)) {
                     holder.setIsRecyclable(false);
 
                     mSelectedItems.add(p);
                     mSendFiles.add(mMedias.get(p));
 
-                    holder.ivTick.setVisibility(VISIBLE);
                     holder.ivShadow.setVisibility(VISIBLE);
 
                     addSelectedAnimation(holder.container);
@@ -124,23 +129,38 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     if (mListener != null) {
                         mListener.onFileSelected();
                     }
+                    mMedias.get(position).setCheck(true);
+                    mMedias.get(position).setIndex(mSelectedItems.size());
                 } else {
                     holder.setIsRecyclable(true);
 
                     mSelectedItems.remove(Integer.valueOf(p));
                     mSendFiles.remove(mMedias.get(p));
 
-                    holder.ivTick.setVisibility(GONE);
                     holder.ivShadow.setVisibility(GONE);
 
                     addDeselectedAnimation(holder.container);
-
                     if (mListener != null) {
                         mListener.onFileDeselected();
                     }
+                    mMedias.get(position).setCheck(false);
+                    setItemIndex();
                 }
+                notifyDataSetChanged();
             }
         });
+    }
+
+    private void setItemIndex(){
+        int index = 0;
+        for(int i = 0;i < mMedias.size();i++){
+            if (mMedias.get(i).isCheck()){
+                index++;
+                mMedias.get(i).setIndex(index);
+            }else{
+                mMedias.get(i).setIndex(0);
+            }
+        }
     }
 
     @Override
@@ -172,8 +192,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private void addSelectedAnimation(View... views) {
         List<Animator> valueAnimators = new ArrayList<>();
         for (View v : views) {
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, "scaleX", 0.90f);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, "scaleY", 0.90f);
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, "scaleX", 0.95f);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, "scaleY", 0.95f);
 
             valueAnimators.add(scaleX);
             valueAnimators.add(scaleY);
@@ -190,7 +210,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         TextView tvDuration;
         ImageView ivPhoto;
         ImageView ivShadow;
-        ImageView ivTick;
+        TextView tvTick;
 
         PhotoViewHolder(View itemView) {
             super(itemView);
@@ -198,7 +218,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             tvDuration = (TextView) itemView.findViewById(R.id.text_photoselect_duration);
             ivPhoto = (ImageView) itemView.findViewById(R.id.image_photoselect_photo);
             ivShadow = (ImageView) itemView.findViewById(R.id.image_photoselect_shadow);
-            ivTick = (ImageView) itemView.findViewById(R.id.image_photoselect_tick);
+            tvTick =  itemView.findViewById(R.id.tv_photoselect_tick);
         }
     }
 }

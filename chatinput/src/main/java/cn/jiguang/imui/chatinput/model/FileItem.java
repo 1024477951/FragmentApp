@@ -9,6 +9,8 @@ public class FileItem implements Comparable<FileItem> {
     private String mFilePath;
     private String mFileName;
     private String mSize;
+    private boolean isCheck = false;
+    private int index;
 
     /**
      * 创建时间
@@ -76,6 +78,22 @@ public class FileItem implements Comparable<FileItem> {
 
     public void setType(Type type) {
         this.mType = type;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override

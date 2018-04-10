@@ -426,7 +426,7 @@ public class ChatInputView extends LinearLayout
     private OnClickListener onMenuItemClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            setMenuContainerHeight((int) getResources().getDimension(R.dimen.d660_0));
             if (view.getId() == R.id.aurora_menuitem_ib_send) {
                 // Allow send text and photos at the same time.
                 if (onSubmit()) {

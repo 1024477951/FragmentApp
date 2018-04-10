@@ -28,7 +28,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/img_left_icon"
                 android:layout_marginLeft="@dimen/d10.0"
-                android:background="@drawable/shape_radius_ffffff_30"
+                android:background="@drawable/shape_radius_338eff_30"
                 android:alpha="0.3"
                 android:paddingLeft="@dimen/d15.0"
                 android:paddingRight="@dimen/d15.0"

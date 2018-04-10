@@ -19,15 +19,18 @@
         android:src="@drawable/aurora_selectphoto_shadow"
         android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/image_photoselect_tick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:src="@drawable/aurora_selectphoto_checked_icon"
-        android:visibility="gone"
-        tools:visibility="visible" />
+    <TextView android:id="@+id/tv_photoselect_tick"
+        android:layout_width="@dimen/d60.0"
+        android:layout_height="@dimen/d60.0"
+        android:background="@drawable/shape_radius_338eff_30"
+        android:paddingLeft="@dimen/d15.0"
+        android:paddingRight="@dimen/d15.0"
+        android:gravity="center"
+        android:lines="1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/d40.0"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/text_photoselect_duration"
