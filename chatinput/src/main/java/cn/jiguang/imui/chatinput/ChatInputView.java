@@ -88,7 +88,7 @@ public class ChatInputView extends LinearLayout
 
     private static final String TAG = "ChatInputView";
     private EmoticonsEditText mChatInput;
-    private TextView mSendCountTv;
+//    private TextView mSendCountTv;
     private CharSequence mInput;
     private Space mInputMarginLeft;
     private Space mInputMarginRight;
@@ -97,7 +97,7 @@ public class ChatInputView extends LinearLayout
     private ImageButton mPhotoBtn;
     private ImageButton mCameraBtn;
     private ImageButton mEmojiBtn;
-    private ImageButton mSendBtn;
+    private FrameLayout mSendBtn;
 
     private LinearLayout mChatInputContainer;
     private LinearLayout mMenuItemContainer;
@@ -200,7 +200,7 @@ public class ChatInputView extends LinearLayout
         mPhotoBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_photo);
         mCameraBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_camera);
         mEmojiBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_emoji);
-        mSendBtn = (ImageButton) findViewById(R.id.aurora_menuitem_ib_send);
+        mSendBtn = findViewById(R.id.rc_emoticon_toggle);
 
         View voiceBtnContainer = findViewById(R.id.aurora_framelayout_menuitem_voice);
         View photoBtnContainer = findViewById(R.id.aurora_framelayout_menuitem_photo);
@@ -212,7 +212,7 @@ public class ChatInputView extends LinearLayout
         emojiBtnContainer.setOnClickListener(onMenuItemClickListener);
         mSendBtn.setOnClickListener(onMenuItemClickListener);
 
-        mSendCountTv = (TextView) findViewById(R.id.aurora_menuitem_tv_send_count);
+//        mSendCountTv = (TextView) findViewById(R.id.aurora_menuitem_tv_send_count);
         mInputMarginLeft = (Space) findViewById(R.id.aurora_input_margin_left);
         mInputMarginRight = (Space) findViewById(R.id.aurora_input_margin_right);
         mChatInputContainer = (LinearLayout) findViewById(R.id.aurora_ll_input_container);
@@ -345,9 +345,9 @@ public class ChatInputView extends LinearLayout
         mPhotoBtn.setImageResource(mStyle.getPhotoBtnIcon());
         mCameraBtn.setBackground(mStyle.getCameraBtnBg());
         mCameraBtn.setImageResource(mStyle.getCameraBtnIcon());
-        mSendBtn.setBackground(mStyle.getSendBtnBg());
-        mSendBtn.setImageResource(mStyle.getSendBtnIcon());
-        mSendCountTv.setBackground(mStyle.getSendCountBg());
+//        mSendBtn.setBackground(mStyle.getSendBtnBg());
+//        mSendBtn.setImageResource(mStyle.getSendBtnIcon());
+//        mSendCountTv.setBackground(mStyle.getSendCountBg());
         mSelectAlbumIb.setVisibility(mStyle.getShowSelectAlbum() ? VISIBLE : INVISIBLE);
 
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
@@ -426,8 +426,10 @@ public class ChatInputView extends LinearLayout
     private OnClickListener onMenuItemClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
+//            mChatInput.clearFocus();
+//            EmoticonsKeyboardUtils.closeSoftKeyboard(mChatInput);
             setMenuContainerHeight((int) getResources().getDimension(R.dimen.d660_0));
-            if (view.getId() == R.id.aurora_menuitem_ib_send) {
+            if (view.getId() == R.id.rc_emoticon_toggle) {
                 // Allow send text and photos at the same time.
                 if (onSubmit()) {
                     mChatInput.setText("");
@@ -435,9 +437,10 @@ public class ChatInputView extends LinearLayout
                 if (mSelectPhotoView.getSelectFiles() != null && mSelectPhotoView.getSelectFiles().size() > 0) {
                     mListener.onSendFiles(mSelectPhotoView.getSelectFiles());
 
-                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                            R.drawable.aurora_menuitem_send));
-                    mSendCountTv.setVisibility(View.INVISIBLE);
+//                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
+//                            R.drawable.aurora_menuitem_send));
+                    mSendBtn.setSelected(false);
+//                    mSendCountTv.setVisibility(View.INVISIBLE);
                     mSelectPhotoView.resetCheckState();
                     dismissMenuLayout();
                     mImm.hideSoftInputFromWindow(getWindowToken(), 0);
@@ -1048,12 +1051,15 @@ public class ChatInputView extends LinearLayout
     public void onFileSelected() {
         int size = mSelectPhotoView.getSelectFiles().size();
         Log.i("ChatInputView", "select file size: " + size);
-        if (mInput.length() == 0 && size == 1) {
-            triggerSendButtonAnimation(mSendBtn, true, true);
-        } else if (mInput.length() > 0 && mSendCountTv.getVisibility() != View.VISIBLE) {
-            mSendCountTv.setVisibility(View.VISIBLE);
+        if (mInput.length() == 0 && size == 0) {
+//            triggerSendButtonAnimation(mSendBtn, true, true);
+            mSendBtn.setSelected(false);
+        } else if (mInput.length() > 0 || size > 0) {
+//            mSendCountTv.setVisibility(View.VISIBLE);
+            mSendBtn.setSelected(true);
         }
-        mSendCountTv.setText(String.valueOf(size));
+//        mSendCountTv.setText(String.valueOf(size));
+        mSelectPhotoView.setCheckNum(size);
     }
 
     /**
@@ -1064,13 +1070,16 @@ public class ChatInputView extends LinearLayout
         int size = mSelectPhotoView.getSelectFiles().size();
         Log.i("ChatInputView", "deselect file size: " + size);
         if (size > 0) {
-            mSendCountTv.setText(String.valueOf(size));
+//            mSendCountTv.setText(String.valueOf(size));
+            mSendBtn.setSelected(true);
         } else {
-            mSendCountTv.setVisibility(View.INVISIBLE);
+//            mSendCountTv.setVisibility(View.INVISIBLE);
             if (mInput.length() == 0) {
-                triggerSendButtonAnimation(mSendBtn, false, true);
+//                triggerSendButtonAnimation(mSendBtn, false, true);
+                mSendBtn.setSelected(false);
             }
         }
+        mSelectPhotoView.setCheckNum(size);
     }
 
     /**
@@ -1080,7 +1089,7 @@ public class ChatInputView extends LinearLayout
      * @param hasContent    EditText has content or photos have been selected
      * @param isSelectPhoto check if selecting photos
      */
-    private void triggerSendButtonAnimation(final ImageButton sendBtn, final boolean hasContent,
+    private void triggerSendButtonAnimation(final View sendBtn, final boolean hasContent,
                                             final boolean isSelectPhoto) {
         float[] shrinkValues = new float[]{0.6f};
         AnimatorSet shrinkAnimatorSet = new AnimatorSet();
@@ -1102,13 +1111,13 @@ public class ChatInputView extends LinearLayout
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                mSendCountTv.bringToFront();
+//                mSendCountTv.bringToFront();
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                     requestLayout();
                     invalidate();
                 }
                 if (mSelectPhotoView.getSelectFiles() != null && mSelectPhotoView.getSelectFiles().size() > 0) {
-                    mSendCountTv.setVisibility(View.VISIBLE);
+//                    mSendCountTv.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -1127,18 +1136,20 @@ public class ChatInputView extends LinearLayout
             @Override
             public void onAnimationStart(Animator animator) {
                 if (!hasContent && isSelectPhoto) {
-                    mSendCountTv.setVisibility(View.INVISIBLE);
+//                    mSendCountTv.setVisibility(View.INVISIBLE);
                 }
             }
 
             @Override
             public void onAnimationEnd(Animator animator) {
                 if (hasContent) {
-                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                            mStyle.getSendBtnPressedIcon()));
+//                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
+//                            mStyle.getSendBtnPressedIcon()));
+                    mSendBtn.setSelected(true);
                 } else {
-                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
-                            R.drawable.aurora_menuitem_send));
+//                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
+//                            R.drawable.aurora_menuitem_send));
+                    mSendBtn.setSelected(false);
                 }
                 restoreAnimatorSet.start();
             }
@@ -1326,14 +1337,14 @@ public class ChatInputView extends LinearLayout
     public boolean onPreDraw() {
         if (mPendingShowMenu) {
             if (isKeyboardVisible()) {
-                ViewGroup.LayoutParams params = mMenuContainer.getLayoutParams();
-                int distance = getDistanceFromInputToBottom();
-                Log.d(TAG, "Distance from bottom: " + distance);
-                if (distance > 300 && distance != params.height) {
-                    params.height = distance;
-                    mSoftKeyboardHeight = distance;
-                    mMenuContainer.setLayoutParams(params);
-                }
+//                ViewGroup.LayoutParams params = mMenuContainer.getLayoutParams();
+//                int distance = getDistanceFromInputToBottom();
+//                Log.d(TAG, "Distance from bottom: " + distance);
+//                if (distance > 300 && distance != params.height) {
+//                    params.height = distance;
+//                    mSoftKeyboardHeight = distance;
+//                    mMenuContainer.setLayoutParams(params);
+//                }
                 return false;
             } else {
                 showMenuLayout();
@@ -1350,7 +1361,7 @@ public class ChatInputView extends LinearLayout
     }
 
     public int getDistanceFromInputToBottom() {
-        mSendBtn.getGlobalVisibleRect(mRect);
+        mSendBtn.getGlobalVisibleRect(mRect);//得到view相对于整个屏幕的坐标
         return mHeight - mRect.bottom;
     }
 
@@ -1411,10 +1422,6 @@ public class ChatInputView extends LinearLayout
 
     public ImageButton getEmojiBtn() {
         return this.mEmojiBtn;
-    }
-
-    public ImageButton getSendBtn() {
-        return this.mSendBtn;
     }
 
     public ImageButton getSelectAlbumBtn() {
