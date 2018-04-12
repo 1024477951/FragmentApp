@@ -31,7 +31,6 @@ public class ChatView extends RelativeLayout {
     private ChatInputView mChatInput;
     private RecordVoiceButton mRecordVoiceBtn;
     private PullToRefreshLayout mPtrLayout;
-    private ImageButton mSelectAlbumIb;
 
     public ChatView(Context context) {
         super(context);
@@ -58,7 +57,6 @@ public class ChatView extends RelativeLayout {
          */
         mChatInput.setMenuContainerHeight((int) getResources().getDimension(R.dimen.d660_0));
         mRecordVoiceBtn = mChatInput.getRecordVoiceButton();
-        mSelectAlbumIb = mChatInput.getSelectAlbumBtn();
         PtrDefaultHeader header = new PtrDefaultHeader(getContext());
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
@@ -140,9 +138,5 @@ public class ChatView extends RelativeLayout {
 
     public MessageList getMessageListView() {
         return mMsgList;
-    }
-
-    public ImageButton getSelectAlbumBtn() {
-        return this.mSelectAlbumIb;
     }
 }

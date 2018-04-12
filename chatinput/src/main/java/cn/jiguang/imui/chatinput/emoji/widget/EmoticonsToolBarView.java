@@ -80,8 +80,8 @@ public class EmoticonsToolBarView extends RelativeLayout {
         if (rec > 0) {
             iv_icon.setImageResource(rec);
         }
-//        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(mBtnWidth, LayoutParams.MATCH_PARENT);
-//        iv_icon.setLayoutParams(imgParams);
+        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(mBtnWidth, LayoutParams.MATCH_PARENT);
+        iv_icon.setLayoutParams(imgParams);
         if (pageSetEntity != null) {
             iv_icon.setTag(R.id.id_tag_pageset, pageSetEntity);
             try {

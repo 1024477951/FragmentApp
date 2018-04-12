@@ -4,7 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +16,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +81,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
     @Override
     public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
+
         if (holder.container.getHeight() != ChatInputView.sMenuHeight) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                     ChatInputView.sMenuHeight, ChatInputView.sMenuHeight);
@@ -80,6 +92,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         Glide.with(mContext)
                 .load(item.getFilePath())
                 .into(holder.ivPhoto);
+
+//        holder.ivPhoto.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        int width = holder.ivPhoto.getMeasuredWidth();
 
         if (mSelectedItems.contains(position)) {    // Current photo is selected
             holder.ivShadow.setVisibility(VISIBLE);
@@ -105,8 +120,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
         if (item.isCheck()  == true){
             holder.tvTick.setText(item.getIndex()+"");
+            holder.tvTick.setBackground(mContext.getResources().getDrawable(R.drawable.shape_radius_338eff_30));
         }else{
             holder.tvTick.setText("");
+            holder.tvTick.setBackground(mContext.getResources().getDrawable(R.drawable.shape_radius_1a000000_30));
         }
 
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +148,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     }
                     mMedias.get(position).setCheck(true);
                     mMedias.get(position).setIndex(mSelectedItems.size());
+                    holder.tvTick.setBackground(mContext.getResources().getDrawable(R.drawable.shape_radius_338eff_30));
                 } else {
                     holder.setIsRecyclable(true);
 
@@ -144,6 +162,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                         mListener.onFileDeselected();
                     }
                     mMedias.get(position).setCheck(false);
+                    holder.tvTick.setBackground(mContext.getResources().getDrawable(R.drawable.shape_radius_1a000000_30));
                     setItemIndex();
                 }
                 notifyDataSetChanged();
@@ -192,8 +211,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private void addSelectedAnimation(View... views) {
         List<Animator> valueAnimators = new ArrayList<>();
         for (View v : views) {
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, "scaleX", 0.95f);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, "scaleY", 0.95f);
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, "scaleX", 0.98f);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, "scaleY", 0.98f);
 
             valueAnimators.add(scaleX);
             valueAnimators.add(scaleY);

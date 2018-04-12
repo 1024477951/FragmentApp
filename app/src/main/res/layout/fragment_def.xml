@@ -11,7 +11,7 @@
         android:drawableLeft="@mipmap/icon_search"
         android:padding="@dimen/d22.0"
         android:text="搜索"
-        android:background="@drawable/shape_radius_338eff_30"
+        android:background="@drawable/shape_radius_1a000000_30"
         android:drawablePadding="@dimen/d15.0"
         android:textColor="#000000"
         android:layout_gravity="center"

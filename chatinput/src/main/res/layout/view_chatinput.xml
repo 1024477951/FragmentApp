@@ -44,16 +44,18 @@
                 android:layout_marginLeft="@dimen/d15.0"
                 android:layout_marginRight="@dimen/d30.0"
                 android:id="@+id/rc_emoticon_toggle"
+                android:padding="@dimen/d20.0"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/d40.0"
-                    android:layout_marginRight="@dimen/d40.0"
+                    android:layout_marginLeft="@dimen/d20.0"
+                    android:layout_marginRight="@dimen/d20.0"
                     android:gravity="center"
+                    android:maxHeight="@dimen/d104.0"
                     android:text="发送"
                     android:textColor="@color/white"
                     android:textSize="@dimen/d44.0" />
@@ -88,16 +90,16 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-        <include
-            android:id="@+id/aurora_fl_camera_container"
-            layout="@layout/layout_chatinput_camera"
-            android:visibility="gone" />
+        <!--<include-->
+            <!--android:id="@+id/aurora_fl_camera_container"-->
+            <!--layout="@layout/layout_chatinput_camera"-->
+            <!--android:visibility="gone" />-->
 
         <cn.jiguang.imui.chatinput.emoji.EmojiView
             android:id="@+id/aurora_rl_emoji_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </FrameLayout>
 </LinearLayout>

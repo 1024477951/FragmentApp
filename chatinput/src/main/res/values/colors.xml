@@ -17,4 +17,15 @@
     <color name="aurora_spilt_line">#CFCFCF</color>
     <color name="toolbar_btn_nomal">@color/white</color>
     <color name="toolbar_btn_select">#D9D9D9</color>
+
+
+    <color name="ic_back_press">#323336</color>
+    <color name="ip_color_primary">#393A3F</color>
+    <color name="ip_color_primary_dark">#303135</color>
+    <color name="ip_color_primary_trans">#ec2f3335</color>
+    <color name="ip_color_press">#ffe0e0e0</color>
+    <color name="ip_camera_pre">#353535</color>
+    <color name="ip_color_accent">#3399ff</color>
+    <color name="ip_text_secondary_inverted">#66ffffff</color>
+    <color name="ip_text_primary_inverted">#ffffff</color>
 </resources>

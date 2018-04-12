@@ -20,15 +20,15 @@
             android:layout_gravity="center"
             android:visibility="gone"/>
 
-        <ImageButton
-            android:id="@+id/aurora_imagebtn_selectphoto_album"
-            android:layout_width="@dimen/aurora_size_album_button"
-            android:layout_height="@dimen/aurora_size_album_button"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/aurora_selectphoto_album"
-            android:visibility="visible"/>
+        <!--<ImageButton-->
+            <!--android:id="@+id/aurora_imagebtn_selectphoto_album"-->
+            <!--android:layout_width="@dimen/aurora_size_album_button"-->
+            <!--android:layout_height="@dimen/aurora_size_album_button"-->
+            <!--android:layout_gravity="bottom|right"-->
+            <!--android:layout_marginBottom="16dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:background="@drawable/aurora_selectphoto_album"-->
+            <!--android:visibility="visible"/>-->
     </FrameLayout>
 
     <RelativeLayout
@@ -46,22 +46,24 @@
 
         <LinearLayout android:id="@+id/lin_check_img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_toRightOf="@+id/tv_photo"
             android:layout_marginLeft="@dimen/d70.0"
             android:layout_centerVertical="true"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <View android:id="@+id/start_img"
+                android:layout_width="@dimen/d40.0"
+                android:layout_height="@dimen/d40.0"
                 android:layout_gravity="center_vertical"
-                android:checked="true"
-                style="@style/Base.Widget.AppCompat.CompoundButton.RadioButton"/>
+                android:clickable="false"
+                android:background="@drawable/shape_radius_ffffff_30" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/d14.0"
                 android:layout_gravity="center_vertical"
+                android:clickable="false"
                 android:text="原图"
                 android:textColor="#338EFF"
                 android:textSize="@dimen/d46.0" />
@@ -73,7 +75,6 @@
             android:layout_marginLeft="@dimen/d77.0"
             android:layout_toRightOf="@+id/lin_check_img"
             android:layout_centerVertical="true"
-            android:text="相册"
             android:textColor="#338EFF"
             android:textSize="@dimen/d46.0" />
 

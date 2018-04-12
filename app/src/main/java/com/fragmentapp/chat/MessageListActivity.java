@@ -7,17 +7,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -54,6 +57,13 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jiguang.imui.chatinput.ChatInputView;
+import cn.jiguang.imui.chatinput.camera.ImageDataSource;
+import cn.jiguang.imui.chatinput.camera.ImagePicker;
+import cn.jiguang.imui.chatinput.camera.bean.ImageFolder;
+import cn.jiguang.imui.chatinput.camera.bean.ImageItem;
+import cn.jiguang.imui.chatinput.camera.ui.ImageCropActivity;
+import cn.jiguang.imui.chatinput.camera.ui.ImageGridActivity;
+import cn.jiguang.imui.chatinput.camera.ui.ImagePreviewActivity;
 import cn.jiguang.imui.chatinput.listener.OnCameraCallbackListener;
 import cn.jiguang.imui.chatinput.listener.OnMenuClickListener;
 import cn.jiguang.imui.chatinput.listener.RecordVoiceListener;
@@ -69,7 +79,8 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MessageListActivity extends BaseActivity implements View.OnTouchListener,
-        EasyPermissions.PermissionCallbacks, SensorEventListener {
+        EasyPermissions.PermissionCallbacks, SensorEventListener, ImageDataSource.OnImagesLoadedListener
+        , ImagePicker.OnImageSelectedListener{
 
     //-------toolbar-------
     /**
@@ -120,6 +131,9 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         context.startActivity(intent);
     }
 
+    public static final int REQUEST_PERMISSION_STORAGE = 0x01;
+    public static final int REQUEST_PERMISSION_CAMERA = 0x02;
+
     private final int RC_RECORD_VOICE = 0x0001;
     private final int RC_CAMERA = 0x0002;
     private final int RC_PHOTO = 0x0003;
@@ -144,6 +158,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
     private ArrayList<String> mMsgIdList = new ArrayList<>();
 
     private int type;
+    private ImagePicker imagePicker;
 
     @Override
     public int layoutID() {
@@ -155,6 +170,20 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         this.mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mWindow = getWindow();
         registerProximitySensorListener();
+
+        imagePicker = ImagePicker.getInstance();
+        imagePicker.clear();
+        imagePicker.addOnImageSelectedListener(this);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                new ImageDataSource(this, null, this);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);
+            }
+        } else {
+            new ImageDataSource(this, null, this);
+        }
 
         type = getIntent().getIntExtra("type",0);
 
@@ -375,14 +404,42 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             }
         });
 
-        mChatView.getSelectAlbumBtn().setOnClickListener(new View.OnClickListener() {
+        mChatView.getChatInputView().setCallBack(new ChatInputView.CallBack() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(MessageListActivity.this, "OnClick select album button",
-                        Toast.LENGTH_SHORT).show();
+            public void camera() {
+                if (!checkPermission(Manifest.permission.CAMERA)) {
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
+                } else {
+                    imagePicker.takePicture((Activity) context, ImagePicker.REQUEST_CODE_TAKE);
+                }
             }
         });
+
     }
+
+    public boolean checkPermission(@NonNull String permission) {
+        return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                new ImageDataSource(this, null, this);
+            } else {
+                Toast.makeText(context,"权限被禁止，无法选择本地图片",Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
+            } else {
+                Toast.makeText(context,"权限被禁止，无法打开相机",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 
     private void registerProximitySensorListener() {
         try {
@@ -445,6 +502,20 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     }
 
+    @Override
+    public void onImagesLoaded(List<ImageFolder> imageFolders) {
+
+    }
+
+    @Override
+    public void onImageSelected(int position, ImageItem item, boolean isAdd) {
+        if (item != null) {
+            FileItem fileItem = new FileItem(item.path, item.name, item.size + "", new Date().toString());
+            fileItem.setType(FileItem.Type.Image);
+            mChatView.getChatInputView().sendCameraImg(fileItem);
+        }
+    }
+
     private class HeadsetDetectReceiver extends BroadcastReceiver {
 
         @Override
@@ -456,13 +527,6 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                 }
             }
         }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -736,11 +800,58 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         }
     }
 
+    private boolean isOrigin = false;  //是否选中原图
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && data.getExtras() != null) {
+            data.putExtra("isCamera",imagePicker.isCamera());
+            if (resultCode == ImagePicker.RESULT_CODE_BACK) {
+                isOrigin = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
+            } else {
+                //从拍照界面返回
+                //点击 X , 没有选择照片
+                if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
+                    //什么都不做 直接调起相机
+                } else {
+                    //说明是从裁剪页面过来的数据，直接返回就可以
+                    setResult(ImagePicker.RESULT_CODE_ITEMS, data);
+                }
+            }
+        } else {
+            //如果是裁剪，因为裁剪指定了存储的Uri，所以返回的data一定为null
+            if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
+                //发送广播通知图片增加了
+                ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
+
+                /**
+                 * 2017-03-21 对机型做旋转处理
+                 */
+                String path = imagePicker.getTakeImageFile().getAbsolutePath();
+
+                ImageItem imageItem = new ImageItem();
+                imageItem.path = path;
+                imageItem.isCamera = imagePicker.isCamera();
+                imagePicker.clearSelectedImages();
+                imagePicker.addSelectedImageItem(0, imageItem, true);
+                if (imagePicker.isCrop()) {
+                    Intent intent = new Intent(context, ImageCropActivity.class);
+                    startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+                    setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+                }
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mReceiver);
         mSensorManager.unregisterListener(this);
         ViewHolderController.getInstance().clear();
+        imagePicker.removeOnImageSelectedListener(this);
     }
 }

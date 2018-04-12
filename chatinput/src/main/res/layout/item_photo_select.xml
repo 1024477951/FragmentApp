@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:paddingRight="8dp">
+    android:paddingRight="@dimen/d10.0">
 
     <ImageView
         android:id="@+id/image_photoselect_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/aurora_picture_not_found" />
 
     <ImageView
@@ -22,7 +22,7 @@
     <TextView android:id="@+id/tv_photoselect_tick"
         android:layout_width="@dimen/d60.0"
         android:layout_height="@dimen/d60.0"
-        android:background="@drawable/shape_radius_338eff_30"
+        android:background="@drawable/shape_radius_1a000000_30"
         android:paddingLeft="@dimen/d15.0"
         android:paddingRight="@dimen/d15.0"
         android:gravity="center"

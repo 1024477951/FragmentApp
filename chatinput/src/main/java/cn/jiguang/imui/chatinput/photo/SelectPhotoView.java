@@ -17,7 +17,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -40,6 +42,10 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
     private RecyclerView mRvPhotos; // Select photo view
     private PhotoAdapter mPhotoAdapter;
     private ProgressBar mProgressBar;
+
+    private LinearLayout lin_check_img;
+    private TextView tv_check_num;
+    private View start_img;
 
     private List<FileItem> mMedias; // All photo or video files
 
@@ -71,6 +77,23 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
         mRvPhotos = (RecyclerView) findViewById(R.id.aurora_recyclerview_selectphoto);
         mRvPhotos.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mRvPhotos.setHasFixedSize(true);
+
+        lin_check_img = findViewById(R.id.lin_check_img);
+        tv_check_num = findViewById(R.id.tv_check_num);
+        start_img = findViewById(R.id.start_img);
+
+        lin_check_img.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (start_img.isSelected()){
+                    start_img.setSelected(false);
+                    start_img.setBackground(getResources().getDrawable(R.drawable.shape_radius_ffffff_30));
+                }else{
+                    start_img.setSelected(true);
+                    start_img.setBackground(getResources().getDrawable(R.drawable.icon_start));
+                }
+            }
+        });
     }
 
     public void initData() {
@@ -175,6 +198,10 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
                     Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    public void setCheckNum(int num){
+        tv_check_num.setText(num > 0 ? "已选择"+num+"项" : "");
     }
 
     public List<FileItem> getSelectFiles() {

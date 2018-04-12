@@ -48,6 +48,7 @@ public class EmojiView extends AutoHeightLayout implements EmoticonsFuncView.OnE
 
     private void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.layout_chatinput_emoji,this);
+
         mContext = context;
 
         mEmoticonsFuncView = ((EmoticonsFuncView) findViewById(R.id.view_epv));
