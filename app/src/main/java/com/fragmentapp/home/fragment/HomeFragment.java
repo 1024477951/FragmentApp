@@ -1,7 +1,6 @@
 package com.fragmentapp.home.fragment;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -73,7 +72,7 @@ public class HomeFragment extends LazyFragment implements IHomeView {
 
     @OnClick({R.id.menu})
     public void click(View view) {
-        AlertFragment.newInstance(null).show(getChildFragmentManager(),TAG);
+        AddDialogFragment.newInstance(null).show(getChildFragmentManager(),TAG);
     }
 
     @Override

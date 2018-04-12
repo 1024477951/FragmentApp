@@ -43,6 +43,7 @@ import com.fragmentapp.chat.views.ChatView;
 import com.fragmentapp.helper.GlideApp;
 import com.fragmentapp.helper.TimeUtil;
 import com.fragmentapp.home.bean.ChatBean;
+import com.fragmentapp.home.fragment.AlertDialogFragment;
 
 import java.io.File;
 import java.text.ParseException;
@@ -69,6 +70,7 @@ import cn.jiguang.imui.chatinput.listener.OnMenuClickListener;
 import cn.jiguang.imui.chatinput.listener.RecordVoiceListener;
 import cn.jiguang.imui.chatinput.model.FileItem;
 import cn.jiguang.imui.chatinput.model.VideoItem;
+import cn.jiguang.imui.chatinput.photo.SelectPhotoView;
 import cn.jiguang.imui.commons.ImageLoader;
 import cn.jiguang.imui.commons.models.IMessage;
 import cn.jiguang.imui.messages.MsgListAdapter;
@@ -80,7 +82,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MessageListActivity extends BaseActivity implements View.OnTouchListener,
         EasyPermissions.PermissionCallbacks, SensorEventListener, ImageDataSource.OnImagesLoadedListener
-        , ImagePicker.OnImageSelectedListener{
+        , ImagePicker.OnImageSelectedListener {
 
     //-------toolbar-------
     /**
@@ -175,14 +177,17 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         imagePicker.clear();
         imagePicker.addOnImageSelectedListener(this);
 
+        String[] perms = new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                new ImageDataSource(this, null, this);
+            if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
+                EasyPermissions.requestPermissions(MessageListActivity.this,
+                        getResources().getString(R.string.rationale_camera),
+                        REQUEST_PERMISSION_STORAGE, perms);
             } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);
+                new ImageDataSource(this, null, this);
             }
-        } else {
-            new ImageDataSource(this, null, this);
         }
 
         type = getIntent().getIntExtra("type",0);
@@ -407,18 +412,32 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         mChatView.getChatInputView().setCallBack(new ChatInputView.CallBack() {
             @Override
             public void camera() {
-                if (!checkPermission(Manifest.permission.CAMERA)) {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
-                } else {
+                String[] perms = new String[]{
+                        Manifest.permission.CAMERA
+                };
+
+                if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
+                    EasyPermissions.requestPermissions(MessageListActivity.this,
+                            getResources().getString(R.string.rationale_camera),
+                            ImageGridActivity.REQUEST_PERMISSION_CAMERA, perms);
+                }else {
                     imagePicker.takePicture((Activity) context, ImagePicker.REQUEST_CODE_TAKE);
                 }
             }
         });
 
-    }
+        mChatView.getChatInputView().getSelectPictureContainer().setCallBack(new SelectPhotoView.CallBack() {
+            @Override
+            public void photo() {
+                Intent intent = new Intent(MessageListActivity.this, ImageGridActivity.class);
+//                if (mAdapter.getData().size() > 0) {
+//                    ArrayList<ImageItem> imageItems = (ArrayList<ImageItem>) mAdapter.getData();
+//                    intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imageItems);
+//                }
+                startActivityForResult(intent, 1);
+            }
+        });
 
-    public boolean checkPermission(@NonNull String permission) {
-        return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -428,18 +447,39 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 new ImageDataSource(this, null, this);
             } else {
-                Toast.makeText(context,"权限被禁止，无法选择本地图片",Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("title","权限被禁止");
+                bundle.putString("title","权限被禁止，无法选择本地图片");
+                AlertDialogFragment.newInstance(bundle).show(getSupportFragmentManager(),TAG);
             }
         } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
             } else {
-                Toast.makeText(context,"权限被禁止，无法打开相机",Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("title","权限被禁止");
+                bundle.putString("title","权限被禁止，无法打开相机");
+                AlertDialogFragment.newInstance(bundle).show(getSupportFragmentManager(),TAG);
             }
+        }else if (grantResults.length < 0){
+            Bundle bundle = new Bundle();
+            bundle.putString("title","权限被禁止");
+            bundle.putString("title","权限被禁止，请先允许或打开所操作的权限");
+            AlertDialogFragment.newInstance(bundle).show(getSupportFragmentManager(),TAG);
         }
     }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
 
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
 
     private void registerProximitySensorListener() {
         try {
@@ -509,6 +549,10 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
+//        sendCameraImg(item);
+    }
+
+    private void sendCameraImg(ImageItem item){
         if (item != null) {
             FileItem fileItem = new FileItem(item.path, item.name, item.size + "", new Date().toString());
             fileItem.setType(FileItem.Type.Image);
@@ -526,18 +570,6 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                     mAdapter.setAudioPlayByEarPhone(state);
                 }
             }
-        }
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
         }
     }
 
@@ -804,25 +836,19 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && data.getExtras() != null) {
-            data.putExtra("isCamera",imagePicker.isCamera());
-            if (resultCode == ImagePicker.RESULT_CODE_BACK) {
-                isOrigin = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
-            } else {
-                //从拍照界面返回
-                //点击 X , 没有选择照片
-                if (data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) == null) {
-                    //什么都不做 直接调起相机
-                } else {
-                    //说明是从裁剪页面过来的数据，直接返回就可以
-                    setResult(ImagePicker.RESULT_CODE_ITEMS, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == 1) {
+                ArrayList<ImageItem> mParts = imagePicker.getSelectedImages();
+                for (ImageItem item : mParts) {
+                    sendCameraImg(item);
                 }
+                imagePicker.setSelectedImages(new ArrayList<ImageItem>());
             }
         } else {
             //如果是裁剪，因为裁剪指定了存储的Uri，所以返回的data一定为null
             if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE_TAKE) {
                 //发送广播通知图片增加了
-                ImagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
+                imagePicker.galleryAddPic(this, imagePicker.getTakeImageFile());
 
                 /**
                  * 2017-03-21 对机型做旋转处理
@@ -838,9 +864,14 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                     Intent intent = new Intent(context, ImageCropActivity.class);
                     startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
                 } else {
-                    Intent intent = new Intent();
-                    intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
-                    setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
+                    ArrayList<ImageItem> mParts = imagePicker.getSelectedImages();
+                    for (ImageItem item : mParts) {
+                        sendCameraImg(item);
+                    }
+                    imagePicker.setSelectedImages(new ArrayList<ImageItem>());
+//                    Intent intent = new Intent();
+//                    intent.putExtra(ImagePicker.EXTRA_RESULT_ITEMS, imagePicker.getSelectedImages());
+//                    setResult(ImagePicker.RESULT_CODE_ITEMS, intent);   //单选不需要裁剪，返回数据
                 }
             }
         }

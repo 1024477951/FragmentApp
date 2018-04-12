@@ -37,8 +37,9 @@
         android:background="#eeeeee">
         <TextView android:id="@+id/tv_photo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/d44.0"
+            android:gravity="center"
             android:layout_centerVertical="true"
             android:text="相册"
             android:textColor="#338EFF"

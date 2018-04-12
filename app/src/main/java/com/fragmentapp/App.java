@@ -5,10 +5,14 @@ import android.os.StrictMode;
 import android.util.DisplayMetrics;
 
 import com.bumptech.glide.Glide;
+import com.fragmentapp.helper.GlideImageLoader;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.uuzuche.lib_zxing.DisplayUtil;
+
+import cn.jiguang.imui.chatinput.camera.ImagePicker;
+import cn.jiguang.imui.chatinput.camera.view.CropImageView;
 
 /**
  * Created by liuzhen on 2017/11/8.
@@ -17,6 +21,8 @@ import com.uuzuche.lib_zxing.DisplayUtil;
 public class App extends Application {
 
     private static App instance;
+
+    public ImagePicker mImagePicker;
 
     @Override
     public void onCreate() {
@@ -49,6 +55,19 @@ public class App extends Application {
                     .penaltyLog()
                     .build());
         }
+
+        mImagePicker = ImagePicker.getInstance();
+        mImagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
+        mImagePicker.setShowCamera(true);  //显示拍照按钮
+        mImagePicker.setCrop(false);        //允许裁剪（单选才有效）
+        mImagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        mImagePicker.setSelectLimit(9);    //选中数量限制
+        mImagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        mImagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        mImagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        mImagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
+        mImagePicker.setOutPutY(1000);//保存文件的高度。单位像素
+
     }
 
     public static App getInstance(){

@@ -39,12 +39,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -116,6 +119,7 @@ public class ChatInputView extends LinearLayout
     private RecordControllerView mRecordControllerView;
     private Chronometer mChronometer;
     private TextView mRecordHintTv;
+    private ImageView iv_loading;
     private RecordVoiceButton mRecordVoiceBtn;
 
     SelectPhotoView mSelectPhotoView;
@@ -144,19 +148,6 @@ public class ChatInputView extends LinearLayout
 
     private long mRecordTime;
     private boolean mPlaying = false;
-
-    // To judge if it is record video mode
-    private boolean mIsRecordVideoMode = false;
-
-    // To judge if it is recording video now
-    private boolean mIsRecordingVideo = false;
-
-    // To judge if is finish recording video
-    private boolean mFinishRecordingVideo = false;
-
-    // Video file to be saved at
-    private String mVideoFilePath;
-    private int mVideoDuration;
 
     // If audio file has been set
     private boolean mSetData;
@@ -223,10 +214,12 @@ public class ChatInputView extends LinearLayout
         mRecordControllerView = (RecordControllerView) findViewById(R.id.aurora_rcv_recordvoice_controller);
         mChronometer = (Chronometer) findViewById(R.id.aurora_chronometer_recordvoice);
         mRecordHintTv = (TextView) findViewById(R.id.aurora_tv_recordvoice_hint);
+        iv_loading = findViewById(R.id.iv_loading);
         mSendAudioBtn = (Button) findViewById(R.id.aurora_btn_recordvoice_send);
         mCancelSendAudioBtn = (Button) findViewById(R.id.aurora_btn_recordvoice_cancel);
         mRecordVoiceBtn = (RecordVoiceButton) findViewById(R.id.aurora_rvb_recordvoice_record);
 
+        iv_loading.setVisibility(GONE);
         mSelectPhotoView = (SelectPhotoView) findViewById(R.id.aurora_view_selectphoto);
         mSelectPhotoView.setOnFileSelectedListener(this);
         mSelectPhotoView.initData();
@@ -815,6 +808,9 @@ public class ChatInputView extends LinearLayout
         Log.e("ChatInputView", "starting chronometer");
         mRecordHintTv.setVisibility(VISIBLE);
         mRecordHintTv.setText("准备中");
+        iv_loading.setVisibility(VISIBLE);
+        Animation rotateAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+        iv_loading.startAnimation(rotateAnimation);
         postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -822,6 +818,8 @@ public class ChatInputView extends LinearLayout
                 mChronometer.start();
                 mChronometer.setVisibility(VISIBLE);
                 mRecordHintTv.setVisibility(INVISIBLE);
+                iv_loading.clearAnimation();
+                iv_loading.setVisibility(GONE);
             }
         }, 200);
     }
@@ -1014,7 +1012,7 @@ public class ChatInputView extends LinearLayout
         return mRecordVoiceRl;
     }
 
-    public FrameLayout getSelectPictureContainer() {
+    public SelectPhotoView getSelectPictureContainer() {
         return mSelectPhotoView;
     }
 

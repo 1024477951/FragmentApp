@@ -35,7 +35,7 @@
         android:paddingRight="10dp"
         android:paddingTop="12dp">
 
-        <com.lzy.imagepicker.view.SuperCheckBox
+        <cn.jiguang.imui.chatinput.camera.view.SuperCheckBox
             android:id="@+id/cb_check"
             style="@style/SuperCheckboxTheme"
             android:layout_width="wrap_content"

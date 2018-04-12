@@ -1,7 +1,6 @@
 package com.fragmentapp.home.fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -18,10 +17,10 @@ import com.fragmentapp.home.FragmentFactory;
 import butterknife.OnClick;
 
 
-public class AlertFragment extends BaseDialogFragment {
+public class AddDialogFragment extends BaseDialogFragment {
 
-    public static AlertFragment newInstance(Bundle bundle) {
-        AlertFragment fragment = new AlertFragment();
+    public static AddDialogFragment newInstance(Bundle bundle) {
+        AddDialogFragment fragment = new AddDialogFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -50,7 +49,7 @@ public class AlertFragment extends BaseDialogFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_alert_zxing;
+        return R.layout.layout_add_dialog;
     }
 
     @Override

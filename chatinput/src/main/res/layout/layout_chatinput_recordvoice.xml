@@ -85,12 +85,25 @@
                     android:textSize="@dimen/aurora_textsize_chronometer"
                     android:visibility="invisible" />
 
-                <TextView
-                    android:id="@+id/aurora_tv_recordvoice_hint"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="@string/record_voice_hint" />
+                    android:orientation="horizontal">
+                    <ImageView android:id="@+id/iv_loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/chat_sound_loading"/>
+                    <TextView
+                        android:id="@+id/aurora_tv_recordvoice_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/d16.0"
+                        android:text="@string/record_voice_hint" />
+                </LinearLayout>
+
             </RelativeLayout>
 
             <cn.jiguang.imui.chatinput.record.RecordVoiceButton

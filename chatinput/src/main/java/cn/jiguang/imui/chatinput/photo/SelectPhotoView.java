@@ -3,6 +3,7 @@ package cn.jiguang.imui.chatinput.photo;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -28,6 +29,8 @@ import java.util.Collections;
 import java.util.List;
 
 import cn.jiguang.imui.chatinput.R;
+import cn.jiguang.imui.chatinput.camera.ImagePicker;
+import cn.jiguang.imui.chatinput.camera.ui.ImageGridActivity;
 import cn.jiguang.imui.chatinput.listener.OnFileSelectedListener;
 import cn.jiguang.imui.chatinput.model.FileItem;
 import cn.jiguang.imui.chatinput.model.VideoItem;
@@ -45,9 +48,10 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
 
     private LinearLayout lin_check_img;
     private TextView tv_check_num;
-    private View start_img;
+    private View start_img,tv_photo;
 
     private List<FileItem> mMedias; // All photo or video files
+    private CallBack callBack;
 
     private Handler mMediaHandler = new Handler(this);
 
@@ -81,6 +85,7 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
         lin_check_img = findViewById(R.id.lin_check_img);
         tv_check_num = findViewById(R.id.tv_check_num);
         start_img = findViewById(R.id.start_img);
+        tv_photo = findViewById(R.id.tv_photo);
 
         lin_check_img.setOnClickListener(new OnClickListener() {
             @Override
@@ -92,6 +97,13 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
                     start_img.setSelected(true);
                     start_img.setBackground(getResources().getDrawable(R.drawable.icon_start));
                 }
+            }
+        });
+        tv_photo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callBack != null)
+                    callBack.photo();
             }
         });
     }
@@ -218,4 +230,13 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
     public void setOnFileSelectedListener(OnFileSelectedListener listener) {
         mOnFileSelectedListener = listener;
     }
+
+    public void setCallBack(CallBack callBack){
+        this.callBack = callBack;
+    }
+
+    public interface CallBack{
+        void photo();
+    }
+
 }

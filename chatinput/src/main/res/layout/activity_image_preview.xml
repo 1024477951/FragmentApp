@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#000">
 
-    <com.lzy.imagepicker.view.ViewPagerFixed
+    <cn.jiguang.imui.chatinput.camera.view.ViewPagerFixed
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
 
-            <com.lzy.imagepicker.view.SuperCheckBox
+            <cn.jiguang.imui.chatinput.camera.view.SuperCheckBox
                 android:id="@+id/cb_origin"
                 style="@style/SuperCheckboxTheme"
                 android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
                 android:textColor="#FFF"
                 android:visibility="invisible" />
 
-            <com.lzy.imagepicker.view.SuperCheckBox
+            <cn.jiguang.imui.chatinput.camera.view.SuperCheckBox
                 android:id="@+id/cb_check"
                 style="@style/SuperCheckboxTheme"
                 android:layout_width="wrap_content"
