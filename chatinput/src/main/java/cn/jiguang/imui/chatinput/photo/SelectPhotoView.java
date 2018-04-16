@@ -227,6 +227,13 @@ public class SelectPhotoView extends FrameLayout implements Handler.Callback {
         mPhotoAdapter.resetCheckedState();
     }
 
+    public void clearCheck(){
+        if (mPhotoAdapter == null) {
+            return;
+        }
+        mPhotoAdapter.clearCheck();
+    }
+
     public void setOnFileSelectedListener(OnFileSelectedListener listener) {
         mOnFileSelectedListener = listener;
     }

@@ -14,6 +14,7 @@ import com.fragmentapp.home.adapter.HomeAdapter;
 import com.fragmentapp.home.bean.ChatBean;
 import com.fragmentapp.home.imple.IHomeView;
 import com.fragmentapp.home.presenter.HomePresenter;
+import com.fragmentapp.view.dialog.AddDialogFragment;
 import com.oushangfeng.pinnedsectionitemdecoration.PinnedHeaderItemDecoration;
 
 import java.util.List;

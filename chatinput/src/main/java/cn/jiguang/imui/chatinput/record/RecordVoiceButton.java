@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.widget.AppCompatImageButton;
@@ -140,7 +141,7 @@ public class RecordVoiceButton extends AppCompatImageButton {
                             msg.what = START_RECORD;
                             msg.sendToTarget();
                         }
-                    }, 500);
+                    }, 200);
                 } else {
                     Toast.makeText(this.getContext(), mContext.getString(R.string.sdcard_not_exist_toast),
                             Toast.LENGTH_SHORT).show();
@@ -154,6 +155,7 @@ public class RecordVoiceButton extends AppCompatImageButton {
                 this.setPressed(false);
                 //松开录音按钮时刻
                 long time2 = System.currentTimeMillis();
+
                 if (time2 - time1 < 500) {
                     cancelTimer();
                     if (mControllerView != null) {
@@ -161,8 +163,9 @@ public class RecordVoiceButton extends AppCompatImageButton {
                     }
                     return true;
                 } else if (time2 - time1 < 1000) {
+                    cancelTimer();
                     if (mControllerView != null) {
-                        mControllerView.resetState();
+                        mControllerView.onActionUp();
                     }
                     cancelRecord();
                 } else if (mControllerView != null) {
@@ -196,6 +199,7 @@ public class RecordVoiceButton extends AppCompatImageButton {
             timer.cancel();
             timer.purge();
             isTimerCanceled = true;
+            timer = null;
         }
     }
 
@@ -215,8 +219,10 @@ public class RecordVoiceButton extends AppCompatImageButton {
         stopRecording();
 
         long intervalTime = System.currentTimeMillis() - startTime;
+        Log.e("tag","finishRecord "+intervalTime);
         if (intervalTime < MIN_INTERVAL_TIME) {
-            Toast.makeText(getContext(), mContext.getString(R.string.time_too_short_toast), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, mContext.getString(R.string.time_too_short_toast), Toast.LENGTH_SHORT).show();
+            mListener.shortTime();
             myRecAudioFile.delete();
         } else {
             if (myRecAudioFile != null && myRecAudioFile.exists()) {
@@ -436,6 +442,7 @@ public class RecordVoiceButton extends AppCompatImageButton {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             RecordVoiceButton controller = lButton.get();
+
             if (controller != null) {
                 switch (msg.what) {
                     case START_RECORD:

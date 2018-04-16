@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
@@ -35,6 +37,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.chat.models.DefaultUser;
@@ -43,7 +47,10 @@ import com.fragmentapp.chat.views.ChatView;
 import com.fragmentapp.helper.GlideApp;
 import com.fragmentapp.helper.TimeUtil;
 import com.fragmentapp.home.bean.ChatBean;
-import com.fragmentapp.home.fragment.AlertDialogFragment;
+import com.fragmentapp.view.dialog.AlertAlphaDialogFragment;
+import com.fragmentapp.view.dialog.AlertDialogFragment;
+import com.fragmentapp.view.dialog.DownPopWindow;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.io.File;
 import java.text.ParseException;
@@ -64,7 +71,6 @@ import cn.jiguang.imui.chatinput.camera.bean.ImageFolder;
 import cn.jiguang.imui.chatinput.camera.bean.ImageItem;
 import cn.jiguang.imui.chatinput.camera.ui.ImageCropActivity;
 import cn.jiguang.imui.chatinput.camera.ui.ImageGridActivity;
-import cn.jiguang.imui.chatinput.camera.ui.ImagePreviewActivity;
 import cn.jiguang.imui.chatinput.listener.OnCameraCallbackListener;
 import cn.jiguang.imui.chatinput.listener.OnMenuClickListener;
 import cn.jiguang.imui.chatinput.listener.RecordVoiceListener;
@@ -177,20 +183,14 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         imagePicker.clear();
         imagePicker.addOnImageSelectedListener(this);
 
-        String[] perms = new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
-                EasyPermissions.requestPermissions(MessageListActivity.this,
-                        getResources().getString(R.string.rationale_camera),
-                        REQUEST_PERMISSION_STORAGE, perms);
-            } else {
-                new ImageDataSource(this, null, this);
-            }
+        if (checkPermission(Manifest.permission.CAMERA,1, 1)!= PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
+        } else {
+            new ImageDataSource(this, null, this);
         }
 
-        type = getIntent().getIntExtra("type",0);
+
+        type = getIntent().getIntExtra("type", 0);
 
         mChatView.initModule();
         tv_title.setText("Deadpool");
@@ -366,6 +366,14 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             public void onPreviewSend() {
 
             }
+
+            @Override
+            public void shortTime() {
+                Bundle bundle = new Bundle();
+                bundle.putInt("res", R.mipmap.icon_sound_time);
+                bundle.putString("content", "按键时间太短");
+                AlertAlphaDialogFragment.newInstance(bundle).show(getSupportFragmentManager(), TAG);
+            }
         });
 
         mChatView.setOnCameraCallbackListener(new OnCameraCallbackListener() {
@@ -412,15 +420,9 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         mChatView.getChatInputView().setCallBack(new ChatInputView.CallBack() {
             @Override
             public void camera() {
-                String[] perms = new String[]{
-                        Manifest.permission.CAMERA
-                };
-
-                if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
-                    EasyPermissions.requestPermissions(MessageListActivity.this,
-                            getResources().getString(R.string.rationale_camera),
-                            ImageGridActivity.REQUEST_PERMISSION_CAMERA, perms);
-                }else {
+                if (checkPermission(Manifest.permission.CAMERA,1, 1)!= PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MessageListActivity.this, new String[]{Manifest.permission.CAMERA}, ImageGridActivity.REQUEST_PERMISSION_CAMERA);
+                } else {
                     imagePicker.takePicture((Activity) context, ImagePicker.REQUEST_CODE_TAKE);
                 }
             }
@@ -442,7 +444,8 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Log.e("tag", "success");
         if (requestCode == REQUEST_PERMISSION_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 new ImageDataSource(this, null, this);
@@ -454,7 +457,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
             }
         } else if (requestCode == REQUEST_PERMISSION_CAMERA) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                imagePicker.takePicture(this, ImagePicker.REQUEST_CODE_TAKE);
+
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString("title","权限被禁止");
@@ -476,9 +479,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        }
+
     }
 
     private void registerProximitySensorListener() {
@@ -552,7 +553,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
 //        sendCameraImg(item);
     }
 
-    private void sendCameraImg(ImageItem item){
+    private void sendCameraImg(ImageItem item) {
         if (item != null) {
             FileItem fileItem = new FileItem(item.path, item.name, item.size + "", new Date().toString());
             fileItem.setType(FileItem.Type.Image);
@@ -663,10 +664,22 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
                 }
             }
         });
-
+        //长按事件
         mAdapter.setMsgLongClickListener(new MsgListAdapter.OnMsgLongClickListener<MyMessage>() {
             @Override
             public void onMessageLongClick(View view, MyMessage message) {
+                if (message.getMessageStatus() == IMessage.MessageStatus.SEND_FAILED){
+                    new DownPopWindow(context, new DownPopWindow.CallBack() {
+                        @Override
+                        public void click(View v) {
+                            switch (v.getId()){
+                                case R.id.save:
+
+                                    break;
+                            }
+                        }
+                    }).showPopFormBottom(mChatView);
+                }
                 Toast.makeText(getApplicationContext(),
                         getApplicationContext().getString(R.string.message_long_click_hint),
                         Toast.LENGTH_SHORT).show();
@@ -706,6 +719,7 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         sendVoiceMsg.setUserInfo(new DefaultUser("1", "Ironman", "R.drawable.aurora_headicon_default"));
         sendVoiceMsg.setMediaFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/voice/2018-02-28-105103.m4a");
         sendVoiceMsg.setDuration(4);
+        sendVoiceMsg.setMessageStatus(IMessage.MessageStatus.SEND_FAILED);
         mAdapter.addToStart(sendVoiceMsg, true);
 
         MyMessage eventMsg = new MyMessage("你撤回了一条消息", IMessage.MessageType.EVENT.ordinal());
@@ -820,19 +834,21 @@ public class MessageListActivity extends BaseActivity implements View.OnTouchLis
         return false;
     }
 
-    @OnClick({R.id.fl_left,R.id.readNum})
+    @OnClick({R.id.fl_left, R.id.readNum})
     public void back(View view) {
         switch (view.getId()) {
             case R.id.fl_left:
                 finish();
                 break;
             case R.id.readNum:
-                Toast.makeText(context,"readNum",Toast.LENGTH_SHORT).show();finish();
+                Toast.makeText(context, "readNum", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
     }
 
     private boolean isOrigin = false;  //是否选中原图
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

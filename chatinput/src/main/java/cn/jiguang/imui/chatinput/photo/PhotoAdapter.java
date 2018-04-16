@@ -182,6 +182,15 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         }
     }
 
+    public void clearCheck(){
+        if (mMedias != null){
+            for (int i = 0;i < mMedias.size();i++) {
+                mMedias.get(i).setCheck(false);
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mMedias.size();

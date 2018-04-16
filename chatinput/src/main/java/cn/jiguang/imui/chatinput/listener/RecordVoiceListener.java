@@ -37,4 +37,6 @@ public interface RecordVoiceListener {
      * Add since 0.7.3
      */
     void onPreviewSend();
+
+    void shortTime();
 }

@@ -379,6 +379,9 @@ public class ChatInputView extends LinearLayout
                 if (mSelectPhotoView.getSelectFiles() != null && mSelectPhotoView.getSelectFiles().size() > 0) {
                     mListener.onSendFiles(mSelectPhotoView.getSelectFiles());
 
+                    mSelectPhotoView.setCheckNum(0);
+                    mSelectPhotoView.setVisibility(GONE);
+                    mSelectPhotoView.clearCheck();
 //                    mSendBtn.setImageDrawable(ContextCompat.getDrawable(getContext(),
 //                            R.drawable.aurora_menuitem_send));
                     mSendBtn.setSelected(false);

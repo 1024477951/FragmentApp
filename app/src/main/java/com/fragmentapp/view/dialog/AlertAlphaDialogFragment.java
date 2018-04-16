@@ -1,4 +1,4 @@
-package com.fragmentapp.home.fragment;
+package com.fragmentapp.view.dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,18 +9,25 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
-import com.fragmentapp.home.FragmentFactory;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class AddDialogFragment extends BaseDialogFragment {
+public class AlertAlphaDialogFragment extends BaseDialogFragment {
 
-    public static AddDialogFragment newInstance(Bundle bundle) {
-        AddDialogFragment fragment = new AddDialogFragment();
+    @BindView(R.id.iv_sound)
+    ImageView iv_sound;
+    @BindView(R.id.tv_content)
+    TextView tv_content;
+
+    public static AlertAlphaDialogFragment newInstance(Bundle bundle) {
+        AlertAlphaDialogFragment fragment = new AlertAlphaDialogFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -38,7 +45,7 @@ public class AddDialogFragment extends BaseDialogFragment {
         if (getDialog() != null) {
             Window window = getDialog().getWindow();
             WindowManager.LayoutParams params = window.getAttributes();
-            params.gravity = Gravity.TOP|Gravity.RIGHT;
+            params.gravity = Gravity.CENTER;
             params.width = WindowManager.LayoutParams.WRAP_CONTENT;
 
             window.setAttributes(params);
@@ -49,7 +56,7 @@ public class AddDialogFragment extends BaseDialogFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_add_dialog;
+        return R.layout.layout_alpha_dialog;
     }
 
     @Override
@@ -66,15 +73,20 @@ public class AddDialogFragment extends BaseDialogFragment {
                 return false;
             }
         });
+
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            int res = bundle.getInt("res");
+            iv_sound.setImageResource(res);
+            String content = bundle.getString("content");
+            tv_content.setText(content);
+        }
     }
 
-    @OnClick({R.id.zxing,R.id.group})
+    @OnClick({R.id.root})
     public void click(View view) {
         switch (view.getId()) {
-            case R.id.zxing:
-                FragmentFactory.newInstance(getContext(),FragmentFactory.Zxing);
-                break;
-            case R.id.group:
+            case R.id.root:
 
                 break;
         }

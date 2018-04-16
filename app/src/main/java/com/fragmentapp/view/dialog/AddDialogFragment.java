@@ -1,4 +1,4 @@
-package com.fragmentapp.home.fragment;
+package com.fragmentapp.view.dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,25 +9,18 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
 import com.fragmentapp.home.FragmentFactory;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class AlertDialogFragment extends BaseDialogFragment {
+public class AddDialogFragment extends BaseDialogFragment {
 
-    @BindView(R.id.tv_title)
-    TextView tv_title;
-    @BindView(R.id.tv_content)
-    TextView tv_content;
-
-    public static AlertDialogFragment newInstance(Bundle bundle) {
-        AlertDialogFragment fragment = new AlertDialogFragment();
+    public static AddDialogFragment newInstance(Bundle bundle) {
+        AddDialogFragment fragment = new AddDialogFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -56,7 +49,7 @@ public class AlertDialogFragment extends BaseDialogFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_alert_dialog;
+        return R.layout.layout_add_dialog;
     }
 
     @Override
@@ -73,23 +66,15 @@ public class AlertDialogFragment extends BaseDialogFragment {
                 return false;
             }
         });
-
-        Bundle bundle = getArguments();
-        if (bundle != null){
-            String title = bundle.getString("title");
-            tv_title.setText(title);
-            String content = bundle.getString("content");
-            tv_content.setText(content);
-        }
     }
 
-    @OnClick({R.id.confirm,R.id.root})
+    @OnClick({R.id.zxing,R.id.group})
     public void click(View view) {
         switch (view.getId()) {
-            case R.id.confirm:
-
+            case R.id.zxing:
+                FragmentFactory.newInstance(getContext(),FragmentFactory.Zxing);
                 break;
-            case R.id.root:
+            case R.id.group:
 
                 break;
         }
