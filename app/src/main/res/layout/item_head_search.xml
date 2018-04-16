@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/search"
+    android:id="@+id/fl_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/d32.0"
-    android:layout_marginBottom="@dimen/d32.0"
-    android:layout_marginLeft="@dimen/d43.0"
-    android:layout_marginRight="@dimen/d43.0"
     android:gravity="center">
 
-    <RelativeLayout
+    <com.fragmentapp.view.ShadowLayout
+        android:layout_marginRight="@dimen/d31.0"
+        android:layout_marginLeft="@dimen/d31.0"
+        android:layout_marginTop="@dimen/d18.0"
+        android:layout_marginBottom="@dimen/d18.0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/shape_radius_ffffff_16">
+        android:layout_gravity="center_horizontal"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/d116.0"
-            android:layout_centerInParent="true"
-            android:drawableLeft="@mipmap/icon_search"
-            android:drawablePadding="@dimen/d23.0"
-            android:gravity="center"
-            android:text="搜索"
-            android:textColor="#45000000"
-            android:textSize="@dimen/d40.0" />
+        app:sl_shadowRadius="@dimen/d16.0"
+        app:sl_shadowColor="#18999999"
+        app:sl_dx="0dp"
+        app:sl_dy="0dp"
+        app:sl_cornerRadius="@dimen/d1.0"
+        >
+        <RelativeLayout
+            android:background="@drawable/shape_radius_ffffff_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d116.0"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/icon_search"
+                android:drawablePadding="@dimen/d23.0"
+                android:gravity="center"
+                android:text="搜索"
+                android:textColor="#45000000"
+                android:textSize="@dimen/d40.0" />
 
+        </RelativeLayout>
+
+    </com.fragmentapp.view.ShadowLayout>
+    <View
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d1.0"
+        android:background="@color/color_dddddd" />
 
 </FrameLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_contactsCont"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_fafafa"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/d130.0"
+                android:visibility="invisible"
+                app:layout_scrollFlags="scroll|enterAlways" >
+
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/toolbar" />
+
+                <include layout="@layout/item_head_search" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d1.0"
+                    android:background="@color/color_dddddd" />
+
+                <com.fragmentapp.view.tablayout.SlidingTabLayout
+                    android:id="@+id/tb_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d128.0"
+                    android:background="@color/white"
+
+                    app:tl_indicator_color="@color/color_338eff"
+                    app:tl_indicator_corner_radius="@dimen/d5.0"
+                    app:tl_indicator_gravity="bottom"
+                    app:tl_indicator_height="@dimen/d10.0"
+                    app:tl_indicator_width="@dimen/d50.0"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textSelectColor="@color/color_338eff"
+                    app:tl_textUnselectColor="@color/color_999999"
+                    app:tl_textsize="@dimen/d42.0"
+                    app:tl_underline_color="@color/transparent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d1.0"
+                    android:background="@color/color_dddddd" />
+
+
+
+                <RelativeLayout
+                    android:id="@+id/suspension_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d128.0"
+                    android:background="@android:color/white"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_contact_list_arrow_nor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/d52.0" />
+
+                    <TextView
+                        android:id="@+id/tv_teamName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/d28.0"
+                        android:layout_toRightOf="@id/iv_contact_list_arrow_nor"
+                        android:gravity="center"
+                        android:textColor="@color/color_111111"
+                        android:textSize="@dimen/d46.0" />
+
+                    <TextView
+                        android:id="@+id/tv_userNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/d52.0"
+                        android:gravity="center"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/d40.0" />
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
+
+
+
+
+

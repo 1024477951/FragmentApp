@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d175.0"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/fl_teamAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/d100.0">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/iv_teamAvatar"
+            android:layout_width="@dimen/d116.0"
+            android:layout_height="@dimen/d116.0" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_team_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d28.0"
+        android:layout_marginTop="@dimen/d35.0"
+        android:layout_toRightOf="@id/fl_teamAvatar"
+        android:gravity="center"
+        android:textColor="@color/color_111111"
+        android:textSize="@dimen/d46.0" />
+
+    <TextView
+        android:id="@+id/tv_team_userJob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/d35.0"
+        android:layout_marginLeft="@dimen/d28.0"
+        android:layout_toRightOf="@id/fl_teamAvatar"
+        android:gravity="center"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/d40.0" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d1.0"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_dddddd" />
+</RelativeLayout>

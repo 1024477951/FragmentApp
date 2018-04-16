@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 
 import com.fragmentapp.base.LazyFragment;
+import com.fragmentapp.contacts.fragment.ContactsFragment;
 import com.fragmentapp.home.fragment.HomeFragment;
 
 import java.lang.ref.SoftReference;
@@ -30,7 +31,7 @@ public class FragmentHelper {
                     fragment = new HomeFragment();
                     break;
                 case 1:
-                    fragment = new HomeFragment();
+                    fragment = new ContactsFragment();
                     break;
                 case 2:
                     fragment = new HomeFragment();

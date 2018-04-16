@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/xuanfu"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d128.0"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_contact_list_arrow_nor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/d52.0"
+       />
+
+    <TextView
+        android:id="@+id/tv_teamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/d28.0"
+        android:layout_toRightOf="@id/iv_contact_list_arrow_nor"
+        android:gravity="center"
+        android:textColor="@color/color_111111"
+        android:textSize="@dimen/d46.0" />
+
+    <TextView
+        android:id="@+id/tv_userNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/d52.0"
+        android:gravity="center"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/d40.0" />
+</RelativeLayout>

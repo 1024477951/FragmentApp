@@ -78,6 +78,20 @@ public class TimeUtil {
         return China_FORMAT.format(date);
     }
 
+    public static String getYearMonthTime(String timeStamp) {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月");
+        return sdr.format(date);
+    }
+
+    public static String getYearMonthDay(String timeStamp) {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        SimpleDateFormat sdr = new SimpleDateFormat("yy-M-d");
+        return sdr.format(date);
+    }
+
     private static void clear(){
         startTime = null;
         endTime = null;

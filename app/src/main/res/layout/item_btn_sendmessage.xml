@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.fragmentapp.view.ShadowLayout
+        android:layout_marginTop="@dimen/d116.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:sl_cornerRadius="@dimen/d40.0"
+        android:layout_centerHorizontal="true"
+        app:sl_dx="0dp"
+        app:sl_dy="0dp"
+        app:sl_shadowColor="#303399ff"
+        app:sl_shadowRadius="@dimen/d15.0">
+
+        <TextView
+            android:id="@+id/btn_submit"
+            android:layout_width="@dimen/d894.0"
+            android:layout_height="@dimen/d140.0"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shape_button_submit"
+            android:gravity="center"
+            android:text="发消息"
+            android:textColor="@color/white"
+            android:textSize="@dimen/d46.0" />
+    </com.fragmentapp.view.ShadowLayout>
+</RelativeLayout>

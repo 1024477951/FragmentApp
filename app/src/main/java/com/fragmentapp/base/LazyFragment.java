@@ -29,31 +29,31 @@ public abstract class LazyFragment extends BaseFragment {
 
     //-------toolbar-------
     /** left */
-    @BindView(R.id.fl_left)
+    @Nullable @BindView(R.id.fl_left)
     public View fl_left;
-    @BindView(R.id.tv_left_title)
+    @Nullable @BindView(R.id.tv_left_title)
     public TextView tv_left_title;
-    @BindView(R.id.tv_read)
+    @Nullable @BindView(R.id.tv_read)
     public TextView tv_read;
-    @BindView(R.id.circle_read)
+    @Nullable @BindView(R.id.circle_read)
     public View circle_read;
-    @BindView(R.id.img_left_icon)
+    @Nullable @BindView(R.id.img_left_icon)
     public ImageView img_left_icon;
 
     /** center */
-    @BindView(R.id.tv_title)
+    @Nullable @BindView(R.id.tv_title)
     public TextView tv_title;
-    @BindView(R.id.tv_status)
+    @Nullable @BindView(R.id.tv_status)
     public TextView tv_status;
-    @BindView(R.id.img_triangle)
+    @Nullable @BindView(R.id.img_triangle)
     public ImageView img_triangle;
 
     /** right */
-    @BindView(R.id.tv_right_title)
+    @Nullable @BindView(R.id.tv_right_title)
     public TextView tv_right_title;
-    @BindView(R.id.menu)
+    @Nullable @BindView(R.id.menu)
     public FrameLayout menu;
-    @BindView(R.id.img_menu_icon)
+    @Nullable @BindView(R.id.img_menu_icon)
     public ImageView img_menu_icon;
     //-------toolbar-------
 
