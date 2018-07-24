@@ -44,7 +44,9 @@ public class BounceView extends android.support.v7.widget.AppCompatCheckBox{
     }
 
     public void startAnimation() {
-        ValueAnimator anim = ValueAnimator.ofInt(-10,0,6,0);
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) getLayoutParams();
+        int topMargin = lp.topMargin;
+        ValueAnimator anim = ValueAnimator.ofInt(-10,0+topMargin,6,0+topMargin);
 
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

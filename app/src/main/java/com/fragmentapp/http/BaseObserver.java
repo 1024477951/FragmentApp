@@ -1,7 +1,8 @@
 package com.fragmentapp.http;
 
 import android.os.Looper;
-import android.util.Log;
+
+import com.orhanobut.logger.Logger;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -15,27 +16,26 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
 
     @Override
     public void onSubscribe(Disposable d) {
-        Log.e(TAG, "onSubscribe");
+        Logger.e(TAG, "onSubscribe");
     }
 
     @Override
     public void onNext(T t) {
-        Log.e(TAG, "onNext"+t);
+        Logger.e(TAG, "onNext"+t);
         if (t.getStatus() == 200) {
             onNextResponse(t);
         } else {
-            Log.e(TAG, "ErrorStatus:" + t.getStatus() + "ErrorInfo" + t.getInfo());
+            Logger.e(TAG, "ErrorStatus:" + t.getStatus() + "ErrorInfo" + t.getInfo());
             onErrorResponse(t);
         }
     }
 
     @Override
     public void onError(Throwable e) {
-        Log.e(TAG, "onError" + e.toString());
+        Logger.e(TAG, "onError" + e.toString());
         onNetWorkError("onError 网络超时，请重新尝试--"+e.getMessage());
         if (Looper.myLooper() == null) {
             Looper.prepare();
-            Log.e(TAG,"onError 网络超时，请重新尝试");
             Looper.loop();
         }
 
@@ -43,7 +43,7 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
 
     @Override
     public void onComplete() {
-        Log.e(TAG, "onComplete");
+        Logger.e(TAG, "onComplete");
     }
 
     /**返回成功*/

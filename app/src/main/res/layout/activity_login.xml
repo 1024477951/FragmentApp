@@ -18,11 +18,10 @@
         android:paddingRight="@dimen/d20.0"
         android:paddingTop="@dimen/d30.0"
         android:paddingBottom="@dimen/d30.0"
-        android:layout_marginBottom="@dimen/d100.0"
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout android:id="@+id/left"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -44,7 +43,7 @@
                 android:background="@null"
                 android:maxLines="1"
                 android:hint="用户名"
-                android:text="s645"/>
+                android:text="user"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -67,7 +66,7 @@
                 android:background="@null"
                 android:maxLines="1"
                 android:hint="密码"
-                android:text=""/>
+                android:text="pwd"/>
         </LinearLayout>
 
         <Button android:id="@+id/btn_submit"

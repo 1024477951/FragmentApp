@@ -3,17 +3,14 @@ package com.fragmentapp.home;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
-import com.fragmentapp.helper.FragmentHelper;
 import com.fragmentapp.home.adapter.MainAdapter;
 
 import butterknife.BindView;
@@ -67,7 +64,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     public void click(View view){
 
-        int position = 0;
+        int position = -1;
         switch (view.getId()){
             case R.id.home:
                 position = 0;
@@ -82,12 +79,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 position = 3;
                 break;
         }
-        select(position);
+        if (position >= 0) select(position);
     }
     /**添加首页按钮缓存*/
     private void addTab(View view,int position){
-        ViewGroup group = cover(view);
-        CheckBox checkBox = cover(group.getChildAt(0));
+        CheckBox checkBox = cover(view.findViewWithTag("check"));
         checkBox.setChecked(false);
         menus.put(position,checkBox);
     }
@@ -133,4 +129,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        menus.clear();
+        menus = null;
+    }
 }

@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">CustomUI</string>
+
+    <!-- Request permission start -->
+    <!-- Request permission end -->
+
 </resources>

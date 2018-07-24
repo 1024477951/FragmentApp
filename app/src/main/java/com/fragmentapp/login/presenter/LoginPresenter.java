@@ -25,7 +25,8 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void login(String username,String pwd){
-        model.login(observer,username,pwd);
+//        model.login(observer,username,pwd);
+        view.success(new LoginDataBean());
     }
 
     BaseObserver<BaseResponses<LoginDataBean>> observer = new BaseObserver<BaseResponses<LoginDataBean>>(){

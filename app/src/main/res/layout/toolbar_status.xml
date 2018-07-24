@@ -1,0 +1,6 @@
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_status"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:background="@drawable/shape_navigation" />

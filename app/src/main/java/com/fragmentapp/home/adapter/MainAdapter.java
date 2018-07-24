@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.fragmentapp.helper.FragmentHelper;
+import com.fragmentapp.home.FragmentHelper;
 
 /**
  * Created by liuzhen on 2017/11/10.

@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by liuzhen on 2017/11/8.
  */
@@ -23,7 +20,6 @@ public abstract class BaseFragment extends Fragment{
     public String TAG = getClass().getSimpleName();
 
     protected View contentView;
-    protected Unbinder unbinder;
 
     protected boolean isVisible;
     // 标志位，标志已经初始化完成。
@@ -32,10 +28,9 @@ public abstract class BaseFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        Log.e("tag","onCreateView");
         if (contentView == null) {
             contentView = inflater.inflate(getLayoutId(), container, false);
-            unbinder = ButterKnife.bind(this, contentView);
         } else {
             ViewGroup parent = (ViewGroup) contentView.getParent();
             if (parent != null) {
@@ -44,11 +39,5 @@ public abstract class BaseFragment extends Fragment{
         }
         isPrepared = true;
         return contentView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

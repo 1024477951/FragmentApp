@@ -5,6 +5,7 @@ import android.util.Log;
 import com.fragmentapp.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -66,7 +67,7 @@ public class RetrofitHelper {
                     //获取request
                     Request request = chain.request();
                     if (BuildConfig.DEBUG) {
-//                        Log.e("request",request.toString());
+                        Logger.d("Interceptor",chain);
                     }
                     //获取request的创建者builder
                     Request.Builder builder = request.newBuilder();

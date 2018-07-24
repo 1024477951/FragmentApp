@@ -22,7 +22,7 @@ public class DefFootView extends ProgressBar implements IFootView{
 
     public DefFootView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(Color.GRAY);
         init();
     }
 

@@ -1,7 +1,9 @@
 package com.fragmentapp;
 
 import android.app.Application;
+import android.os.StrictMode;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
@@ -32,6 +34,19 @@ public class App extends Application {
                 return BuildConfig.DEBUG;
             }
         });
+
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+        }
+
     }
 
     public static App getInstance(){
@@ -40,7 +55,18 @@ public class App extends Application {
 
     @Override
     public void onTrimMemory(int level) {
-        Logger.d("end----"+level);
+        Logger.d("end----onTrimMemory "+level);
         super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_UI_HIDDEN) {
+            Glide.get(this).clearMemory();
+        }
+        Glide.get(this).trimMemory(level);
     }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
+    }
+
 }

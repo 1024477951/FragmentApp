@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.helper.TimeUtil;
@@ -200,6 +199,8 @@ public class RefreshLayout extends FrameLayout {
                         isStart = true;//是否开始加载
                         isAllow = false;
                     } else {
+                        currentState = END;
+                        refreshHeaderView();
                         if (!isStart) {
                             // 隐藏头布局
                             listParam.setMargins(0, 0, 0, 0);
@@ -209,6 +210,7 @@ public class RefreshLayout extends FrameLayout {
                         if (callBack != null)
                             callBack.pullListener(0);
                     }
+
                     break;
                 default:
                     break;
@@ -223,7 +225,7 @@ public class RefreshLayout extends FrameLayout {
     private void refreshHeaderView() {
         if (callBack == null || isStart)
             return;
-        String val = "准备";
+        String val;
         switch (currentState) {
             case DOWN_REFRESH: // 下拉刷新状态
                 val = "下拉";
@@ -236,10 +238,70 @@ public class RefreshLayout extends FrameLayout {
                 TimeUtil.startTime();
                 break;
             case END:
-                val = "完成";
+            default:
+                val = "";
                 break;
         }
+
         callBack.refreshHeaderView(currentState, val);
+    }
+
+    /**
+     * 是否下拉操作
+     **/
+    public boolean isBottom() {
+        return isBottom;
+    }
+
+    /**
+     * 开始加载
+     **/
+    public void start() {
+        isLoadingMore = true;
+        for (IHeadView head : heads) {
+            head.startAnim();
+        }
+    }
+
+    /**
+     * 结束加载
+     **/
+    public void stop() {
+        if (callBack != null)
+            callBack.pullListener(0);
+        currentState = END;
+        TimeUtil.endTime();
+        long loadTime = TimeUtil.getDateMillis();//大于0表示小于默认的加载时间
+//        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
+        if (loadTime > 0) {//最小限制2秒的动画加载效果
+            postDelayed(new Runnable() {//没有网络访问时固定2秒加载完成
+                @Override
+                public void run() {
+                    listParam.setMargins(0, 0, 0, 0);
+                    footParam.setMargins(0, 0, 0, -mHeadHeight);
+                    list.setLayoutParams(listParam);
+                    isLoadingMore = false;
+                    isStart = false;
+                    isAllow = true;
+                    for (IHeadView head : heads) {
+                        head.stopAnim();
+                    }
+                    refreshHeaderView();
+                }
+            }, loadTime);
+        }else{
+            listParam.setMargins(0, 0, 0, 0);
+            footParam.setMargins(0, 0, 0, -mHeadHeight);
+            list.setLayoutParams(listParam);
+            isLoadingMore = false;
+            isStart = false;
+            isAllow = true;
+            for (IHeadView head : heads) {
+                head.stopAnim();
+            }
+            refreshHeaderView();
+        }
+
     }
 
     public static boolean isViewToTop(View view, int mTouchSlop) {
@@ -378,64 +440,6 @@ public class RefreshLayout extends FrameLayout {
             }
         }
         return false;
-    }
-
-    /**
-     * 是否下拉操作
-     **/
-    public boolean isBottom() {
-        return isBottom;
-    }
-
-    /**
-     * 开始加载
-     **/
-    public void start() {
-        isLoadingMore = true;
-        for (IHeadView head : heads) {
-            head.startAnim();
-        }
-    }
-
-    /**
-     * 结束加载
-     **/
-    public void stop() {
-        if (callBack != null)
-            callBack.pullListener(0);
-        currentState = END;
-        TimeUtil.endTime();
-        long loadTime = TimeUtil.getDateMillis();//大于0表示小于默认的加载时间
-//        Toast.makeText(getContext(), loadTime + "毫秒", Toast.LENGTH_SHORT).show();
-        if (loadTime > 0) {//最小限制2秒的动画加载效果
-            postDelayed(new Runnable() {//没有网络访问时固定2秒加载完成
-                @Override
-                public void run() {
-                    refreshHeaderView();
-                    listParam.setMargins(0, 0, 0, 0);
-                    footParam.setMargins(0, 0, 0, -mHeadHeight);
-                    list.setLayoutParams(listParam);
-                    isLoadingMore = false;
-                    isStart = false;
-                    isAllow = true;
-                    for (IHeadView head : heads) {
-                        head.stopAnim();
-                    }
-                }
-            }, loadTime);
-        }else{
-            refreshHeaderView();
-            listParam.setMargins(0, 0, 0, 0);
-            footParam.setMargins(0, 0, 0, -mHeadHeight);
-            list.setLayoutParams(listParam);
-            isLoadingMore = false;
-            isStart = false;
-            isAllow = true;
-            for (IHeadView head : heads) {
-                head.stopAnim();
-            }
-        }
-
     }
 
     public RefreshLayout setCallBack(CallBack callBack) {

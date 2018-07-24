@@ -3,18 +3,15 @@ package com.fragmentapp.home.fragment;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.helper.EmptyLayout;
-import com.fragmentapp.home.adapter.ArticleAdapter;
-import com.fragmentapp.home.bean.ArticleDataBean;
-import com.fragmentapp.home.imple.IArticleView;
-import com.fragmentapp.home.presenter.ArticlePresenter;
+import com.fragmentapp.home.adapter.HomeAdapter;
+import com.fragmentapp.home.imple.IHomeView;
+import com.fragmentapp.home.presenter.HomePresenter;
 import com.fragmentapp.view.refresh.DefFootView;
 import com.fragmentapp.view.refresh.DefHeaderView;
 import com.fragmentapp.view.refresh.DownHeadView;
@@ -22,10 +19,7 @@ import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.SunHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
-import com.fragmentapp.view.sticky.DividerDecoration;
-import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,20 +29,21 @@ import butterknife.OnClick;
  * Created by liuzhen on 2017/11/8.
  */
 
-public class HomeFragment extends LazyFragment implements IArticleView {
+public class HomeFragment extends LazyFragment implements IHomeView {
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+
     private TextHeadView textHeadView;
     private DownHeadView downHeadView;//扇形头部
     private StickyHeadView stickyHeadView;//粘性头部
     private SunHeadView sunHeadView;
-    private List<ArticleDataBean.ListBean> list = new ArrayList<>();
-    private ArticleAdapter adapter;
 
-    private ArticlePresenter presenter;
+    private HomeAdapter adapter;
+
+    private HomePresenter presenter;
     private int page = 1,lastPage = -1;
 
     @Override
@@ -58,14 +53,17 @@ public class HomeFragment extends LazyFragment implements IArticleView {
 
     @Override
     protected void init() {
-        presenter = new ArticlePresenter(this);
-        page = 1;
-        presenter.getArticleList(page);
 
-        adapter = new ArticleAdapter(getContext(), R.layout.item_home, list);
+        setTitleText("消息");
+        img_menu_icon.setImageResource(R.mipmap.de_ic_add);
+
+        presenter = new HomePresenter(this);
+        page = 1;
+
+        adapter = new HomeAdapter(R.layout.item_home);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerDecoration(getContext()));
+        presenter.getArticleList(page);
 
         textHeadView = new TextHeadView(getContext());
         downHeadView = new DownHeadView(getContext());
@@ -114,32 +112,31 @@ public class HomeFragment extends LazyFragment implements IArticleView {
         });
     }
 
-    @OnClick({R.id.search})
-    public void search(View view) {
-        new SearchFragment().show(getFragmentManager(), TAG);
+    @OnClick({R.id.menu})
+    public void click(View view) {
+
     }
 
     @Override
-    public void success(List<ArticleDataBean.ListBean> list) {
+    public void success(List<String> list) {
         if (list.size() == 0){
-            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
+//            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
         }else {
             page++;//如果有数据则+1下一页
             if (lastPage != page) {
                 if (refreshLayout.isBottom())
-                    adapter.addList(list);
-                else
-                    adapter.setList(list);
+                    adapter.addData(list);
+                else {
+                    adapter.setNewData(list);
+                }
             }
             lastPage = page;
-//            Toast.makeText(getActivity(), "success"+adapter.getItemCount(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void error() {
         emptyLayout.showEmpty((ViewGroup) getView(),"error");
-//        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
     }
 
     @Override

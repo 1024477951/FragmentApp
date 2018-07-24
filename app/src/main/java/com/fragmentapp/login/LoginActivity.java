@@ -1,14 +1,13 @@
 package com.fragmentapp.login;
 
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.SharedPreferencesUtils;
+import com.fragmentapp.home.MainActivity;
 import com.fragmentapp.login.bean.LoginDataBean;
 import com.fragmentapp.login.imple.ILoginView;
 import com.fragmentapp.login.presenter.LoginPresenter;
@@ -48,7 +47,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
             Toast.makeText(context,"param is null",Toast.LENGTH_SHORT).show();
             return;
         }
-        SharedPreferencesUtils.setParam("token",dataBean.getHCACCESSTOKEN());
+        MainActivity.start(context);
+        finish();
+//        SharedPreferencesUtils.setParam("token",dataBean.getHCACCESSTOKEN());
     }
 
     @Override

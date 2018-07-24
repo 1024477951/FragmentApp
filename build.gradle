@@ -7,10 +7,16 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+        maven {
+            url 'https://dl.google.com/dl/android/maven2/'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -24,6 +30,7 @@ allprojects {
         mavenCentral()
         maven { url "https://jitpack.io" }
         maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         //Bmob的maven仓库地址--必填
 //        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
     }
@@ -32,3 +39,15 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    applicationId = 'com.fragmentapp'
+    support_library_version = '27.0.0'
+
+    compileSdk = 27 //API Level SDK的版本号
+    buildTools = '27.0.0'//build-tools 构建工具版本
+
+    minSdk = 19//4.4
+    targetSdk = 27
+}
+

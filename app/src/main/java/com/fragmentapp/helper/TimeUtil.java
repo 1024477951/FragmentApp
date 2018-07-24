@@ -2,7 +2,11 @@ package com.fragmentapp.helper;
 
 import com.orhanobut.logger.Logger;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by liuzhen on 2018/1/5.
@@ -46,6 +50,46 @@ public class TimeUtil {
         long sec = diff % nd % nh % nm;
         clear();
         return defaultTime - sec;
+    }
+
+    public static String getMonthDayHourTime(String timeStamp) throws ParseException {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        DateFormat China_FORMAT = new SimpleDateFormat("MM月dd日 HH:mm", Locale.getDefault());
+        return China_FORMAT.format(date);
+    }
+
+    public static String getLocationMonthDayHourTime() throws ParseException {
+        DateFormat China_FORMAT = new SimpleDateFormat("MM月dd日 HH:mm", Locale.getDefault());
+        return China_FORMAT.format(new Date());
+    }
+
+    public static String getHourTime(String timeStamp) throws ParseException {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        DateFormat China_FORMAT = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return China_FORMAT.format(date);
+    }
+
+    public static String getMonthDayTime(String timeStamp) throws ParseException {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        DateFormat China_FORMAT = new SimpleDateFormat("MM月dd日", Locale.getDefault());
+        return China_FORMAT.format(date);
+    }
+
+    public static String getYearMonthTime(String timeStamp) {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月");
+        return sdr.format(date);
+    }
+
+    public static String getYearMonthDay(String timeStamp) {
+        long lt = new Long(timeStamp);
+        Date date = new Date(lt * 1000);
+        SimpleDateFormat sdr = new SimpleDateFormat("yy-M-d");
+        return sdr.format(date);
     }
 
     private static void clear(){
