@@ -5,7 +5,9 @@ android {
     buildToolsVersion rootProject.ext.buildTools
 
     useLibrary 'org.apache.http.legacy'
-
+    /**
+     * 默认产品偏好配置
+     */
     defaultConfig {
         applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.minSdk
@@ -16,14 +18,35 @@ android {
         multiDexKeepProguard file("multiDexKeep.pro")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    /**
+     * 自定义签名配置
+     */
+    signingConfigs {
+        config {
+        }
+    }
+    /**
+     * 构建类型，分为release和debug两种
+     */
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    /**
+     * DEX文件构建属性配置（加快构建速度）
+     */
+    dexOptions {
+        javaMaxHeapSize = 8g //最大堆内存
+        jumboMode = true //是否支持大工程模式
+        preDexLibraries = true //预编译
+        threadCount = 8 //线程数
+    }
 }
-
+/**
+ * 引入依赖包的秘密
+ */
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

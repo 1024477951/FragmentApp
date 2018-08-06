@@ -74,6 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mImmersionBar = ImmersionBar.with(this)
                 .fitsSystemWindows(true)
                 .keyboardEnable(true)//解决软键盘与底部输入框冲突问题
+                .statusBarAlpha(0.3f)  //状态栏透明度，不写默认0.0f
                 .statusBarColor(R.color.colorPrimary);
         mImmersionBar.init();
         init();

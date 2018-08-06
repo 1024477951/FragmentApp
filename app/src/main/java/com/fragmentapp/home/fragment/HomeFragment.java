@@ -156,4 +156,15 @@ public class HomeFragment extends LazyFragment implements IHomeView {
         dismissDialog();
         refreshLayout.stop();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter = null;
+        textHeadView = null;
+        downHeadView = null;
+        stickyHeadView = null;
+        sunHeadView = null;
+    }
+
 }

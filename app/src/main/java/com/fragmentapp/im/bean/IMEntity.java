@@ -12,6 +12,8 @@ public class IMEntity implements MultiItemEntity {
     public static final int Receive = 2;
     private int itemType;
 
+    private MsgBean data;
+
     public IMEntity(int itemType) {
         this.itemType = itemType;
     }
@@ -19,6 +21,14 @@ public class IMEntity implements MultiItemEntity {
     @Override
     public int getItemType() {
         return itemType;
+    }
+
+    public MsgBean getData() {
+        return data;
+    }
+
+    public void setData(MsgBean data) {
+        this.data = data;
     }
 }
 

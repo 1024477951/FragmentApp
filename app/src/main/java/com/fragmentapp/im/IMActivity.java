@@ -2,13 +2,22 @@ package com.fragmentapp.im;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
+import com.fragmentapp.im.adapter.IMAdapter;
+import com.fragmentapp.im.bean.IMEntity;
+import com.fragmentapp.im.bean.MsgBean;
+import com.fragmentapp.im.imple.IIMView;
+import com.fragmentapp.im.presenter.IMPresenter;
 import com.fragmentapp.view.refresh.DownHeadView;
 import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.TextHeadView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -16,16 +25,20 @@ import butterknife.BindView;
  * Created by liuzhen on 2018/8/6.
  */
 
-public class IMActivity  extends BaseActivity {
+public class IMActivity extends BaseActivity implements IIMView{
 
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    private IMAdapter adapter;
+    private List<IMEntity> list = new ArrayList<>();
 
     private TextHeadView textHeadView;
     private DownHeadView downHeadView;
     private int page = 1,lastPage = -1;
+
+    private IMPresenter presenter;
 
     public static void start(Context context) {
         start(context, null);
@@ -50,7 +63,13 @@ public class IMActivity  extends BaseActivity {
 
         setTitleText("消息");
 
+        adapter = new IMAdapter(list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
+
+        presenter = new IMPresenter(this);
         page = 1;
+        presenter.getList(page);
 
         textHeadView = new TextHeadView(context);
         downHeadView = new DownHeadView(context);
@@ -84,5 +103,56 @@ public class IMActivity  extends BaseActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public void success(List<MsgBean> list) {
+        IMEntity entity = null;
+        MsgBean bean = null;
+        for(int i = 0;i < list.size(); i++){
+            int type;
+            if (i % 2 == 0){
+                type = IMEntity.Send;
+            }else{
+                type = IMEntity.Receive;
+            }
+            entity = new IMEntity(type);
+            entity.setData(list.get(i));
+
+            this.list.add(entity);
+        }
+        entity = new IMEntity(IMEntity.Send);
+        bean = new MsgBean();
+        bean.setType(MsgBean.Photo);
+        entity.setData(bean);
+        this.list.add(entity);
+        entity = new IMEntity(IMEntity.Receive);
+        bean = new MsgBean();
+        bean.setType(MsgBean.Photo);
+        entity.setData(bean);
+        this.list.add(entity);
+        adapter.addData(this.list);
+    }
+
+    @Override
+    public void error() {
+
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void loadStop() {
+        refreshLayout.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter = null;
+        HolderHelper.getInsatance().clear();
     }
 }
