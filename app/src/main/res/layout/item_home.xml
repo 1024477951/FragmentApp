@@ -77,22 +77,6 @@
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/d40.0" />
 
-            <TextView
-                android:id="@+id/tv_read"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/d90.0"
-                android:background="@drawable/shape_radius_ff4038_30"
-                android:gravity="center"
-                android:lines="1"
-                android:maxWidth="@dimen/d90.0"
-                android:minHeight="@dimen/d58.0"
-                android:minWidth="@dimen/d58.0"
-                android:paddingLeft="@dimen/d15.0"
-                android:paddingRight="@dimen/d15.0"
-                android:textColor="@color/white"
-                android:textSize="@dimen/d34.0" />
         </LinearLayout>
     </LinearLayout>
 

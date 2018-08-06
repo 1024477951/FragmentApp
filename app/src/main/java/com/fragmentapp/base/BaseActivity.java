@@ -87,6 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         emptyLayout = null;
         if (mImmersionBar != null)
             mImmersionBar.destroy();
+        context = null;
     }
 
     protected <T> T cover(Object t){

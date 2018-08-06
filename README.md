@@ -37,6 +37,12 @@
 
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/water.gif)
 
+--消息置顶--
+
+博客地址：http://www.cnblogs.com/LiuZhen/p/8651897.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/top.gif)
+
 --首页是常用的懒加载--
 
 博客地址：http://www.cnblogs.com/LiuZhen/p/8135682.html

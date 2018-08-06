@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.home.adapter.HomeAdapter;
 import com.fragmentapp.home.imple.IHomeView;
 import com.fragmentapp.home.presenter.HomePresenter;
+import com.fragmentapp.im.IMActivity;
 import com.fragmentapp.view.refresh.DefFootView;
 import com.fragmentapp.view.refresh.DefHeaderView;
 import com.fragmentapp.view.refresh.DownHeadView;
@@ -64,7 +66,12 @@ public class HomeFragment extends LazyFragment implements IHomeView {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         presenter.getArticleList(page);
-
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                IMActivity.start(getContext());
+            }
+        });
         textHeadView = new TextHeadView(getContext());
         downHeadView = new DownHeadView(getContext());
         stickyHeadView = new StickyHeadView(getContext());

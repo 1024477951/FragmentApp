@@ -7,6 +7,7 @@ import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
