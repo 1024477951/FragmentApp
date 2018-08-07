@@ -32,6 +32,7 @@
         android:layout_below="@+id/tv_time"
         android:layout_marginTop="@dimen/d30.0"
         android:layout_marginLeft="@dimen/d10.0"
+        android:layout_marginRight="@dimen/d120.0"
         android:orientation="horizontal">
         <RelativeLayout android:id="@+id/layout_content"
             android:layout_width="@dimen/d0.0"
@@ -44,15 +45,15 @@
                 android:text="sfdsafasfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfsafd"/>
         </RelativeLayout>
 
-        <FrameLayout android:id="@+id/root_status"
+        <FrameLayout android:id="@+id/layout_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/d10.0">
             <Button
                 android:id="@+id/btn_error"
-                android:layout_width="@dimen/d30.0"
-                android:layout_height="@dimen/d30.0"
-                android:layout_marginLeft="@dimen/d10.0"
+                android:layout_width="@dimen/d50.0"
+                android:layout_height="@dimen/d50.0"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
                 android:scaleType="fitCenter"
@@ -60,7 +61,6 @@
             <TextView android:id="@+id/tv_read"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/d10.0"
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/d32.0"
                 android:textColor="#338EFF"

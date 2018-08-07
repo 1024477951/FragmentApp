@@ -32,7 +32,7 @@ public class IMActivity extends BaseActivity implements IIMView{
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private IMAdapter adapter;
-    private List<IMEntity> list = new ArrayList<>();
+    private List<MsgBean> list = new ArrayList<>();
 
     private TextHeadView textHeadView;
     private DownHeadView downHeadView;
@@ -107,31 +107,9 @@ public class IMActivity extends BaseActivity implements IIMView{
 
     @Override
     public void success(List<MsgBean> list) {
-        IMEntity entity = null;
-        MsgBean bean = null;
-        for(int i = 0;i < list.size(); i++){
-            int type;
-            if (i % 2 == 0){
-                type = IMEntity.Send;
-            }else{
-                type = IMEntity.Receive;
-            }
-            entity = new IMEntity(type);
-            entity.setData(list.get(i));
-
-            this.list.add(entity);
-        }
-        entity = new IMEntity(IMEntity.Send);
-        bean = new MsgBean();
-        bean.setType(MsgBean.Photo);
-        entity.setData(bean);
-        this.list.add(entity);
-        entity = new IMEntity(IMEntity.Receive);
-        bean = new MsgBean();
-        bean.setType(MsgBean.Photo);
-        entity.setData(bean);
-        this.list.add(entity);
-        adapter.addData(this.list);
+        this.list.clear();
+        this.list.addAll(list);
+        adapter.setNewData(this.list);
     }
 
     @Override
@@ -153,6 +131,5 @@ public class IMActivity extends BaseActivity implements IIMView{
     protected void onDestroy() {
         super.onDestroy();
         presenter = null;
-        HolderHelper.getInsatance().clear();
     }
 }

@@ -24,11 +24,31 @@ public class IMPresenter extends BasePresenter {
     public void getList(int page){
         List<MsgBean> list = new ArrayList<>();
         MsgBean bean = null;
-        for (int i = 0;i < 20;i++){
+        for (int i = 0;i < 6;i++){
             bean = new MsgBean();
             bean.setType(MsgBean.Text);
+            if (i % 2 == 0){
+                bean.setSelf(true);
+            }
             list.add(bean);
         }
+        bean = new MsgBean();
+        bean.setType(MsgBean.Photo);
+        bean.setSelf(true);
+        list.add(bean);
+
+        bean = new MsgBean();
+        bean.setType(MsgBean.Photo);
+        list.add(bean);
+
+        bean = new MsgBean();
+        bean.setType(MsgBean.Image_Text);
+        bean.setSelf(true);
+        list.add(bean);
+        bean = new MsgBean();
+        bean.setType(MsgBean.Image_Text);
+        list.add(bean);
+
         view.success(list);
         new Handler().postDelayed(new Runnable() {
             @Override

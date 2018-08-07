@@ -176,7 +176,7 @@ public class RefreshLayout extends FrameLayout {
                             if (callBack != null)
                                 callBack.pullListener(paddingTop);
                         }
-                    } else if (isBottom) {
+                    } else if (isBottom && mFootLayout.getChildCount() > 0) {
                         //限制上滑时不能超过底部的宽度，不然会超出边界
                         //mHeadHeight+20 上滑设置的margin要超过headheight，不然下面判断的大于headheight不成立，下面的margin基础上面设置后的参数
                         if (Math.abs(paddingTop) <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置

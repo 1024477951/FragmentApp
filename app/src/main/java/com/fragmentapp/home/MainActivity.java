@@ -12,7 +12,6 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.home.adapter.MainAdapter;
-import com.fragmentapp.im.HolderHelper;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
