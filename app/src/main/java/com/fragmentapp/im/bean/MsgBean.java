@@ -10,8 +10,17 @@ public class MsgBean {
     public static final int Photo = 2;
     public static final int Image_Text = 3;
 
+    private int id;
     private int type;
     private boolean isSelf;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getType() {
         return type;

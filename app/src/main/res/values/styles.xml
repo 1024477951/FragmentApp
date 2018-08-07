@@ -52,4 +52,10 @@
         <attr name="sl_dy" format="dimension"/>
     </declare-styleable>
 
+    <!--***************启动页Theme***************-->
+    <style name="Theme.Splash" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/shape_navigation</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

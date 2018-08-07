@@ -1,5 +1,7 @@
 package com.fragmentapp.login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +23,19 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends BaseActivity implements ILoginView{
+
+    public static void start(Context context) {
+        start(context, null);
+    }
+
+    public static void start(Context context, Intent extras) {
+        Intent intent = new Intent();
+        intent.setClass(context, LoginActivity.class);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
+    }
 
     @BindView(R.id.root)
     View root;

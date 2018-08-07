@@ -40,10 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** center */
     @Nullable @BindView(R.id.tv_title)
     public TextView tv_title;
-    @Nullable @BindView(R.id.tv_status)
-    public TextView tv_status;
-    @Nullable @BindView(R.id.img_triangle)
-    public ImageView img_triangle;
 
     /** right */
     @Nullable @BindView(R.id.tv_right_title)
@@ -61,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void init();
 
     protected Context context;
-    private ImmersionBar mImmersionBar;
+    protected ImmersionBar mImmersionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,10 +68,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         emptyLayout = new EmptyLayout(this);
         mImmersionBar = ImmersionBar.with(this)
-                .fitsSystemWindows(true)
-                .keyboardEnable(true)//解决软键盘与底部输入框冲突问题
-                .statusBarAlpha(0.3f)  //状态栏透明度，不写默认0.0f
-                .statusBarColor(R.color.colorPrimary);
+                .fitsSystemWindows(false)
+                .keyboardEnable(true)
+                .navigationBarWithKitkatEnable(false);
         mImmersionBar.init();
         init();
     }
@@ -114,16 +109,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void setTitleText(String title){
         tv_title.setText(title);
-        img_triangle.setVisibility(View.GONE);
     }
 
     protected void setTitleText(String title,boolean isGoneTriangle){
         tv_title.setText(title);
-        if (isGoneTriangle == true){
-            img_triangle.setVisibility(View.VISIBLE);
-        }else{
-            img_triangle.setVisibility(View.INVISIBLE);
-        }
     }
 
     protected void setTitleRightText(String title){
@@ -154,11 +143,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         tv_read.setVisibility(View.GONE);
         circle_read.setVisibility(View.GONE);
-    }
-
-    protected void setTitleStatus(String status){
-        tv_status.setText(status);
-        tv_status.setVisibility(View.VISIBLE);
     }
 
     protected void setTitleReadNum(String num){

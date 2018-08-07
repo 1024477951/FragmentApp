@@ -24,31 +24,52 @@ public class IMPresenter extends BasePresenter {
     public void getList(int page){
         List<MsgBean> list = new ArrayList<>();
         MsgBean bean = null;
-        for (int i = 0;i < 6;i++){
+        if (page == 1) {
             bean = new MsgBean();
+            bean.setId(0);
             bean.setType(MsgBean.Text);
-            if (i % 2 == 0){
-                bean.setSelf(true);
-            }
             list.add(bean);
+
+            bean = new MsgBean();
+            bean.setId(1);
+            bean.setType(MsgBean.Photo);
+            bean.setSelf(true);
+            list.add(bean);
+
+            bean = new MsgBean();
+            bean.setId(2);
+            bean.setType(MsgBean.Photo);
+            list.add(bean);
+
+            bean = new MsgBean();
+            bean.setId(3);
+            bean.setType(MsgBean.Image_Text);
+            bean.setSelf(true);
+            list.add(bean);
+            bean = new MsgBean();
+            bean.setId(4);
+            bean.setType(MsgBean.Image_Text);
+            list.add(bean);
+
+            bean = new MsgBean();
+            bean.setId(5);
+            bean.setType(MsgBean.Text);
+            bean.setSelf(true);
+            list.add(bean);
+            bean = new MsgBean();
+            bean.setId(6);
+            bean.setType(MsgBean.Text);
+            list.add(bean);
+
+        }else{
+            for (int i = 0; i < 4; i++) {
+                bean = new MsgBean();
+                bean.setId(i);
+                bean.setType(MsgBean.Text);
+                bean.setSelf(true);
+                list.add(bean);
+            }
         }
-        bean = new MsgBean();
-        bean.setType(MsgBean.Photo);
-        bean.setSelf(true);
-        list.add(bean);
-
-        bean = new MsgBean();
-        bean.setType(MsgBean.Photo);
-        list.add(bean);
-
-        bean = new MsgBean();
-        bean.setType(MsgBean.Image_Text);
-        bean.setSelf(true);
-        list.add(bean);
-        bean = new MsgBean();
-        bean.setType(MsgBean.Image_Text);
-        list.add(bean);
-
         view.success(list);
         new Handler().postDelayed(new Runnable() {
             @Override

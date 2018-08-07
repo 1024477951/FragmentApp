@@ -43,10 +43,6 @@ public abstract class LazyFragment extends BaseFragment {
     /** center */
     @Nullable @BindView(R.id.tv_title)
     public TextView tv_title;
-    @Nullable @BindView(R.id.tv_status)
-    public TextView tv_status;
-    @Nullable @BindView(R.id.img_triangle)
-    public ImageView img_triangle;
 
     /** right */
     @Nullable @BindView(R.id.tv_right_title)
@@ -97,7 +93,7 @@ public abstract class LazyFragment extends BaseFragment {
 
         mImmersionBar = ImmersionBar.with(this)
                 .fitsSystemWindows(false)
-                .statusBarView(R.id.view_status,contentView)
+                .statusBarView(R.id.view_status)
                 .keyboardEnable(true)
                 .navigationBarWithKitkatEnable(false);
         mImmersionBar.init();
@@ -131,7 +127,6 @@ public abstract class LazyFragment extends BaseFragment {
 
     protected void setTitleText(String title){
         tv_title.setText(title);
-        tv_status.setVisibility(View.GONE);
     }
 
     protected void setTitleLeftText(String title){
@@ -179,16 +174,6 @@ public abstract class LazyFragment extends BaseFragment {
 
     protected void setTitleText(String title,boolean isGoneTriangle){
         tv_title.setText(title);
-        if (isGoneTriangle == true){
-            img_triangle.setVisibility(View.VISIBLE);
-        }else{
-            img_triangle.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    protected void setTitleStatus(String status){
-        tv_status.setText(status);
-        tv_status.setVisibility(View.VISIBLE);
     }
 
     protected void setTitleReadNum(String num){

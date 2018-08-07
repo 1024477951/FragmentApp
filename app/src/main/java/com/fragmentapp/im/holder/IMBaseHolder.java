@@ -12,6 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by liuzhen on 2018/8/7.
+ * baseHolder view
  */
 
 public abstract class IMBaseHolder extends BaseViewHolder {

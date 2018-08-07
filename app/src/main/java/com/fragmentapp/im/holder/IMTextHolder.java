@@ -24,7 +24,7 @@ public class IMTextHolder extends IMBaseHolder{
         }
         tv_content.setTextColor(txtColor);
     }
-
+    /** 此处参数为 baseHolder view */
     public IMTextHolder(View view) {
         super(view);
     }

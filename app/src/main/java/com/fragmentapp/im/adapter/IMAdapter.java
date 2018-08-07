@@ -99,7 +99,7 @@ public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
         switch (item.getType()){
             case MsgBean.Text:
                 IMTextHolder holder = (IMTextHolder)helper;
-                holder.setContent("sdfsafasfdasdfasdfasdfasfafdasdfsafdasfdasfsadfasfasfasfsafsadfafsadfas");
+                holder.setContent(item.getId()+"");
                 break;
         }
         if (item.isSelf() && (item.getType() == MsgBean.Image_Text)){//只有发送样式不同
