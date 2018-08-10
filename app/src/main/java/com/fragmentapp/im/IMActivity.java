@@ -109,6 +109,7 @@ public class IMActivity extends BaseActivity implements IIMView{
                     }
                 });
 
+        //viewholder 点击监听
         adapter.setClickListener(new IMAdapter.IMClickListener() {
             @Override
             public void click(View view, MsgBean message) {
@@ -122,7 +123,7 @@ public class IMActivity extends BaseActivity implements IIMView{
                 }
             }
         });
-
+        //viewholder 长按监听
         adapter.setLongClickListener(new IMAdapter.IMLongClickListener() {
             @Override
             public void longClick(View view, MsgBean message) {
