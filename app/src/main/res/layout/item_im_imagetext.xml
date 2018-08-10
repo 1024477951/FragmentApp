@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content" >
 
-    <ImageView
-        android:layout_width="@dimen/d150.0"
-        android:layout_height="@dimen/d150.0"
-        android:src="@drawable/rotate_progress"/>
+    <ImageView android:id="@+id/iv_file"
+        android:layout_width="@dimen/d170.0"
+        android:layout_height="@dimen/d170.0"
+        android:src="@mipmap/icon_file_other"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_111111"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/d10.0"
-        android:lineSpacingExtra="5dp"
-        android:text="image text"/>
+        android:layout_toRightOf="@+id/iv_file"
+        android:layout_marginLeft="@dimen/d14.0"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0.0"
+            android:layout_weight="1"
+            android:textSize="@dimen/d46.0"
+            android:gravity="top"
+            android:textColor="#111111"
+            android:layout_marginRight="3dp"
+            android:lines="1"
+            android:text="这里的文件名字最"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0.0"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:layout_marginRight="3dp"
+            android:textSize="@dimen/d36.0"
+            android:lines="2"
+            android:text="这里是内容啊内容内容内容
+内容内容内容内容内容内..."/>
+
+    </LinearLayout>
+
+    <TextView android:id="@+id/tv_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_file"
+        android:layout_marginTop="@dimen/d15.0"
+        android:textSize="@dimen/d30.0"
+        android:textColor="#999999"
+        android:text="未读"/>
+
+</RelativeLayout>

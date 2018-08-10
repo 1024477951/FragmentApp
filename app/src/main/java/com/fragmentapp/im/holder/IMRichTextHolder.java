@@ -1,9 +1,9 @@
 package com.fragmentapp.im.holder;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fragmentapp.App;
 import com.fragmentapp.R;
 import com.fragmentapp.im.MessageStatus;
 import com.fragmentapp.im.bean.MsgBean;
@@ -12,17 +12,20 @@ import com.fragmentapp.im.bean.MsgBean;
  * Created by liuzhen on 2018/8/7.
  */
 
-public class IMImageTextHolder extends IMBaseHolder{
+public class IMRichTextHolder extends IMBaseHolder{
 
-    protected TextView tv_update,tv_content,tv_title;
-    protected ImageView iv_file;
+    protected TextView tv_content;
 
     @Override
     protected void init(boolean isSelef) {
-        iv_file = getView(R.id.iv_file);
-        tv_update = getView(R.id.tv_update);
         tv_content = getView(R.id.tv_content);
-        tv_title = getView(R.id.tv_title);
+        int txtColor;
+        if (isSelef){
+            txtColor = App.getInstance().getResources().getColor(R.color.color_ffffff);
+        }else{
+            txtColor = App.getInstance().getResources().getColor(R.color.color_4b4b4b);
+        }
+        tv_content.setTextColor(txtColor);
     }
 
     @Override
@@ -55,19 +58,15 @@ public class IMImageTextHolder extends IMBaseHolder{
         }
     }
 
-    public IMImageTextHolder(View view) {
+    /** 此处参数为 baseHolder view */
+    public IMRichTextHolder(View view) {
         super(view);
-
     }
 
     @Override
     public void content(final MsgBean item){
 
-        tv_title.setText("这是一个图文消息");
-        tv_content.setText("xxxxxxxxxxxxx");
-
-        String val = "xxx 更新于xxxx xx xx";
-        tv_update.setText(val);
+        tv_content.setText("这是一个富文本");
 
         btn_error.setOnClickListener(new View.OnClickListener() {
             @Override

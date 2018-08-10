@@ -1,28 +1,34 @@
 package com.fragmentapp.im.holder;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.fragmentapp.R;
+import com.fragmentapp.helper.AudioPlayerUtils;
 import com.fragmentapp.im.MessageStatus;
 import com.fragmentapp.im.bean.MsgBean;
+
+import java.util.HashMap;
 
 /**
  * Created by liuzhen on 2018/8/7.
  */
 
-public class IMImageTextHolder extends IMBaseHolder{
+public class IMVoiceHolder extends IMBaseHolder{
 
-    protected TextView tv_update,tv_content,tv_title;
-    protected ImageView iv_file;
+    private static HashMap<Integer, ImageView> mData = new HashMap<>();
+
+    protected TextView tv_bg,tv_lenght;
+    protected ImageView iv_anim;
+
+    private AnimationDrawable anim;
 
     @Override
     protected void init(boolean isSelef) {
-        iv_file = getView(R.id.iv_file);
-        tv_update = getView(R.id.tv_update);
-        tv_content = getView(R.id.tv_content);
-        tv_title = getView(R.id.tv_title);
+        tv_bg = getView(R.id.tv_bg);
+        tv_lenght = getView(R.id.tv_lenght);
+        iv_anim = getView(R.id.iv_anim);
     }
 
     @Override
@@ -55,19 +61,54 @@ public class IMImageTextHolder extends IMBaseHolder{
         }
     }
 
-    public IMImageTextHolder(View view) {
+    /** 此处参数为 baseHolder view */
+    public IMVoiceHolder(View view) {
         super(view);
-
     }
 
     @Override
     public void content(final MsgBean item){
+        /**
+         * 2秒及以内默认200px，到40秒每间隔10秒增进60px，40秒到60每隔10秒增进40px*/
+        long duration = 2000;
+        String lengthStr = duration + "2''";
+        int maxWidth = 520;
+        int minWidth = 200;
+        int width;
+        if (duration < 2){
+            width = minWidth;
+        }else if (duration > 2 && duration < 40){
+            long moreDuration = (duration) / 10;
+            width = 60 * (int)moreDuration + minWidth;
+        }else{
+            long moreDuration = (duration) / 10;
+            width = 40 * (int)moreDuration + minWidth;
+        }
+        tv_bg.setWidth(width > maxWidth ? maxWidth : width);
+        tv_lenght.setText(lengthStr);
 
-        tv_title.setText("这是一个图文消息");
-        tv_content.setText("xxxxxxxxxxxxx");
+        AudioPlayerUtils.newInstance().setCallBack(new AudioPlayerUtils.CallBack() {
+            @Override
+            public void stop() {
+                for (ImageView iv : mData.values()) {
+                    AnimationDrawable anim = (AnimationDrawable) iv.getBackground();
+                    anim.selectDrawable(0);      //选择当前动画的第一帧，然后停止
+                    anim.stop();
+                }
+                mData.clear();
+                if (anim != null){
+                    anim.stop();
+                    anim.selectDrawable(0);
+                    anim = null;
+                }
+//                KLog.json("Player","stop "+ JSONArray.toJSONString(mData.keySet()));
+            }
 
-        String val = "xxx 更新于xxxx xx xx";
-        tv_update.setText(val);
+            @Override
+            public void start() {
+
+            }
+        });
 
         btn_error.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,5 +144,20 @@ public class IMImageTextHolder extends IMBaseHolder{
             }
         });
     }
+
+    public void playVoice(MsgBean message) {
+        if (anim != null){
+            anim.stop();
+            anim.selectDrawable(0);
+            anim = null;
+        }
+        anim = (AnimationDrawable) iv_anim.getBackground();
+        anim.start();
+        mData.put(message.getId(),iv_anim);
+
+//        KLog.e("Player","start "+message.getMessageUId());
+//        AudioPlayerUtils.newInstance().playBase64(voiceMsg.getBase64());
+    }
+
 
 }

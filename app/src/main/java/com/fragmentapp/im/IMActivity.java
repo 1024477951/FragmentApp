@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
@@ -107,6 +108,30 @@ public class IMActivity extends BaseActivity implements IIMView{
                         stickyHeadView.move(pullHeight);
                     }
                 });
+
+        adapter.setClickListener(new IMAdapter.IMClickListener() {
+            @Override
+            public void click(View view, MsgBean message) {
+                switch (view.getId()){
+                    case R.id.btn_error:
+                        break;
+                    case R.id.layout_content:
+                        break;
+                    case R.id.profile_image:
+                        break;
+                }
+            }
+        });
+
+        adapter.setLongClickListener(new IMAdapter.IMLongClickListener() {
+            @Override
+            public void longClick(View view, MsgBean message) {
+                switch (view.getId()){
+                    case R.id.layout_content:
+                        break;
+                }
+            }
+        });
 
     }
 

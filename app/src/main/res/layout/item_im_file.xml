@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="@dimen/d600.0"
+    android:orientation="horizontal">
+
+    <ImageView android:id="@+id/iv_file"
+        android:layout_width="@dimen/d170.0"
+        android:layout_height="@dimen/d170.0"
+        android:src="@mipmap/icon_file_other"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/d14.0"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0.0"
+            android:layout_weight="1"
+            android:textSize="@dimen/d46.0"
+            android:gravity="top"
+            android:textColor="#111111"
+            android:layout_marginRight="3dp"
+            android:lines="2"
+            android:text="这里的文件名字最最长最长只能到这...里.pdf"/>
+        <ProgressBar android:id="@+id/pb_down"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="bottom"
+            style="@style/progressBarHorizontal"
+            android:max="100" />
+        <FrameLayout android:id="@+id/down_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+            <TextView android:id="@+id/tv_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#999999"
+                android:textSize="@dimen/d36.0"
+                android:text="10.5M"/>
+            <TextView android:id="@+id/tv_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="#338EFF"
+                android:textSize="@dimen/d36.0"
+                android:text="未下载"/>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

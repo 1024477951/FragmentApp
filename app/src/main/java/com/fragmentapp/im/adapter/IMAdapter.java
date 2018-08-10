@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fragmentapp.R;
+import com.fragmentapp.im.MessageStatus;
 import com.fragmentapp.im.bean.MsgBean;
 import com.fragmentapp.im.bean.MsgType;
 import com.fragmentapp.im.holder.IMBaseHolder;
@@ -20,6 +21,9 @@ import java.util.List;
  */
 
 public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
+
+    protected IMAdapter.IMClickListener clickListener;
+    protected IMAdapter.IMLongClickListener longClickListener;
 
     public IMAdapter(@Nullable List<MsgBean> data) {
         super(data);
@@ -55,8 +59,11 @@ public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
         return type;
     }
 
+    /**
+     * 自定义viewholder,抽离原本布局复用，也可样式分离，比如 [语音]
+     * */
     @Override
-    public IMBaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {//自定义viewholder
+    public IMBaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         IMBaseHolder holder = null;
         View view = null;
@@ -90,21 +97,56 @@ public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
                 holder = new IMImageTextHolder(inflater.inflate(R.layout.item_im_receive_holder, parent,false));
                 break;
         }
-        holder.setContent(view,isSelf);
+        holder.setContentView(view,isSelf);
         return holder;
     }
 
+    /**
+     * 抽象适配器方法，重复利用，减少比对
+     * */
     @Override
     protected void convert(IMBaseHolder helper, MsgBean item) {
-        switch (item.getType()){
-            case MsgBean.Text:
-                IMTextHolder holder = (IMTextHolder)helper;
-                holder.setContent(item.getId()+"");
+        if (helper == null) return;
+        boolean isShowDate = false;
+
+        boolean whiteBg = false;
+        switch (item.getType()) {
+            case MsgBean.Image_Text:
+                whiteBg = true;
+                break;
+            case MsgBean.File:
+                whiteBg = true;
                 break;
         }
-        if (item.isSelf() && (item.getType() == MsgBean.Image_Text)){//只有发送样式不同
+        helper.setContent(item);
+        if (item.isSelf() && whiteBg){//只有发送样式不同
             helper.setContentBg();
         }
+        if (isShowDate){
+            helper.showMsgLine(0);
+        }
+
+        if (item.isSelf()) {
+            helper.setStatus(MessageStatus.READ);
+        }
+
+        helper.setClickListener(clickListener);
+        helper.setLongClickListener(longClickListener);
     }
 
+    public interface IMClickListener {
+        void click(View view,MsgBean message);
+    }
+
+    public interface IMLongClickListener {
+        void longClick(View view, MsgBean message);
+    }
+
+    public void setClickListener(IMClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public void setLongClickListener(IMLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
+    }
 }

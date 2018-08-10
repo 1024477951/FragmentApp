@@ -52,10 +52,21 @@
         <attr name="sl_dy" format="dimension"/>
     </declare-styleable>
 
-    <!--***************启动页Theme***************-->
     <style name="Theme.Splash" parent="AppTheme">
         <item name="android:windowBackground">@drawable/shape_navigation</item>
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="progressBar_im_loading" parent="android:Widget.DeviceDefault.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateDrawable">@drawable/progressbar_im_image</item>
+    </style>
+
+    <style name="progressBarHorizontal" parent="android:Widget.DeviceDefault.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_color_horizontal</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:maxHeight">5dip</item>
     </style>
 
 </resources>

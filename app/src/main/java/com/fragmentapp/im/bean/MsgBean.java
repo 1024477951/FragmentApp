@@ -9,6 +9,10 @@ public class MsgBean {
     public static final int Text = 1;
     public static final int Photo = 2;
     public static final int Image_Text = 3;
+    public static final int Event = 4;
+    public static final int Voice = 5;
+    public static final int TextImage = 6;
+    public static final int File = 7;
 
     private int id;
     private int type;

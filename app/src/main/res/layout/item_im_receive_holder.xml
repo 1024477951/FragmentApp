@@ -33,41 +33,62 @@
         android:layout_marginTop="@dimen/d30.0"
         android:layout_marginLeft="@dimen/d10.0"
         android:layout_marginRight="@dimen/d120.0"
-        android:orientation="horizontal">
-        <RelativeLayout android:id="@+id/layout_content"
-            android:layout_width="@dimen/d0.0"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_im_receive_def_bg">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sfdsafasfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfsafd"/>
-        </RelativeLayout>
+        android:orientation="vertical">
 
-        <FrameLayout android:id="@+id/layout_status"
+        <TextView android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/d10.0">
-            <Button
-                android:id="@+id/btn_error"
-                android:layout_width="@dimen/d50.0"
-                android:layout_height="@dimen/d50.0"
-                android:layout_gravity="center_vertical"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:background="@mipmap/icon_im_error"/>
-            <TextView android:id="@+id/tv_read"
+            android:textColor="@color/color_545454"
+            android:textSize="@dimen/d30.0"
+            android:text="name"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d10.0"
+            android:orientation="horizontal">
+            <RelativeLayout android:id="@+id/layout_content"
+                android:layout_width="@dimen/d0.0"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/icon_im_receive_def_bg">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sfdsafasfdsafasfs"/>
+            </RelativeLayout>
+
+            <FrameLayout android:id="@+id/layout_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textSize="@dimen/d32.0"
-                android:textColor="#338EFF"
-                android:gravity="center"
-                android:text="未读" />
-        </FrameLayout>
+                android:layout_marginLeft="@dimen/d10.0">
+                <Button
+                    android:id="@+id/btn_error"
+                    android:layout_width="@dimen/d50.0"
+                    android:layout_height="@dimen/d50.0"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:scaleType="fitCenter"
+                    android:background="@mipmap/icon_im_error"/>
+                <TextView android:id="@+id/tv_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/d32.0"
+                    android:textColor="#338EFF"
+                    android:gravity="center"
+                    android:text="未读" />
+                <ProgressBar
+                    android:id="@+id/pb_load"
+                    style="@style/progressBar_im_loading"
+                    android:layout_width="@dimen/d50.0"
+                    android:layout_height="@dimen/d50.0"
+                    android:layout_gravity="center_vertical" />
+            </FrameLayout>
 
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

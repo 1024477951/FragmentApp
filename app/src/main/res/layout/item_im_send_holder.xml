@@ -57,17 +57,24 @@
                 android:textColor="#338EFF"
                 android:gravity="center"
                 android:text="未读" />
+            <ProgressBar
+                android:id="@+id/pb_load"
+                style="@style/progressBar_im_loading"
+                android:layout_width="@dimen/d50.0"
+                android:layout_height="@dimen/d50.0"
+                android:layout_gravity="center_vertical" />
         </FrameLayout>
 
         <RelativeLayout android:id="@+id/layout_content"
             android:layout_width="@dimen/d0.0"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:background="@drawable/icon_im_send_def_bg">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sfdsafasfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfdsafasfsafdsfsafd"/>
+                android:text="sfdsafasfds"/>
         </RelativeLayout>
 
     </LinearLayout>
