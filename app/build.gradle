@@ -83,4 +83,9 @@ dependencies {
     implementation "com.gyf.barlibrary:barlibrary:2.3.0"
     //权限
     //    implementation 'pub.devrel:easypermissions:1.2.0'//会引起合并冲突问题
+
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
 }
