@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/d200.0"
     android:background="@color/white"
-    android:padding="@dimen/d40.0">
+    android:paddingLeft="@dimen/d30.0"
+    android:paddingRight="@dimen/d30.0">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="@dimen/d150.0"
         android:layout_height="@dimen/d150.0"
         android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
         android:src="@mipmap/icon_chat_single"
         app:civ_border_color="@color/color_ffffff"
         app:civ_border_width="@dimen/d1.0" />
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/layout_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/d15.0"
         android:layout_toRightOf="@+id/profile_image"
@@ -79,5 +79,13 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d1.0"
+        android:layout_marginTop="@dimen/d20.0"
+        android:layout_marginBottom="@dimen/d20.0"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_navigation"/>
 
 </RelativeLayout>
