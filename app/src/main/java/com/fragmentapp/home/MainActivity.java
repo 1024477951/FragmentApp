@@ -12,6 +12,7 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.home.adapter.MainAdapter;
+import com.fragmentapp.im.service.WebSocketService;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -61,6 +62,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 init();
             }
         });
+
+        Intent intent = new Intent(this, WebSocketService.class);
+        startService(intent);
     }
 
     public void click(View view){
@@ -135,6 +139,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onDestroy();
         menus.clear();
         menus = null;
+        Intent intent = new Intent(this, WebSocketService.class);
+        stopService(intent);
         Logger.e(TAG,"-----程序退出-----");
     }
 }

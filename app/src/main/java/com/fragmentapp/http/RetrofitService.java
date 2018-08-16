@@ -17,8 +17,8 @@ import retrofit2.http.QueryMap;
 public interface RetrofitService {
 
     @FormUrlEncoded
-    @POST("/Login")
-    Observable<BaseResponses<LoginDataBean>> login(@FieldMap Map<String, String> map);
+    @POST("/api/message/register")
+    Observable<BaseResponses> register(@FieldMap Map<String, String> map);
 
 //    //获取文章列表信息
 //    @POST("/Article/getArticleList")

@@ -53,7 +53,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <service android:name=".im.service.WebSocketService"/>
+
+        <service android:name=".im.service.WebSocketService" />
     </application>
 
 </manifest>

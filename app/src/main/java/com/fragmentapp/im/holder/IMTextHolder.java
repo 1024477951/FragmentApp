@@ -1,10 +1,5 @@
 package com.fragmentapp.im.holder;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
@@ -71,7 +66,7 @@ public class IMTextHolder extends IMBaseHolder{
     @Override
     public void content(final MsgBean item){
 
-        tv_content.setText("这是一个普通文本");
+        tv_content.setText("这是一个普通文本 "+item.getId());
 
         btn_error.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.fragmentapp.http.RetrofitHelper;
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
 import java.net.URISyntaxException;
@@ -25,6 +26,8 @@ public class WebSocketService extends Service {
     private Socket mSocket;
     private final String TAG = this.getClass().getSimpleName();
 
+    private int count = 0;
+
     /**
      * 首次创建服务时，系统将调用此方法来执行一次性设置程序（在调用 onStartCommand() 或 onBind() 之前）。
      * 如果服务已在运行，则不会调用此方法。该方法只被调用一次
@@ -32,7 +35,7 @@ public class WebSocketService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Logger.e(TAG+"service create");
     }
 
     @Nullable
@@ -45,7 +48,7 @@ public class WebSocketService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Logger.e(TAG,"创建WebSocket:");
+        Logger.e(TAG+"创建WebSocket");
         initWebSocket();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -61,7 +64,8 @@ public class WebSocketService extends Service {
 //        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
 //        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
         mSocket.off();
-        Logger.e(TAG,"WebSocket销毁了:");
+        mSocket = null;
+        Logger.e(TAG+" WebSocket销毁了");
     }
 
     private void initWebSocket() {
@@ -69,13 +73,15 @@ public class WebSocketService extends Service {
             try {
                 IO.Options opts = new IO.Options();
                 opts.forceNew = true;
-                opts.transports = new String[]{WebSocket.NAME};//polling/websocket
+                opts.transports = new String[]{WebSocket.NAME};//['websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
                 opts.query = "uid=" + 1801 + "&auth=androidA0:32:99:4E:66:77";
                 opts.reconnection = true;// 是否自动重连
-                opts.reconnectionAttempts = 3;// 重连尝试次数
+                opts.reconnectionAttempts = 100;// 重连尝试次数
                 opts.reconnectionDelay = 1000;// 重连间隔
-                opts.timeout = 20000;// 连接超时时间 ms
-                mSocket = IO.socket(RetrofitHelper.BASE_URL_USER,opts);
+                opts.timeout = 5000;// 连接超时时间 ms
+                opts.multiplex = false;//当连接超时后是否允许Socket.io以其他连接方式尝试连接
+
+                mSocket = IO.socket(RetrofitHelper.Socket_Url,opts);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -86,25 +92,26 @@ public class WebSocketService extends Service {
             mSocket.on("message", new Emitter.Listener() { //监听回调函数
                 @Override
                 public void call(Object... args) {
-
+                    Logger.json("message:" + args[0]);
                 }
             });
-
-            mSocket.connect();
+            count = 0;
         }
+        mSocket.connect();
     }
 
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Logger.e(TAG," WebSocket连接:" + Arrays.toString(args));
+            count++;
+            Logger.e(TAG+" "+count+" WebSocket连接:" + Arrays.toString(args));
         }
     };
 
     private Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Logger.e(TAG," WebSocket断开:" + Arrays.toString(args));
+            Logger.e(TAG+" WebSocket断开:" + Arrays.toString(args));
         }
     };
 
@@ -112,7 +119,7 @@ public class WebSocketService extends Service {
         @Override
         public void call(Object... args) {
 
-            Logger.e(TAG,"WebSocket连接异常:" + Arrays.toString(args));
+            Logger.e(TAG+" WebSocket连接异常:" + Arrays.toString(args));
             /*如果想长连接，则不用关闭service*/
 //            stopSelf();
         }

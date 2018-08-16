@@ -6,24 +6,33 @@ package com.fragmentapp.http;
 
 public class BaseResponses<T> {
 
-    private String info;
-    private int status;
+    private String message;
+    private int code;
+    private int http_code;
     private T data;
 
-    public String getInfo() {
-        return info;
+    public String getMessage() {
+        return message;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getHttp_code() {
+        return http_code;
+    }
+
+    public void setHttp_code(int http_code) {
+        this.http_code = http_code;
     }
 
     public T getData() {

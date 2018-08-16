@@ -56,7 +56,7 @@ public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
                 }
                 break;
         }
-        return type;
+        return type;//返回细分类型
     }
 
     /**
@@ -97,18 +97,21 @@ public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
                 holder = new IMImageTextHolder(inflater.inflate(R.layout.item_im_receive_holder, parent,false));
                 break;
         }
-        holder.setContentView(view,isSelf);
+        holder.setContentView(view,isSelf);//给通用视图填充多类型视图
         return holder;
     }
 
     /**
      * 抽象适配器方法，重复利用，减少比对
+     * 避免多类型时类型转换繁琐操作，直接抽象成base
      * */
     @Override
     protected void convert(IMBaseHolder helper, MsgBean item) {
         if (helper == null) return;
-        boolean isShowDate = false;
 
+        helper.setContent(item);//把通用的操作放在base里
+
+        boolean isShowDate = false;
         boolean whiteBg = false;
         switch (item.getType()) {
             case MsgBean.Image_Text:
@@ -118,16 +121,16 @@ public class IMAdapter extends BaseQuickAdapter<MsgBean, IMBaseHolder> {
                 whiteBg = true;
                 break;
         }
-        helper.setContent(item);
+
         if (item.isSelf() && whiteBg){//只有发送样式不同
             helper.setContentBg();
         }
         if (isShowDate){
-            helper.showMsgLine(0);
+            helper.showMsgLine(0);//显示历史消息样式
         }
 
         if (item.isSelf()) {
-            helper.setStatus(MessageStatus.READ);
+            helper.setStatus(MessageStatus.READ);//状态固定为已读
         }
 
         helper.setClickListener(clickListener);

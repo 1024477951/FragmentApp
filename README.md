@@ -15,6 +15,12 @@
 
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/beans.gif)
 
+--IM多类型holder封装--
+
+博客地址：https://www.cnblogs.com/LiuZhen/p/9483145.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/holder.gif)
+
 --首页菜单--
 
 博客地址：http://www.cnblogs.com/LiuZhen/p/7865625.html

@@ -20,14 +20,14 @@ public class LoginModel implements ILoginModel {
 
     @Override
     public void login(final BaseObserver<BaseResponses<LoginDataBean>> observer,String username,String pwd) {
-        Map<String, String> map = new HashMap<>();
-        map.put("account[username]", username);
-        map.put("account[password]", pwd);
-        RetrofitHelper.getInstance().getService()
-                .login(map)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("HC-ACCESS-TOKEN", username);
+//        map.put("account[password]", pwd);
+//        RetrofitHelper.getInstance().getService()
+//                .register(map)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(observer);
     }
 
 }

@@ -21,18 +21,18 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
 
     @Override
     public void onNext(T t) {
-        Logger.e(TAG, "onNext"+t);
-        if (t.getStatus() == 200) {
+        Logger.e(TAG, "onNext "+t);
+        if (t.getHttp_code() == 200) {
             onNextResponse(t);
         } else {
-            Logger.e(TAG, "ErrorStatus:" + t.getStatus() + "ErrorInfo" + t.getInfo());
+            Logger.e(TAG, "ServerStatus:" + t.getCode()+" HttpStatus:"+ t.getHttp_code() + " ErrorInfo:" + t.getMessage());
             onErrorResponse(t);
         }
     }
 
     @Override
     public void onError(Throwable e) {
-        Logger.e(TAG, "onError" + e.toString());
+        Logger.e(TAG, "onError:" + e.toString());
         onNetWorkError("onError 网络超时，请重新尝试--"+e.getMessage());
         if (Looper.myLooper() == null) {
             Looper.prepare();
