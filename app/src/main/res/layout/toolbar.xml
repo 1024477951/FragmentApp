@@ -48,7 +48,7 @@
                 android:minWidth="@dimen/d58.0"
                 android:paddingLeft="@dimen/d15.0"
                 android:paddingRight="@dimen/d15.0"
-                android:textColor="@color/color_FFFEFE"
+                android:textColor="@color/color_fffefe"
                 android:textSize="@dimen/d36.0"
                 android:visibility="invisible"/>
         </RelativeLayout>

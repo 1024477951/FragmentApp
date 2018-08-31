@@ -11,8 +11,10 @@ import android.widget.CheckBox;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
+import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.home.adapter.MainAdapter;
 import com.fragmentapp.im.service.WebSocketService;
+import com.fragmentapp.login.LoginActivity;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -45,6 +47,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void init() {
+        String token = SharedPreferencesUtils.getParam("token");
+        if (token != null){
         adapter = new MainAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(FragmentHelper.getCount());
@@ -65,6 +69,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         Intent intent = new Intent(this, WebSocketService.class);
         startService(intent);
+        }else {
+            LoginActivity.start(context);
+            finish();
+        }
     }
 
     public void click(View view){

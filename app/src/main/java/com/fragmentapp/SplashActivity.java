@@ -1,6 +1,8 @@
 package com.fragmentapp;
 
 import com.fragmentapp.base.BaseActivity;
+import com.fragmentapp.helper.SharedPreferencesUtils;
+import com.fragmentapp.home.MainActivity;
 import com.fragmentapp.login.LoginActivity;
 
 /**
@@ -15,7 +17,13 @@ public class SplashActivity extends BaseActivity{
 
     @Override
     public void init() {
-        LoginActivity.start(context);
-        finish();
+        String token = SharedPreferencesUtils.getParam("token");
+        if (token != null){
+            MainActivity.start(context);
+            finish();
+        }else {
+            LoginActivity.start(context);
+            finish();
+        }
     }
 }

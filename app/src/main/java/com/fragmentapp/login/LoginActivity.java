@@ -62,9 +62,14 @@ public class LoginActivity extends BaseActivity implements ILoginView{
             Toast.makeText(context,"param is null",Toast.LENGTH_SHORT).show();
             return;
         }
+        SharedPreferencesUtils.setParam("token",dataBean.getHCACCESSTOKEN());
+        new LoginPresenter(this).register();
+    }
+
+    @Override
+    public void register() {
         MainActivity.start(context);
         finish();
-//        SharedPreferencesUtils.setParam("token",dataBean.getHCACCESSTOKEN());
     }
 
     @Override
@@ -80,7 +85,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
             Toast.makeText(context,"param is null",Toast.LENGTH_SHORT).show();
             return;
         }
-        new LoginPresenter(this).login(name,pwd);
+        new LoginPresenter(this).login();
     }
 
     @Override

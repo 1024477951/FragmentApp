@@ -1,14 +1,23 @@
 package com.fragmentapp;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.os.StrictMode;
+import android.telephony.TelephonyManager;
 
 import com.bumptech.glide.Glide;
+import com.fragmentapp.helper.MacUtils;
+import com.fragmentapp.helper.SharedPreferencesUtils;
+import com.fragmentapp.im.service.WebSocketService;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.UUID;
 
 /**
  * Created by liuzhen on 2017/11/8.
@@ -62,12 +71,63 @@ public class App extends Application {
         return instance;
     }
 
+    @SuppressLint("MissingPermission")
+    public String getDerviceID() {
+        String DerviceID = "";
+        // mac地址
+        DerviceID = MacUtils.getMacAddr();
+        if (DerviceID == null || "".equals(DerviceID)) {
+            Logger.e("MacUtils.getMacAddr()=null");
+            DerviceID = MacUtils.getMac();
+        }
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+        //IMEI（imei）
+        if (DerviceID == null || "".equals(DerviceID)) {
+            Logger.e("MacUtils.getMac()=null");
+            try {
+                DerviceID = tm.getDeviceId();
+            } catch (Exception e) {
+                Logger.e(e.toString());
+            }
+
+        }
+
+        //序列号（sn）
+        if (DerviceID == null || "".equals(DerviceID)) {
+            Logger.e("IMEI（imei）=null");
+
+            try {
+                DerviceID = tm.getSimSerialNumber();
+            } catch (Exception e) {
+                Logger.e(e.toString());
+            }
+        }
+        /**
+         * 得到全局唯一UUID
+         */
+        if (DerviceID == null || "".equals(DerviceID)) {
+            Logger.e("序列号（sn）=null");
+            DerviceID = SharedPreferencesUtils.getParam("uuid", null);
+
+            if (DerviceID == null || "".equals(DerviceID)) {
+                DerviceID = UUID.randomUUID().toString();
+                SharedPreferencesUtils.setParam("uuid", DerviceID);
+            }
+            Logger.e("uuid:" + DerviceID);
+        }
+
+        return DerviceID;
+    }
+
     @Override
     public void onTrimMemory(int level) {
         Logger.d("end----onTrimMemory "+level);
         super.onTrimMemory(level);
         if (level == TRIM_MEMORY_UI_HIDDEN) {
             Glide.get(this).clearMemory();
+            Intent intent = new Intent(instance, WebSocketService.class);
+            instance.stopService(intent);
         }
         Glide.get(this).trimMemory(level);
     }

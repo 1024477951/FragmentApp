@@ -25,12 +25,12 @@ public abstract class IMBaseHolder extends BaseViewHolder {
     protected IMAdapter.IMClickListener clickListener;
     protected IMAdapter.IMLongClickListener longClickListener;
 
-    protected TextView tv_time, tv_read, tv_name;
+    protected TextView tv_time, tv_read, tv_name,tv_voice;
     protected Button btn_error;
 
     protected CircleImageView profile_image;
 
-    protected View pb_load;
+    protected View pb_load, iv_read,layout_voice,pb_voice_font;
 
     protected RelativeLayout layout_content;
     protected View layout_status;
@@ -49,9 +49,12 @@ public abstract class IMBaseHolder extends BaseViewHolder {
         tv_read = getView(R.id.tv_read);
         tv_name = getView(R.id.tv_name);
         pb_load = getView(R.id.pb_load);
+        tv_voice = getView(R.id.tv_voice);
+        pb_voice_font = getView(R.id.pb_voice_font);
 
         layout_content = getView(R.id.layout_content);
         layout_status = getView(R.id.layout_status);
+        layout_voice = getView(R.id.layout_voice);
 
         profile_image = getView(R.id.profile_image);
     }
@@ -62,17 +65,26 @@ public abstract class IMBaseHolder extends BaseViewHolder {
         init(isSelef);
         layout_status.setVisibility(View.GONE);
         tv_time.setVisibility(View.GONE);
+        layout_voice.setVisibility(View.GONE);
+        if (iv_read != null) {
+            iv_read.setVisibility(View.GONE);
+        }
     }
 
     public void setContent(MsgBean item) {
         if (tv_name != null) {
             tv_name.setText("tom");
         }
-        GlideApp.with(App.getInstance())
-                .load(R.mipmap.icon_chat_single)
-                .skipMemoryCache(false)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(profile_image);
+        if (layout_status != null) {
+            layout_status.setVisibility(View.GONE);
+        }
+        if (profile_image != null) {
+            GlideApp.with(App.getInstance())
+                    .load(R.mipmap.icon_chat_single)
+                    .skipMemoryCache(false)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(profile_image);
+        }
         content(item);
     }
 
@@ -81,12 +93,16 @@ public abstract class IMBaseHolder extends BaseViewHolder {
      */
     public void setContentBg() {
         int bg = R.drawable.icon_im_send_white_bg;
-        layout_content.setBackgroundResource(bg);
+        if (layout_content != null) {
+            layout_content.setBackgroundResource(bg);
+        }
     }
 
     public void showMsgDate() {
-        tv_time.setText("～以下为新消息～");
-        tv_time.setVisibility(View.VISIBLE);
+        if (tv_time != null) {
+            tv_time.setText("～以下为新消息～");
+            tv_time.setVisibility(View.VISIBLE);
+        }
     }
 
     public void showMsgLine(long time) {
@@ -100,8 +116,10 @@ public abstract class IMBaseHolder extends BaseViewHolder {
      * 消息状态
      */
     public void setStatus(int status) {
-        layout_status.setVisibility(View.VISIBLE);
-        status(status);
+        if (layout_status != null) {
+            layout_status.setVisibility(View.VISIBLE);
+            status(status);
+        }
     }
 
     public void setClickListener(IMAdapter.IMClickListener clickListener) {

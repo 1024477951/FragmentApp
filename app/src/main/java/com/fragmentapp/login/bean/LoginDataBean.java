@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginDataBean {
 
-    @SerializedName("HC-ACCESS-TOKEN")
+    @SerializedName("HC_ACCESS_TOKEN")
     private String HCACCESSTOKEN;
 
     public String getHCACCESSTOKEN() {

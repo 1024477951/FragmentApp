@@ -95,6 +95,12 @@ public class WebSocketService extends Service {
                     Logger.json("message:" + args[0]);
                 }
             });
+            mSocket.on("alert", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    Logger.json("message:" + args[0]);
+                }
+            });
             count = 0;
         }
         mSocket.connect();

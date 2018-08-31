@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.NinePatch;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -28,7 +29,7 @@ public class IMPhotoHolder extends IMBaseHolder{
     @Override
     protected void init(boolean isSelef) {
         iv_content = getView(R.id.iv_content);
-        layout_content.setBackground(null);
+//        layout_content.setBackground(null);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class IMPhotoHolder extends IMBaseHolder{
 
     @Override
     protected void content(final MsgBean item) {
+        showImage(item.isSelf());
         btn_error.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,40 +105,57 @@ public class IMPhotoHolder extends IMBaseHolder{
 
     }
 
-    private void showImage(){
-        Bitmap bitmap_bg = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.icon_im_send_def_bg);
+    private void showImage(boolean isSelf){
         Bitmap bitmap_in = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.icon_demo_bg);
-        final Bitmap bp = getRoundCornerImage(bitmap_bg, bitmap_in);
-        final Bitmap bp2 = getShardImage(bitmap_bg, bp);
+//        final Bitmap bp = getRoundCornerImage(bitmap_bg, bitmap_in);
+        final Bitmap bp2 = canvasTriangle(bitmap_in,isSelf ? 0 : 1);
         iv_content.setImageBitmap(bp2);
     }
 
-    public Bitmap getRoundCornerImage(Bitmap bitmap_bg, Bitmap bitmap_in)
-    {
-        Bitmap roundConcerImage = Bitmap.createBitmap(500,500, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(roundConcerImage);
-        Paint paint = new Paint();
-        Rect rect = new Rect(0,0,500,500);
-        Rect rectF = new Rect(0, 0, bitmap_in.getWidth(), bitmap_in.getHeight());
+    /**
+     * 绘制成微信聊天效果
+     * @param bitmapimg
+     * @param direct
+     * @return
+     */
+    public static Bitmap canvasTriangle(Bitmap bitmapimg, int direct) {
+        Bitmap output = Bitmap.createBitmap(bitmapimg.getWidth()/2,
+                bitmapimg.getHeight()/2, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(output);
+        //设置默认背景颜色
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmapimg.getWidth(),
+                bitmapimg.getHeight());
+
         paint.setAntiAlias(true);
-        NinePatch patch = new NinePatch(bitmap_bg, bitmap_bg.getNinePatchChunk(), null);
-        patch.draw(canvas, rect);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        //右边
+        if (direct == 0) {
+            canvas.drawRect(0, 0, bitmapimg.getWidth() - 15, bitmapimg.getHeight(), paint);
+            Path path = new Path();
+            path.moveTo(bitmapimg.getWidth() - 15, 10);
+            path.lineTo(bitmapimg.getWidth(), 20);
+            path.lineTo(bitmapimg.getWidth() - 15, 30);
+            path.lineTo(bitmapimg.getWidth() - 15, 10);
+            canvas.drawPath(path, paint);
+        }
+        //左边
+        if (direct == 1) {
+            canvas.drawRect(15, 0, bitmapimg.getWidth(), bitmapimg.getHeight(), paint);
+            Path path = new Path();
+            path.moveTo(15, 10);
+            path.lineTo(0, 20);
+            path.lineTo(15, 30);
+            path.lineTo(15, 10);
+            canvas.drawPath(path, paint);
+        }
+        //两层绘制交集。显示上层
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap_in, rectF, rect, paint);
-        return roundConcerImage;
+        canvas.drawBitmap(bitmapimg, rect, rect, paint);
+        return output;
     }
-    public Bitmap getShardImage(Bitmap bitmap_bg,Bitmap bitmap_in)
-    {
-        Bitmap roundConcerImage = Bitmap.createBitmap(500,500, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(roundConcerImage);
-        Paint paint = new Paint();
-        Rect rect = new Rect(0,0,500,500);
-        paint.setAntiAlias(true);
-        NinePatch patch = new NinePatch(bitmap_bg, bitmap_bg.getNinePatchChunk(), null);
-        patch.draw(canvas, rect);
-        Rect rect2 = new Rect(2,2,498,498);
-        canvas.drawBitmap(bitmap_in, rect, rect2, paint);
-        return roundConcerImage;
-    }
+
 
 }

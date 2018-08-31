@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion rootProject.ext.compileSdk
@@ -83,9 +84,17 @@ dependencies {
     implementation "com.gyf.barlibrary:barlibrary:2.3.0"
     //权限
     //    implementation 'pub.devrel:easypermissions:1.2.0'//会引起合并冲突问题
-
+    //greendao db
+    implementation "org.greenrobot:greendao:3.2.2"
+    //socket.io
     implementation ('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
+}
+
+greendao {
+    schemaVersion 1 //数据库版本号
+    daoPackage "${rootProject.ext.applicationId}.db" //数据库相关文件的包名
+    targetGenDir 'src/main/java' //生成数据库文件的目录
 }

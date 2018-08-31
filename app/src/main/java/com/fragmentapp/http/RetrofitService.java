@@ -20,6 +20,10 @@ public interface RetrofitService {
     @POST("/api/message/register")
     Observable<BaseResponses> register(@FieldMap Map<String, String> map);
 
+    @FormUrlEncoded
+    @POST("/login/old")
+    Observable<BaseResponses<LoginDataBean>> login(@FieldMap Map<String, String> map);
+
 //    //获取文章列表信息
 //    @POST("/Article/getArticleList")
 //    Observable<BaseResponses<ArticleDataBean>> getArticleList(@Header("HC-ACCESS-TOKEN") String header, @QueryMap Map<String, Integer> map);

@@ -9,6 +9,7 @@ import com.fragmentapp.login.bean.LoginDataBean;
 public interface ILoginView {
 
     void success(LoginDataBean dataBean);
+    void register();
     void error();
 
 }
