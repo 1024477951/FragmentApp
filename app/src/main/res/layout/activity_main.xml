@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/root">
 
     <com.fragmentapp.view.viewpager.ScrollerViewPager
         android:id="@+id/viewPager"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/bottombar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

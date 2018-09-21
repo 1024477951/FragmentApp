@@ -91,6 +91,7 @@ dependencies {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
+    compile 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
 }
 
 greendao {

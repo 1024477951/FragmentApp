@@ -2,12 +2,16 @@ package com.fragmentapp.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.RectF;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.model.GuidePage;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
@@ -15,14 +19,27 @@ import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.home.adapter.MainAdapter;
 import com.fragmentapp.im.service.WebSocketService;
 import com.fragmentapp.login.LoginActivity;
+import com.fragmentapp.view.alert.Guide;
+import com.fragmentapp.view.alert.GuideBuilder;
+import com.fragmentapp.view.alert.MutiComponent;
+import com.fragmentapp.view.alert.SimpleComponent;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
+    @BindView(R.id.home)
+    View home;
+    @BindView(R.id.contact)
+    View contact;
+    @BindView(R.id.community)
+    View community;
+    @BindView(R.id.me)
+    View me;
 
     private MainAdapter adapter;
     private SparseArray<CheckBox> menus = new SparseArray<>();
@@ -48,37 +65,53 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void init() {
         String token = SharedPreferencesUtils.getParam("token");
-        if (token != null){
-        adapter = new MainAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(FragmentHelper.getCount());
-        viewPager.addOnPageChangeListener(this);
+        if (token != null) {
+            adapter = new MainAdapter(getSupportFragmentManager());
+            viewPager.setAdapter(adapter);
+            viewPager.setOffscreenPageLimit(FragmentHelper.getCount());
+            viewPager.addOnPageChangeListener(this);
 
-        addTab(findViewById(R.id.home),0);
-        addTab(findViewById(R.id.contact),1);
-        addTab(findViewById(R.id.community),2);
-        addTab(findViewById(R.id.me),3);
-        select(0);
+            addTab(home, 0);
+            addTab(contact, 1);
+            addTab(community, 2);
+            addTab(me, 3);
+            select(0);
 
-        emptyLayout.setCallBack(new EmptyLayout.CallBack() {
-            @Override
-            public void click() {
-                init();
-            }
-        });
+            emptyLayout.setCallBack(new EmptyLayout.CallBack() {
+                @Override
+                public void click() {
+                    init();
+                }
+            });
 
-        Intent intent = new Intent(this, WebSocketService.class);
-        startService(intent);
-        }else {
+            Intent intent = new Intent(this, WebSocketService.class);
+            startService(intent);
+        } else {
             LoginActivity.start(context);
             finish();
         }
     }
 
-    public void click(View view){
+    public void showGuideView(View view) {
+        NewbieGuide.with(this)
+                .setLabel("guide1")
+                .alwaysShow(true)//总是显示，调试时可以打开
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(view)
+                        .setLayoutRes(R.layout.layout_alert))
+                .show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showGuideView(community);
+    }
+
+    public void click(View view) {
 
         int position = -1;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.home:
                 position = 0;
                 break;
@@ -94,24 +127,30 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
         if (position >= 0) select(position);
     }
-    /**添加首页按钮缓存*/
-    private void addTab(View view,int position){
+
+    /**
+     * 添加首页按钮缓存
+     */
+    private void addTab(View view, int position) {
         CheckBox checkBox = cover(view.findViewWithTag("check"));
         checkBox.setChecked(false);
-        menus.put(position,checkBox);
+        menus.put(position, checkBox);
     }
-    /**选择菜单*/
-    private void select(int position){
+
+    /**
+     * 选择菜单
+     */
+    private void select(int position) {
         if (menus.get(position).isChecked())
             return;//防止执行多次
 //        Log.e("tag",position+"");
-        for (int i = 0;i < menus.size();i++) {
+        for (int i = 0; i < menus.size(); i++) {
             CheckBox box = menus.get(i);
             if (box == null)
                 continue;
             if (i == position) {
                 box.setChecked(true);
-            }else
+            } else
                 box.setChecked(false);
         }
         viewPager.setCurrentItem(position, false);
@@ -134,7 +173,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     @Override
-    public boolean onKeyDown(int keyCode,KeyEvent event){
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
             return true;
@@ -149,6 +188,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         menus = null;
         Intent intent = new Intent(this, WebSocketService.class);
         stopService(intent);
-        Logger.e(TAG,"-----程序退出-----");
+        Logger.e(TAG, "-----程序退出-----");
     }
 }
