@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import android.telephony.TelephonyManager;
 
 import com.bumptech.glide.Glide;
+import com.fragmentapp.helper.AppManager;
 import com.fragmentapp.helper.MacUtils;
 import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.im.service.WebSocketService;
@@ -122,20 +123,32 @@ public class App extends Application {
 
     @Override
     public void onTrimMemory(int level) {
-        Logger.d("end----onTrimMemory "+level);
+        Logger.d("end----onTrimMemory "+level + " activity num "+AppManager.getAppManager().getActivityCount());
         super.onTrimMemory(level);
         if (level == TRIM_MEMORY_UI_HIDDEN) {
             Glide.get(this).clearMemory();
+        }
+        if (level == TRIM_MEMORY_MODERATE){
+
+        }
+        if (level == TRIM_MEMORY_RUNNING_MODERATE){
             Intent intent = new Intent(instance, WebSocketService.class);
             instance.stopService(intent);
+            AppManager.getAppManager().finishAllActivity();
         }
         Glide.get(this).trimMemory(level);
     }
 
     @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Logger.e("end---- onTerminate activity num "+AppManager.getAppManager().getActivityCount());
+    }
+
+    @Override
     public void onLowMemory() {
         super.onLowMemory();
-        Glide.get(this).clearMemory();
+        Logger.d("end----onLowMemory activity num "+AppManager.getAppManager().getActivityCount());
     }
 
 }

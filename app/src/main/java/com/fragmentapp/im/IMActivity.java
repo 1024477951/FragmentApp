@@ -38,7 +38,6 @@ public class IMActivity extends BaseActivity implements IIMView{
 
     private TextHeadView textHeadView;
     private DownHeadView downHeadView;
-    private StickyHeadView stickyHeadView;
 
     private int page = 1;
 
@@ -78,11 +77,9 @@ public class IMActivity extends BaseActivity implements IIMView{
 
         textHeadView = new TextHeadView(context);
         downHeadView = new DownHeadView(context);
-        stickyHeadView = new StickyHeadView(context);
         refreshLayout
                 .setHeaderView(downHeadView)
                 .setHeaderView(textHeadView)
-                .setHeaderView(stickyHeadView)
                 .setCallBack(new RefreshLayout.CallBack() {
                     @Override
                     public void refreshHeaderView(int state, String stateVal) {
@@ -105,7 +102,6 @@ public class IMActivity extends BaseActivity implements IIMView{
                     public void pullListener(int y) {
                         int pullHeight = y / 2;
                         downHeadView.setPull_height(pullHeight);
-                        stickyHeadView.move(pullHeight);
                     }
                 });
 

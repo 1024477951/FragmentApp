@@ -67,10 +67,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         context = this;
         ButterKnife.bind(this);
         emptyLayout = new EmptyLayout(this);
-        mImmersionBar = ImmersionBar.with(this)
-                .fitsSystemWindows(false)
-                .keyboardEnable(true)
-                .navigationBarWithKitkatEnable(false);
+        View view = findViewById(R.id.view_status);
+        mImmersionBar = ImmersionBar.with(this);
+        if (view != null) {
+            mImmersionBar.fitsSystemWindows(false)
+                    .statusBarView(view);
+        }
         mImmersionBar.init();
         init();
     }

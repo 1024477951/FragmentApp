@@ -2,28 +2,25 @@ package com.fragmentapp.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.RectF;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.HighlightOptions;
+import com.app.hubert.guide.model.RelativeGuide;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
+import com.fragmentapp.helper.GuideUtil;
 import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.home.adapter.MainAdapter;
 import com.fragmentapp.im.service.WebSocketService;
 import com.fragmentapp.login.LoginActivity;
-import com.fragmentapp.view.alert.Guide;
-import com.fragmentapp.view.alert.GuideBuilder;
-import com.fragmentapp.view.alert.MutiComponent;
-import com.fragmentapp.view.alert.SimpleComponent;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 
@@ -68,7 +65,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (token != null) {
             adapter = new MainAdapter(getSupportFragmentManager());
             viewPager.setAdapter(adapter);
-            viewPager.setOffscreenPageLimit(FragmentHelper.getCount());
+            viewPager.setOffscreenPageLimit(IMTabHelper.getCount());
             viewPager.addOnPageChangeListener(this);
 
             addTab(home, 0);
@@ -90,22 +87,39 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             LoginActivity.start(context);
             finish();
         }
+        boolean isGuide = GuideUtil.getInstance().isGuide(GuideUtil.getInstance().main);
+        if (isGuide) {
+            showGuideView(community);
+        }
     }
 
     public void showGuideView(View view) {
+        HighlightOptions options = new HighlightOptions.Builder()
+                .setRelativeGuide(new RelativeGuide(R.layout.layout_alert, Gravity.TOP, 0) {
+                    @Override
+                    protected void onLayoutInflated(View view) {
+
+                    }
+                })
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .build();
+        GuidePage page = GuidePage.newInstance()
+                .addHighLightWithOptions(view, options);
         NewbieGuide.with(this)
-                .setLabel("guide1")
+                .setLabel("relative")
                 .alwaysShow(true)//总是显示，调试时可以打开
-                .addGuidePage(GuidePage.newInstance()
-                        .addHighLight(view)
-                        .setLayoutRes(R.layout.layout_alert))
+                .addGuidePage(page)
                 .show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showGuideView(community);
     }
 
     public void click(View view) {
@@ -186,8 +200,5 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onDestroy();
         menus.clear();
         menus = null;
-        Intent intent = new Intent(this, WebSocketService.class);
-        stopService(intent);
-        Logger.e(TAG, "-----程序退出-----");
     }
 }

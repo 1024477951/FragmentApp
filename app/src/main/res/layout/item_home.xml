@@ -36,7 +36,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 android:text="昵称"
                 android:textColor="@color/color_111111"
                 android:textSize="@dimen/d46.0" />
@@ -45,7 +45,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
+                android:layout_gravity="top|right"
                 android:text="时间"
                 android:textColor="@color/color_bbbbbb"
                 android:textSize="@dimen/d36.0" />
@@ -55,13 +55,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0.0"
             android:layout_weight="1"
+            android:layout_marginTop="@dimen/d10.0"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:lines="1"
                 android:textColor="@color/color_fc9606"
                 android:textSize="@dimen/d40.0" />
@@ -70,7 +71,7 @@
                 android:id="@+id/tv_content"
                 android:layout_width="@dimen/d0.0"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="我是一段消息我是一段消息我是一我是一段消息我是一"
@@ -79,13 +80,5 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/d1.0"
-        android:layout_marginTop="@dimen/d20.0"
-        android:layout_marginBottom="@dimen/d20.0"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_navigation"/>
 
 </RelativeLayout>

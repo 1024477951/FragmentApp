@@ -5,15 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_status"/>
-
     <include layout="@layout/toolbar" />
 
-    <com.fragmentapp.view.refresh.RefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:_height="@dimen/d140.0">
+    <!--<com.fragmentapp.view.refresh.RefreshLayout-->
+        <!--android:id="@+id/refreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:_height="@dimen/d180.0">-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -21,6 +19,6 @@
             android:layout_height="match_parent"
             android:divider="@color/color_e1e1e1" />
 
-    </com.fragmentapp.view.refresh.RefreshLayout>
+    <!--</com.fragmentapp.view.refresh.RefreshLayout>-->
 
 </LinearLayout>

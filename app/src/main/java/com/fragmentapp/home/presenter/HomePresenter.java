@@ -22,7 +22,7 @@ public class HomePresenter extends BasePresenter {
 
     public void getArticleList(int page){
         List<String> list = new ArrayList<>();
-        for (int i = 0;i < 10;i++){
+        for (int i = 0;i < 15;i++){
             list.add(""+(i+page));
         }
         view.success(list);

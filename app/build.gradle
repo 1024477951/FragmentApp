@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.application'//申明为主工程
 apply plugin: 'org.greenrobot.greendao'
 
 android {
@@ -31,17 +31,21 @@ android {
      */
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false// 是否对代码混淆、压缩
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'// 是否对资源压缩
         }
+//        debug {
+//            applicationIDsuffix '.debug'//给版本id添加debug后缀
+//            versionNameSuffix '-debug'//给versionName添加debug后缀
+//        }
     }
     /**
      * DEX文件构建属性配置（加快构建速度）
      */
     dexOptions {
-        javaMaxHeapSize = 8g //最大堆内存
-        jumboMode = true //是否支持大工程模式
-        preDexLibraries = true //预编译
+        javaMaxHeapSize = 8g //最大堆内存,properties文件中 Xmx 值的替代，1g=1024
+        jumboMode = true //是否支持大工程模式，允许较大字符在dex文件中
+        preDexLibraries = true //预编译，在libraries打成dex之前启动dx进程
         threadCount = 8 //线程数
     }
 }

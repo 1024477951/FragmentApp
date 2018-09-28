@@ -1,6 +1,8 @@
 package com.fragmentapp.home.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.SunHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -31,10 +34,10 @@ import butterknife.OnClick;
  * Created by liuzhen on 2017/11/8.
  */
 
-public class HomeFragment extends LazyFragment implements IHomeView {
+public class HomeFragment extends IMFragment implements IHomeView {
 
-    @BindView(R.id.refreshLayout)
-    RefreshLayout refreshLayout;
+//    @BindView(R.id.refreshLayout)
+//    RefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -47,11 +50,6 @@ public class HomeFragment extends LazyFragment implements IHomeView {
 
     private HomePresenter presenter;
     private int page = 1,lastPage = -1;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_home;
-    }
 
     @Override
     protected void init() {
@@ -76,47 +74,21 @@ public class HomeFragment extends LazyFragment implements IHomeView {
         downHeadView = new DownHeadView(getContext());
         stickyHeadView = new StickyHeadView(getContext());
         sunHeadView = new SunHeadView(getContext());
-        refreshLayout
-                .setHeaderView(downHeadView)
-                .setHeaderView(textHeadView)
-                .setHeaderView(new DefHeaderView(getContext()))
-                .setHeaderView(stickyHeadView)
-                .setHeaderView(sunHeadView)
-                .setFootView(new DefFootView(getContext()))
-                .setCallBack(new RefreshLayout.CallBack() {
-                    @Override
-                    public void refreshHeaderView(int state, String stateVal) {
-                        textHeadView.setText(stateVal);
-                        switch (state) {
-                            case RefreshLayout.DOWN_REFRESH: // 下拉刷新状态
-                                break;
-                            case RefreshLayout.RELEASE_REFRESH: // 松开刷新状态
-                                break;
-                            case RefreshLayout.LOADING: // 正在刷新中状态
-                                if (refreshLayout.isBottom() == false) {
-                                    page = 1;
-                                    lastPage = -1;
-                                }
-                                presenter.getArticleList(page);
-                                sunHeadView.upAnim();
-                                break;
-                        }
-                    }
 
-                    @Override
-                    public void pullListener(int y) {
-                        int pullHeight = y / 2;
-                        downHeadView.setPull_height(pullHeight);
-                        stickyHeadView.move(pullHeight);
-                    }
-                });
+//        emptyLayout.setCallBack(new EmptyLayout.CallBack() {
+//            @Override
+//            public void click() {
+//                presenter.getArticleList(page);
+//            }
+//        });
+    }
 
-        emptyLayout.setCallBack(new EmptyLayout.CallBack() {
-            @Override
-            public void click() {
-                presenter.getArticleList(page);
-            }
-        });
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getUserVisibleHint()) {//初始化默认加载
+            onVisible();
+        }
     }
 
     @OnClick({R.id.menu})
@@ -131,11 +103,7 @@ public class HomeFragment extends LazyFragment implements IHomeView {
         }else {
             page++;//如果有数据则+1下一页
             if (lastPage != page) {
-                if (refreshLayout.isBottom())
-                    adapter.addData(list);
-                else {
-                    adapter.setNewData(list);
-                }
+                adapter.setNewData(list);
             }
             lastPage = page;
         }
@@ -143,7 +111,7 @@ public class HomeFragment extends LazyFragment implements IHomeView {
 
     @Override
     public void error() {
-        emptyLayout.showEmpty((ViewGroup) getView(),"error");
+//        emptyLayout.showEmpty((ViewGroup) getView(),"error");
     }
 
     @Override
@@ -154,7 +122,6 @@ public class HomeFragment extends LazyFragment implements IHomeView {
     @Override
     public void loadStop() {
         dismissDialog();
-        refreshLayout.stop();
     }
 
     @Override

@@ -179,4 +179,9 @@ public class AppManager {
             }
         }
     }
+
+    public int getActivityCount(){
+        return activityStack.size();
+    }
+
 }

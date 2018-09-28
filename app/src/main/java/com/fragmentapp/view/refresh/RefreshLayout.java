@@ -34,7 +34,7 @@ public class RefreshLayout extends FrameLayout {
     private int downY;// 按下时y轴的偏移量
     private final static int RATIO = 3;//
     //头部的高度
-    protected int mHeadHeight = 120;
+    protected int mHeadHeight;
     //头部layout
     protected FrameLayout mHeadLayout, mFootLayout;//头部容器
     private List<IHeadView> heads = new ArrayList<>();//支持添加多个头部
@@ -68,7 +68,7 @@ public class RefreshLayout extends FrameLayout {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RefreshLayout, defStyleAttr, 0);
         try {
-            mHeadHeight = a.getDimensionPixelSize(R.styleable.RefreshLayout__height, 120);
+            mHeadHeight = a.getDimensionPixelSize(R.styleable.RefreshLayout__height, 200);
         } finally {
             a.recycle();
         }
@@ -170,7 +170,10 @@ public class RefreshLayout extends FrameLayout {
                             currentState = DOWN_REFRESH;
                             refreshHeaderView();
                         }
-                        if (paddingTop <= (mHeadHeight + 10) && !isStart) {//已经处于运行刷新状态的时候禁止设置
+                        if (!isStart) {//已经处于运行刷新状态的时候禁止设置
+                            if (paddingTop > (mHeadHeight + 10)){
+                                paddingTop = mHeadHeight;
+                            }
                             listParam.setMargins(0, paddingTop, 0, 0);
                             list.setLayoutParams(listParam);
                             if (callBack != null)
