@@ -95,7 +95,15 @@ dependencies {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
-    compile 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
+    //引导页遮罩
+    implementation "com.github.huburt-Hu:NewbieGuide:v2.4.0"
+    //时间选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    //侧滑
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+    //下拉
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
 }
 
 greendao {

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_gradient_white"
     android:id="@+id/root">
-    <com.fragmentapp.view.water.WaterBgView
+    <com.fragmentapp.view.water.WaterBgSurfaceView
         android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

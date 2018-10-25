@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (token != null) {
             adapter = new MainAdapter(getSupportFragmentManager());
             viewPager.setAdapter(adapter);
-            viewPager.setOffscreenPageLimit(IMTabHelper.getCount());
+            viewPager.setOffscreenPageLimit(TabHelper.getCount());
             viewPager.addOnPageChangeListener(this);
 
             addTab(home, 0);
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+//                        LoginActivity.start(context);
                     }
                 })
                 .build();

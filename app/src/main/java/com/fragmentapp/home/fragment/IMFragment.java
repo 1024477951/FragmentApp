@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseFragment;
-import com.fragmentapp.home.IMTabFactory;
+import com.fragmentapp.home.Tabs;
 import com.fragmentapp.view.beans.LoadingFragment;
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -60,7 +60,7 @@ public abstract class IMFragment extends BaseFragment {
 
     private ImmersionBar mImmersionBar;
 
-    private IMTabFactory factory;
+    private Tabs factory;
 
     @Override
     protected int getLayoutId() {
@@ -99,7 +99,7 @@ public abstract class IMFragment extends BaseFragment {
         isLoad = true;//加载完后更改状态，只限定加载一次
     }
 
-    public void attachTabData(IMTabFactory factory) {
+    public void attachTabData(Tabs factory) {
         this.factory = factory;
     }
 

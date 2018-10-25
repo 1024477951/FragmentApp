@@ -17,13 +17,12 @@ public class SplashActivity extends BaseActivity{
 
     @Override
     public void init() {
-        String token = SharedPreferencesUtils.getParam("token");
-        if (token != null){
-            MainActivity.start(context);
-            finish();
-        }else {
+//        String token = SharedPreferencesUtils.getParam("token");
+//        if (token != null){
+//            MainActivity.start(context);
+//        }else {
             LoginActivity.start(context);
-            finish();
-        }
+//        }
+        finish();
     }
 }

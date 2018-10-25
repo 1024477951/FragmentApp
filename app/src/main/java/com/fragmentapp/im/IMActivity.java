@@ -2,6 +2,7 @@ package com.fragmentapp.im;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.fragmentapp.view.refresh.DownHeadView;
 import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +30,14 @@ import butterknife.BindView;
  * Created by liuzhen on 2018/8/6.
  */
 
-public class IMActivity extends BaseActivity implements IIMView{
+public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMoreListener {
 
     @BindView(R.id.refreshLayout)
-    RefreshLayout refreshLayout;
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private IMAdapter adapter;
     private List<MsgBean> list = new ArrayList<>();
-
-    private TextHeadView textHeadView;
-    private DownHeadView downHeadView;
 
     private int page = 1;
 
@@ -70,46 +70,16 @@ public class IMActivity extends BaseActivity implements IIMView{
         adapter = new IMAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
-
+        refreshLayout.setOnRefreshLoadMoreListener(this);
         presenter = new IMPresenter(this);
         page = 1;
         presenter.getList(page);
-
-        textHeadView = new TextHeadView(context);
-        downHeadView = new DownHeadView(context);
-        refreshLayout
-                .setHeaderView(downHeadView)
-                .setHeaderView(textHeadView)
-                .setCallBack(new RefreshLayout.CallBack() {
-                    @Override
-                    public void refreshHeaderView(int state, String stateVal) {
-                        textHeadView.setText(stateVal);
-                        switch (state) {
-                            case RefreshLayout.DOWN_REFRESH: // 下拉刷新状态
-                                break;
-                            case RefreshLayout.RELEASE_REFRESH: // 松开刷新状态
-                                break;
-                            case RefreshLayout.LOADING: // 正在刷新中状态
-                                if (refreshLayout.isBottom() == false) {
-
-                                }
-                                presenter.getList(page);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void pullListener(int y) {
-                        int pullHeight = y / 2;
-                        downHeadView.setPull_height(pullHeight);
-                    }
-                });
 
         //viewholder 点击监听
         adapter.setClickListener(new IMAdapter.IMClickListener() {
             @Override
             public void click(View view, MsgBean message) {
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.btn_error:
                         break;
                     case R.id.layout_content:
@@ -123,7 +93,7 @@ public class IMActivity extends BaseActivity implements IIMView{
         adapter.setLongClickListener(new IMAdapter.IMLongClickListener() {
             @Override
             public void longClick(View view, MsgBean message) {
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.layout_content:
                         break;
                 }
@@ -134,11 +104,11 @@ public class IMActivity extends BaseActivity implements IIMView{
 
     @Override
     public void success(List<MsgBean> list) {
-        if (list.size() == 0){
+        if (list.size() == 0) {
 //            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
-        }else {
+        } else {
             if (page > 1) {
-                adapter.addData(0,list);
+                adapter.addData(0, list);
             } else {
                 this.list.clear();
                 this.list.addAll(list);
@@ -161,12 +131,23 @@ public class IMActivity extends BaseActivity implements IIMView{
 
     @Override
     public void loadStop() {
-        refreshLayout.stop();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter = null;
+    }
+
+    @Override
+    public void onLoadMore(@NonNull com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout) {
+        refreshLayout.finishLoadMoreWithNoMoreData();
+    }
+
+    @Override
+    public void onRefresh(@NonNull com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout) {
+        presenter.getList(page);
+        refreshLayout.finishRefresh();
     }
 }

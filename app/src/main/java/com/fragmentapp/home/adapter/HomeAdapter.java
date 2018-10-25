@@ -31,18 +31,14 @@ public class HomeAdapter extends BaseQuickAdapter<String, HomeAdapter.ViewHolder
     static class ViewHolder extends BaseViewHolder
     {
 
-        TextView tv_title,tv_content,tv_time,tv_tag,tv_read;
+        TextView tv_content;
         View root;
         CircleImageView profile_image;
 
         public ViewHolder(View view)
         {
             super(view);
-            tv_title = getView(R.id.tv_title);
             tv_content = getView(R.id.tv_content);
-            tv_time = getView(R.id.tv_time);
-            tv_tag = getView(R.id.tv_tag);
-            tv_read = getView(R.id.tv_read);
 
             root = getView(R.id.root);
 

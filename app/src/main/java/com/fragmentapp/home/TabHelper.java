@@ -13,7 +13,7 @@ import java.util.List;
  * Created by liuzhen on 2017/11/10.
  */
 
-public class IMTabHelper {
+public class TabHelper {
 
     /**
      * 稀疏数组,是Android内部特有的api,标准的jdk是没有这个类的.在Android内部用来替代HashMap<Integer,E>这种形式,使用SparseArray更加节省内存空间的使用,
@@ -26,7 +26,7 @@ public class IMTabHelper {
     }
 
     public static void init(FragmentManager fm){
-        for (IMTabFactory tab : IMTabFactory.values()) {
+        for (Tabs tab : Tabs.values()) {
             try {
                 IMFragment fragment = null;
 
@@ -55,7 +55,7 @@ public class IMTabHelper {
     }
 
     public static int getCount(){
-        return IMTabFactory.values().length;
+        return Tabs.values().length;
     }
 
 }

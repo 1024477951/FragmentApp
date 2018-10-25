@@ -8,10 +8,23 @@
     <include layout="@layout/toolbar" />
 
     <!--<com.fragmentapp.view.refresh.RefreshLayout-->
-        <!--android:id="@+id/refreshLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:_height="@dimen/d180.0">-->
+    <!--android:id="@+id/refreshLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--app:_height="@dimen/d180.0">-->
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/d5.0"
+        android:background="@color/white"
+        app:srlEnableLoadMore="false"
+        app:srlEnableAutoLoadMore="false"
+        app:srlHeaderMaxDragRate="2.5">
+
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -19,6 +32,7 @@
             android:layout_height="match_parent"
             android:divider="@color/color_e1e1e1" />
 
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <!--</com.fragmentapp.view.refresh.RefreshLayout>-->
 
 </LinearLayout>

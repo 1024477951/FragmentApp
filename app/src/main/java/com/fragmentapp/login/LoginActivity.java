@@ -2,6 +2,8 @@ package com.fragmentapp.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import com.fragmentapp.home.MainActivity;
 import com.fragmentapp.login.bean.LoginDataBean;
 import com.fragmentapp.login.imple.ILoginView;
 import com.fragmentapp.login.presenter.LoginPresenter;
+import com.fragmentapp.view.water.WaterBgSurfaceView;
 import com.fragmentapp.view.water.WaterBgView;
 
 import butterknife.BindView;
@@ -44,7 +47,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @BindView(R.id.et_pwd)
     EditText et_pwd;
     @BindView(R.id.bg)
-    WaterBgView waterBgView;
+    WaterBgSurfaceView waterBgView;
 
     @Override
     public int layoutID() {
@@ -53,7 +56,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void init() {
-
+        waterBgView.setZOrderOnTop(true);    // necessary
+        SurfaceHolder sfhTrack = waterBgView.getHolder();
+        sfhTrack.setFormat(PixelFormat.TRANSLUCENT);
     }
 
     @Override
@@ -91,6 +96,5 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        waterBgView.cancel();
     }
 }

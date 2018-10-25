@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.fragmentapp.home.IMTabHelper;
+import com.fragmentapp.home.TabHelper;
 
 /**
  * Created by liuzhen on 2017/11/10.
@@ -14,16 +14,16 @@ public class MainAdapter extends FragmentPagerAdapter {
 
     public MainAdapter(FragmentManager fm) {
         super(fm);
-        IMTabHelper.init(fm);
+        TabHelper.init(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return IMTabHelper.getFragment(position);
+        return TabHelper.getFragment(position);
     }
 
     @Override
     public int getCount() {
-        return IMTabHelper.getCount();
+        return TabHelper.getCount();
     }
 }

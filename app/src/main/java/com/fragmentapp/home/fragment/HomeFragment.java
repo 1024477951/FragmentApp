@@ -25,10 +25,16 @@ import com.fragmentapp.view.refresh.SunHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
 import com.orhanobut.logger.Logger;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by liuzhen on 2017/11/8.
@@ -41,10 +47,10 @@ public class HomeFragment extends IMFragment implements IHomeView {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private TextHeadView textHeadView;
-    private DownHeadView downHeadView;//扇形头部
-    private StickyHeadView stickyHeadView;//粘性头部
-    private SunHeadView sunHeadView;
+//    private TextHeadView textHeadView;
+//    private DownHeadView downHeadView;//扇形头部
+//    private StickyHeadView stickyHeadView;//粘性头部
+//    private SunHeadView sunHeadView;
 
     private HomeAdapter adapter;
 
@@ -61,6 +67,7 @@ public class HomeFragment extends IMFragment implements IHomeView {
         page = 1;
 
         adapter = new HomeAdapter(R.layout.item_home);
+        adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         presenter.getArticleList(page);
@@ -70,10 +77,10 @@ public class HomeFragment extends IMFragment implements IHomeView {
                 IMActivity.start(getContext());
             }
         });
-        textHeadView = new TextHeadView(getContext());
-        downHeadView = new DownHeadView(getContext());
-        stickyHeadView = new StickyHeadView(getContext());
-        sunHeadView = new SunHeadView(getContext());
+//        textHeadView = new TextHeadView(getContext());
+//        downHeadView = new DownHeadView(getContext());
+//        stickyHeadView = new StickyHeadView(getContext());
+//        sunHeadView = new SunHeadView(getContext());
 
 //        emptyLayout.setCallBack(new EmptyLayout.CallBack() {
 //            @Override
@@ -81,6 +88,32 @@ public class HomeFragment extends IMFragment implements IHomeView {
 //                presenter.getArticleList(page);
 //            }
 //        });
+
+//        Observable.just("object")
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<String>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(String list) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+
     }
 
     @Override
@@ -128,10 +161,10 @@ public class HomeFragment extends IMFragment implements IHomeView {
     public void onDestroy() {
         super.onDestroy();
         presenter = null;
-        textHeadView = null;
-        downHeadView = null;
-        stickyHeadView = null;
-        sunHeadView = null;
+//        textHeadView = null;
+//        downHeadView = null;
+//        stickyHeadView = null;
+//        sunHeadView = null;
     }
 
 }

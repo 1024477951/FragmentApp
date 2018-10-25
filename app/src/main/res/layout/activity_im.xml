@@ -9,11 +9,25 @@
 
     <include layout="@layout/toolbar" />
 
-    <com.fragmentapp.view.refresh.RefreshLayout
+    <!--<com.fragmentapp.view.refresh.RefreshLayout-->
+        <!--android:id="@+id/refreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/d0.0"-->
+        <!--android:layout_weight="1"-->
+        <!--app:_height="@dimen/d140.0">-->
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:_height="@dimen/d140.0">
+        android:layout_marginTop="@dimen/d5.0"
+        android:background="@color/white"
+        app:srlEnableLoadMore="true"
+        app:srlEnableAutoLoadMore="false"
+        app:srlHeaderMaxDragRate="2.5">
+
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -21,6 +35,132 @@
             android:layout_height="match_parent"
             android:divider="@color/color_e1e1e1" />
 
-    </com.fragmentapp.view.refresh.RefreshLayout>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <!--</com.fragmentapp.view.refresh.RefreshLayout>-->
+
+    <LinearLayout
+        android:id="@+id/bar_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#C0C0C0" />
+
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:filterTouchesWhenObscured="true"
+            android:focusableInTouchMode="true"
+            android:paddingTop="4dp">
+
+            <RelativeLayout
+                android:id="@+id/edittext_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="bottom">
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="35dip"
+                    android:background="@drawable/input_bar_bg_active"
+                    android:maxLines="3"
+                    android:minHeight="40dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="1dp"
+                    android:paddingRight="1dp"
+                    android:paddingTop="3dp"
+                    android:textSize="16sp" />
+
+
+                <ImageView
+                    android:id="@+id/iv_emoji"
+                    android:layout_width="24dip"
+                    android:layout_height="24dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_margin="1dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/icon_chat_emoji_normal"
+                    android:visibility="visible" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tv_send"
+                android:layout_width="40dp"
+                android:layout_height="40dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:gravity="center"
+                android:onClick="sendMessage"
+                android:text="发送"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#C0C0C0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <!-- 表情图片 -->
+
+            <LinearLayout
+                android:id="@+id/ll_emoji"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/emoji_viewpage"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/emoji_cursor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
