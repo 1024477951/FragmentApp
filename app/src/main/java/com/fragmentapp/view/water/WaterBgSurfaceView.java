@@ -38,7 +38,7 @@ public class WaterBgSurfaceView extends SurfaceView implements
 
     private Bitmap bitmap;
 
-    private DrawThread drawClock;
+    private DrawThread drawThread;
 
     public WaterBgSurfaceView(Context context) {
         this(context, null, 0);
@@ -61,7 +61,7 @@ public class WaterBgSurfaceView extends SurfaceView implements
         // 去除画笔锯齿
         paint.setAntiAlias(true);
         // 设置风格为实线
-        paint.setStyle(Paint.Style.FILL);
+        paint.setStyle(Paint.Style.STROKE);
         // 设置画笔颜色
 //        paint.setColor(getResources().getColor(R.color.color_4446b7));
 
@@ -96,9 +96,9 @@ public class WaterBgSurfaceView extends SurfaceView implements
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        drawClock = new DrawThread(getHolder());
-        drawClock.setRunning(true);
-        drawClock.start();
+        drawThread = new DrawThread(getHolder());
+        drawThread.setRunning(true);
+        drawThread.start();
     }
 
     @Override
@@ -110,10 +110,10 @@ public class WaterBgSurfaceView extends SurfaceView implements
     public void surfaceDestroyed(SurfaceHolder holder) {
         bitmap = null;
         boolean retry = true;
-        drawClock.setRunning(false);
+        drawThread.setRunning(false);
         while (retry) {
             try {
-                drawClock.join();
+                drawThread.join();
                 retry = false;
             } catch (InterruptedException e) {
             }
