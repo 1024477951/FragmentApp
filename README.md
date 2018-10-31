@@ -3,7 +3,19 @@
 
 欢迎收藏
 
---sun--
+--仿微信未读平滑滚动定位效果--
+
+博客地址：https://www.cnblogs.com/LiuZhen/p/9884948.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/smooth.gif)
+
+--贝塞尔浪花登录背景--
+
+博客地址：http://www.cnblogs.com/LiuZhen/p/8125751.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/water.gif)
+
+--sun 自定义小太阳控件--
 
 博客地址：http://www.cnblogs.com/LiuZhen/p/8359611.html
 
@@ -36,12 +48,6 @@
 --分页效果--
 
 ![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/page.gif)
-
---贝塞尔浪花登录背景--
-
-博客地址：http://www.cnblogs.com/LiuZhen/p/8125751.html
-
-![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/water.gif)
 
 --消息置顶--
 

@@ -60,11 +60,6 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
     private HomePresenter presenter;
     private int page = 1,lastPage = -1;
 
-    //目标项是否在最后一个可见项之后
-    private boolean mShouldScroll;
-    //记录目标项位置
-    private int mToPosition;
-
     @Override
     protected void init() {
 
@@ -84,16 +79,6 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 IMActivity.start(getContext());
-            }
-        });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {
-                    mShouldScroll = false;
-                    smoothMoveToPosition(mToPosition);
-                }
             }
         });
 //        textHeadView = new TextHeadView(getContext());
@@ -211,12 +196,8 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
                 // smoothScrollToPosition 不会有效果，此时调用smoothScrollBy来滑动到指定位置
                 recyclerView.smoothScrollBy(0, top);
             }
-        } else {
-            // 第三种可能:跳转位置在最后可见项之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
-            // 再通过onScrollStateChanged控制再次调用smoothMoveToPosition，执行上一个判断中的方法
+        }else{//未读item是最后一个的时候
             recyclerView.smoothScrollToPosition(position);
-            mToPosition = position;
-            mShouldScroll = true;
         }
     }
 
