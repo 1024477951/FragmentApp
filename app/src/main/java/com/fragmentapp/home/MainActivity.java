@@ -19,6 +19,7 @@ import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.helper.GuideUtil;
 import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.home.adapter.MainAdapter;
+import com.fragmentapp.home.fragment.HomeFragment;
 import com.fragmentapp.im.service.WebSocketService;
 import com.fragmentapp.login.LoginActivity;
 
@@ -37,6 +38,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     View community;
     @BindView(R.id.me)
     View me;
+
+    private long firstPressTime = 0;
 
     private MainAdapter adapter;
     private SparseArray<CheckBox> menus = new SparseArray<>();
@@ -128,6 +131,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         switch (view.getId()) {
             case R.id.home:
                 position = 0;
+                long now = System.currentTimeMillis();
+                if ((now - firstPressTime) > 500){
+                    firstPressTime = now;
+                }else{
+                    HomeFragment fragment = cover(adapter.getItem(position));
+                    fragment.click();
+                }
                 break;
             case R.id.contact:
                 position = 1;

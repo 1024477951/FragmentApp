@@ -26,7 +26,7 @@ public class GuideUtil {
         if (BuildConfig.VERSION_CODE == 1 && SharedPreferencesUtils.getParam(key,false)){
             isGuide = true;
         }
-        return true;
+        return isGuide;
     }
 
 }

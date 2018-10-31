@@ -12,7 +12,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.helper.EmptyLayout;
+import com.fragmentapp.helper.RecyclerViewPositionHelper;
+import com.fragmentapp.home.TabHelper;
 import com.fragmentapp.home.adapter.HomeAdapter;
+import com.fragmentapp.home.bean.HomeDataBean;
 import com.fragmentapp.home.imple.IHomeView;
 import com.fragmentapp.home.presenter.HomePresenter;
 import com.fragmentapp.im.IMActivity;
@@ -40,13 +43,13 @@ import io.reactivex.schedulers.Schedulers;
  * Created by liuzhen on 2017/11/8.
  */
 
-public class HomeFragment extends IMFragment implements IHomeView {
+public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnListenerClick {
 
 //    @BindView(R.id.refreshLayout)
 //    RefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
+    private LinearLayoutManager layoutManager;
 //    private TextHeadView textHeadView;
 //    private DownHeadView downHeadView;//扇形头部
 //    private StickyHeadView stickyHeadView;//粘性头部
@@ -56,6 +59,11 @@ public class HomeFragment extends IMFragment implements IHomeView {
 
     private HomePresenter presenter;
     private int page = 1,lastPage = -1;
+
+    //目标项是否在最后一个可见项之后
+    private boolean mShouldScroll;
+    //记录目标项位置
+    private int mToPosition;
 
     @Override
     protected void init() {
@@ -68,13 +76,24 @@ public class HomeFragment extends IMFragment implements IHomeView {
 
         adapter = new HomeAdapter(R.layout.item_home);
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         presenter.getArticleList(page);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 IMActivity.start(getContext());
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {
+                    mShouldScroll = false;
+                    smoothMoveToPosition(mToPosition);
+                }
             }
         });
 //        textHeadView = new TextHeadView(getContext());
@@ -130,7 +149,7 @@ public class HomeFragment extends IMFragment implements IHomeView {
     }
 
     @Override
-    public void success(List<String> list) {
+    public void success(List<HomeDataBean> list) {
         if (list.size() == 0){
 //            emptyLayout.showEmpty((ViewGroup) getView(),"empty");
         }else {
@@ -165,6 +184,40 @@ public class HomeFragment extends IMFragment implements IHomeView {
 //        downHeadView = null;
 //        stickyHeadView = null;
 //        sunHeadView = null;
+    }
+
+    @Override
+    public void click() {
+        int position = adapter.findReadPosition(recyclerView);
+        smoothMoveToPosition(position);
+        Logger.e("tag--"+position);
+    }
+
+    /**
+     * 滑动到指定位置
+     */
+    private void smoothMoveToPosition(final int position) {
+        int firstItem = recyclerView.getChildLayoutPosition(recyclerView.getChildAt(0));
+        int lastItem = recyclerView.getChildLayoutPosition(recyclerView.getChildAt(recyclerView.getChildCount() - 1));
+
+        if (position < firstItem) {//往上定位
+            // 第一种可能:跳转位置在第一个可见位置之前，使用smoothScrollToPosition
+            recyclerView.smoothScrollToPosition(position);
+        } else if (position <= lastItem) {//往下定位
+            // 第二种可能:跳转位置在第一个可见位置之后，最后一个可见项之前
+            int movePosition = position - firstItem;
+            if (movePosition >= 0 && movePosition < recyclerView.getChildCount()) {
+                int top = recyclerView.getChildAt(movePosition).getTop();
+                // smoothScrollToPosition 不会有效果，此时调用smoothScrollBy来滑动到指定位置
+                recyclerView.smoothScrollBy(0, top);
+            }
+        } else {
+            // 第三种可能:跳转位置在最后可见项之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
+            // 再通过onScrollStateChanged控制再次调用smoothMoveToPosition，执行上一个判断中的方法
+            recyclerView.smoothScrollToPosition(position);
+            mToPosition = position;
+            mShouldScroll = true;
+        }
     }
 
 }

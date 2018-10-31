@@ -16,23 +16,22 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
 
     @Override
     public void onSubscribe(Disposable d) {
-        Logger.e(TAG, "onSubscribe");
+        Logger.i(TAG, "onSubscribe");
     }
 
     @Override
     public void onNext(T t) {
-        Logger.e(TAG, "onNext "+t);
         if (t.getHttp_code() == 200) {
             onNextResponse(t);
         } else {
-            Logger.e(TAG, "ServerStatus:" + t.getCode()+" HttpStatus:"+ t.getHttp_code() + " ErrorInfo:" + t.getMessage());
+            Logger.i(TAG, "ServerStatus:" + t.getCode()+" HttpStatus:"+ t.getHttp_code() + " ErrorInfo:" + t.getMessage());
             onErrorResponse(t);
         }
     }
 
     @Override
     public void onError(Throwable e) {
-        Logger.e(TAG, "onError:" + e.toString());
+        Logger.i(TAG, "onError:" + e.toString());
         onNetWorkError("onError 网络超时，请重新尝试--"+e.getMessage());
         if (Looper.myLooper() == null) {
             Looper.prepare();
@@ -43,7 +42,7 @@ public abstract class BaseObserver<T extends BaseResponses> implements Observer<
 
     @Override
     public void onComplete() {
-        Logger.e(TAG, "onComplete");
+        Logger.i(TAG, "onComplete");
     }
 
     /**返回成功*/

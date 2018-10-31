@@ -58,4 +58,8 @@ public class TabHelper {
         return Tabs.values().length;
     }
 
+    public interface OnListenerClick{
+        void click();
+    }
+
 }

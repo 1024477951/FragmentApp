@@ -34,7 +34,7 @@ public class WaterBgSurfaceView extends SurfaceView implements
     /**
      * off = 偏移值，speed = 速度
      */
-    private int off1,off2, speed1 = 15,speed2 = 25;
+    private int offx,offy,speedx = 5,speedy = 5;
 
     private Bitmap bitmap;
 
@@ -61,7 +61,7 @@ public class WaterBgSurfaceView extends SurfaceView implements
         // 去除画笔锯齿
         paint.setAntiAlias(true);
         // 设置风格为实线
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL);
         // 设置画笔颜色
 //        paint.setColor(getResources().getColor(R.color.color_4446b7));
 
@@ -147,109 +147,63 @@ public class WaterBgSurfaceView extends SurfaceView implements
                             paint.setColor(getResources().getColor(R.color.color_ed3159c7));
                             path.reset();
                             //假设屏幕宽度为600，平均分成四分，两个控制点分别定位宽度的四分之三和四分之一，结束点为二分之一
-                            path.moveTo(-width + off1, waveHeight);//起点
-                            //左边区域，移动的时候连贯,假设max=600
-                            path.quadTo(-width * 3 / 4 + off1, waveHeight + 70, -width / 2 + off1, waveHeight);//-450,60
-                            path.quadTo(-width / 4 + off1, waveHeight - 70, off1, waveHeight);//-150,-60
-                            //根据上面的假设得到两个的控制点距离，x1 = width * 3 / 4，x2 = width / 4 ，和结束点 end = width / 2
-                            path.quadTo(width / 4 + off1, waveHeight + 70, width / 2 + off1, waveHeight);//150,-60
-                            path.quadTo(width * 3 / 4 + off1, waveHeight - 70, width + off1, waveHeight);//450,60
+                            path.moveTo(0, waveHeight);//起点
+                            path.quadTo(width / 4, waveHeight + offx + 70, width / 2, waveHeight);//150,-60
+                            path.quadTo(width * 3 / 4, waveHeight - offy - 70, width, waveHeight);//450,60
                             //闭合区域
                             path.lineTo(width, height);
-                            path.lineTo(-width, height);//一直到最下方
+                            path.lineTo(0, height);//一直到最下方
                             path.close();
                             canvas.drawPath(path, paint);//绘制二级贝塞尔弧形
 
-                            //绘制相交波浪，波形相反
-                            paint.setColor(getResources().getColor(R.color.color_ed3159c7));
-                            path.reset();
-                            path.moveTo(-width + off2, waveHeight);
-                            path.quadTo(-width * 3 / 4 + off2, waveHeight - 50, -width / 2 + off2, waveHeight);
-                            path.quadTo(-width / 4 + off2, waveHeight + 50, off2, waveHeight);
-                            path.quadTo(width / 4 + off2, waveHeight - 50, width / 2 + off2, waveHeight);
-                            path.quadTo(width * 3 / 4 + off2, waveHeight + 50, width + off2, waveHeight);
-                            path.lineTo(width, height);
-                            path.lineTo(-width, height);
-                            path.close();
-                            canvas.drawPath(path, paint);
-
-//                            //辅助波浪，本身衔接不够平滑，为了追求衔接平滑还是在原来的高度上下降调整
-//                            paint.setColor(getResources().getColor(R.color.color_4b12a6d2));
+//                            int bigWidth = width + 100,bigHeight = width + 100;
+//                            //绘制相交波浪，波形相反
+//                            paint.setColor(getResources().getColor(R.color.color_ed3159c7));
 //                            path.reset();
-//                            //假设屏幕宽度为600，平均分成四分，两个控制点分别定位宽度的四分之三和四分之一，结束点为二分之一
-//                            path.moveTo(-width + off, waveHeight + 100);//起点
-//                            //左边区域，移动的时候连贯,假设max=600
-//                            path.quadTo(-width / 2 + off, waveHeight - 120, off, waveHeight + 100);//-450,60
-//                            path.quadTo(width / 2 + off, waveHeight - 120, width + off, waveHeight + 100);//450,60
-//                            //闭合区域
-//                            path.lineTo(width, height);
-//                            path.lineTo(-width, height);//一直到最下方
+//                            path.moveTo(0, waveHeight);
+//                            path.quadTo(bigWidth / 4, waveHeight - off - 50, bigWidth / 2, waveHeight);
+//                            path.quadTo(bigWidth * 3 / 4, waveHeight + off + 50, bigWidth, waveHeight);
+//                            path.lineTo(bigWidth, bigHeight);
+//                            path.lineTo(0, bigHeight);
 //                            path.close();
-//                            canvas.drawPath(path, paint);//绘制二级贝塞尔弧形
+//                            canvas.drawPath(path, paint);
+//
+//                            //第三条波浪降低高度和深色
+//                            int newHeight = waveHeight + 80;
+//                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
+//                            path.reset();
+//                            path.moveTo(0, newHeight);
+//                            path.quadTo(width / 4, newHeight + off + 50, width / 2, newHeight);
+//                            path.quadTo(width * 3 / 4, newHeight - off - 50, width, newHeight);
+//                            path.lineTo(width, height);
+//                            path.lineTo(0, height);
+//                            path.close();
+//                            canvas.drawPath(path, paint);
+//                            //第四条波浪
+//                            newHeight = waveHeight + 130;
+//                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
+//                            path.reset();
+//                            path.moveTo(0, newHeight);
+//                            path.quadTo(width / 4, newHeight + off + 80, width / 2, newHeight);
+//                            path.quadTo(width * 3 / 4, newHeight - off - 80, width, newHeight);
+//                            path.lineTo(width, height);
+//                            path.lineTo(0, height);
+//                            path.close();
+//                            canvas.drawPath(path, paint);
 
-//                            canvas.drawCircle(-width + off, waveHeight - 400, 5, paint);
-//                            canvas.drawCircle(-width / 2 + off, waveHeight - 400, 5, paint);
-//                            canvas.drawCircle(off, waveHeight, 5, paint);
-//                            canvas.drawCircle(width / 2 + off, waveHeight + 400, 5, paint);
-//                            canvas.drawCircle(width + off, waveHeight + 400, 5, paint);
-//                            canvas.drawCircle(width + off, waveHeight, 5, paint);
-                            //第三条波浪降低高度和深色
-                            int newHeight = waveHeight + 80;
-                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
-                            path.reset();
-                            path.moveTo(-width + off1, newHeight);
-                            path.quadTo(-width * 3 / 4 + off1, newHeight + 50, -width / 2 + off1, newHeight);
-                            path.quadTo(-width / 4 + off1, newHeight - 50, off1, newHeight);
-                            path.quadTo(width / 4 + off1, newHeight + 50, width / 2 + off1, newHeight);
-                            path.quadTo(width * 3 / 4 + off1, newHeight - 50, width + off1, newHeight);
-                            path.lineTo(width, height);
-                            path.lineTo(-width, height);
-                            path.close();
-                            canvas.drawPath(path, paint);
-                            //第四条波浪
-                            newHeight = waveHeight + 130;
-                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
-                            path.reset();
-                            path.moveTo(-width + off2, newHeight);
-                            path.quadTo(-width * 3 / 4 + off2, newHeight + 80, -width / 2 + off2, newHeight);
-                            path.quadTo(-width / 4 + off2, newHeight - 80, off2, newHeight);
-                            path.quadTo(width / 4 + off2, newHeight + 80, width / 2 + off2, newHeight);
-                            path.quadTo(width * 3 / 4 + off2, newHeight - 80, width + off2, newHeight);
-                            path.lineTo(width, height);
-                            path.lineTo(-width, height);
-                            path.close();
-                            canvas.drawPath(path, paint);
-
-//                            //贝塞尔坐标，测试红点
-//                            canvas.drawCircle(-width + off, waveHeight + 100, 5, paint);
-//
-//                            canvas.drawCircle(-width * 3 / 4 + off, waveHeight + 100, 5, paint);
-//                            canvas.drawCircle(-width / 2 + off, waveHeight, 5, paint);
-//
-//                            canvas.drawCircle(-width / 4 + off, waveHeight - 100, 5, paint);
-//                            canvas.drawCircle(off, waveHeight, 5, paint);
-//
-//                            canvas.drawCircle(width / 4 + off, waveHeight + 100, 5, paint);
-//                            canvas.drawCircle(width / 2 + off, waveHeight, 5, paint);
-//
-//                            canvas.drawCircle(width * 3 / 4 + off, waveHeight - 100, 5, paint);
-//                            canvas.drawCircle(width + off, waveHeight, 5, paint);
-
-                            off1 = off1 + speed1;//移动X控制点
-                            if (off1 >= width) {
-                                off1 = 0;
+                            offx += speedx;
+                            if (offx >= 100 || offx <= -150) {
+                                speedx = - speedx;
                             }
-                            off2 = off2 + speed2;//移动X控制点
-                            if (off2 >= width) {
-                                off2 = 0;
+                            offy += speedy;
+                            if (offy >= 100 || offy <= -150) {
+                                speedy = - speedy;
                             }
-                            waveHeight = waveHeight + waterUp;
-                            //水位上升下降
-                            if (waveHeight <= height * 3 / 5 - 50 || waveHeight >= height * 3 / 5 + 50) {
-                                waterUp = -waterUp;
-                            }
-
-
+//                            waveHeight = waveHeight + waterUp;
+//                            //水位上升下降
+//                            if (waveHeight <= height * 3 / 5 - 50 || waveHeight >= height * 3 / 5 + 50) {
+//                                waterUp = -waterUp;
+//                            }
                         }
                     }
                 } catch (IllegalArgumentException e) {

@@ -3,6 +3,7 @@ package com.fragmentapp.home.presenter;
 import android.os.Handler;
 
 import com.fragmentapp.base.BasePresenter;
+import com.fragmentapp.home.bean.HomeDataBean;
 import com.fragmentapp.home.imple.IHomeView;
 
 import java.util.ArrayList;
@@ -21,10 +22,20 @@ public class HomePresenter extends BasePresenter {
     }
 
     public void getArticleList(int page){
-        List<String> list = new ArrayList<>();
-        for (int i = 0;i < 15;i++){
-            list.add(""+(i+page));
+        List<HomeDataBean> list = new ArrayList<>();
+        HomeDataBean bean = null;
+        for (int i = 0;i < 20;i++){
+            bean = new HomeDataBean();
+            bean.setId(i);
+            if (i == 10 || i == 2){
+                bean.setReadNum(3);
+            }
+            list.add(bean);
         }
+        bean = new HomeDataBean();
+        bean.setId(21);
+        bean.setReadNum(1);
+        list.add(bean);
         view.success(list);
         new Handler().postDelayed(new Runnable() {
             @Override

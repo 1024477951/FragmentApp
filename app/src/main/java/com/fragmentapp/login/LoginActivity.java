@@ -15,6 +15,7 @@ import com.fragmentapp.home.MainActivity;
 import com.fragmentapp.login.bean.LoginDataBean;
 import com.fragmentapp.login.imple.ILoginView;
 import com.fragmentapp.login.presenter.LoginPresenter;
+import com.fragmentapp.view.water.NewWaterBgSurfaceView;
 import com.fragmentapp.view.water.WaterBgSurfaceView;
 import com.fragmentapp.view.water.WaterBgView;
 

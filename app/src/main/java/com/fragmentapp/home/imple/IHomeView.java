@@ -1,5 +1,7 @@
 package com.fragmentapp.home.imple;
 
+import com.fragmentapp.home.bean.HomeDataBean;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
 
 public interface IHomeView {
 
-    void success(List<String> list);
+    void success(List<HomeDataBean> list);
     void error();
 
     void loading();

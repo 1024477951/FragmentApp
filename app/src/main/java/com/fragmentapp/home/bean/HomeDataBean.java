@@ -5,4 +5,23 @@ package com.fragmentapp.home.bean;
  */
 
 public class HomeDataBean {
+
+    private int id;
+    private int readNum;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getReadNum() {
+        return readNum;
+    }
+
+    public void setReadNum(int readNum) {
+        this.readNum = readNum;
+    }
 }
