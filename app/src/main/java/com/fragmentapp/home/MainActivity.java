@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
      * 添加首页按钮缓存
      */
     private void addTab(View view, int position) {
-        CheckBox checkBox = cover(view.findViewWithTag("check"));
+        CheckBox checkBox = view.findViewWithTag("check");
         checkBox.setChecked(false);
         menus.put(position, checkBox);
     }

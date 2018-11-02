@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @BindView(R.id.et_pwd)
     EditText et_pwd;
     @BindView(R.id.bg)
-    NewWaterBgSurfaceView waterBgView;
+    WaterBgSurfaceView waterBgView;
 
     @Override
     public int layoutID() {

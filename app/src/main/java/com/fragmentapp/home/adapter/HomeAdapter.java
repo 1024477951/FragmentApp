@@ -22,8 +22,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeAdapter extends BaseQuickAdapter<HomeDataBean, HomeAdapter.ViewHolder> {
 
-    private HashSet<Integer> finds = new HashSet<>();
-
     public HomeAdapter(int layoutResId) {
         super(layoutResId);
     }
@@ -49,7 +47,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeDataBean, HomeAdapter.View
         int size = getData().size();
         /** 列表中第一个可见的item position */
         int firstPosition =  RecyclerViewPositionHelper.createHelper(recyclerView).findFirstVisibleItemPosition();
-//        int lastPosition =  RecyclerViewPositionHelper.createHelper(recyclerView).findLastVisibleItemPosition();
+        int lastPosition =  RecyclerViewPositionHelper.createHelper(recyclerView).findLastVisibleItemPosition();
 
         /** 定位第一个未读消息的position */
         int lastNumPosition = -1,firstNumPosition = 0;
@@ -70,19 +68,10 @@ public class HomeAdapter extends BaseQuickAdapter<HomeDataBean, HomeAdapter.View
         for (int i = 0;i < size;i++){
             int num = getData().get(i).getReadNum();
             /** 从可见的position开始往下查找 */
-            if (i > firstPosition && num > 0 && finds.contains(i) == false) {
+            if (i > firstPosition && num > 0 && lastPosition != size-1) {
                 position = i;
-
-                //如果是定位的第一个，把finds集合清空，以控制定位到最后一个的时候上拉到上面在次点击定位到最后一个的时候会跳过最后一个到第一个，
-                // 因为此时finds有值，然后又没有在次连续定位进入else页面clear数据，所以else里面的操作需要放到手动滑到上方定位时来处理
-                finds.clear();
-
-                if (lastNumPosition == i) {//如果定位到了最后一个未读position下标就添加到finds集合中，以控制下次在进入最后一个的时候会跳到第一个循环和重新定位
-                    finds.add(i);
-                }
                 break;
-            }else if (lastNumPosition == i && finds.contains(i)){//如果是已经定位到最后一条未读position了，返回第一条未读position
-                finds.clear();
+            }else if (lastNumPosition == i){//如果是已经定位到最后一条未读position了，返回第一条未读position
                 position = firstNumPosition;
             }
         }
