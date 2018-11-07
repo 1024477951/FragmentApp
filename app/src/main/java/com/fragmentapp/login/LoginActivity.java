@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @BindView(R.id.et_pwd)
     EditText et_pwd;
     @BindView(R.id.bg)
-    WaterBgSurfaceView waterBgView;
+    NewWaterBgSurfaceView waterBgView;
 
     @Override
     public int layoutID() {
@@ -91,7 +91,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
             Toast.makeText(context,"param is null",Toast.LENGTH_SHORT).show();
             return;
         }
-        new LoginPresenter(this).login();
+//        new LoginPresenter(this).login();
+        MainActivity.start(context);
+        finish();
     }
 
     @Override

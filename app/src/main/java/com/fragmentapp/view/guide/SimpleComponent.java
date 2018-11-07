@@ -1,8 +1,7 @@
-package com.fragmentapp.view.alert;
+package com.fragmentapp.view.guide;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.fragmentapp.R;

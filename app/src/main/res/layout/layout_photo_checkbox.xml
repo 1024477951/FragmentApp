@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cb_photo"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/d15.0"
+    android:paddingRight="@dimen/d15.0"
+    android:paddingTop="@dimen/d15.0"
+    android:paddingBottom="@dimen/d15.0"
+    android:button="@drawable/check_img"
+    android:layout_toRightOf="@+id/picture_id_preview"
+    android:layout_centerVertical="true"
+    android:gravity="center"
+    android:text="原图"
+    android:checked="false"
+    android:textColor="#338EFF"
+    android:textSize="@dimen/d46.0"/>

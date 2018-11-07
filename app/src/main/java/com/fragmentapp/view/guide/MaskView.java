@@ -1,4 +1,4 @@
-package com.fragmentapp.view.alert;
+package com.fragmentapp.view.guide;
 
 import android.content.Context;
 import android.graphics.Bitmap;

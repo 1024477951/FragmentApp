@@ -1,4 +1,4 @@
-package com.fragmentapp.view.alert;
+package com.fragmentapp.view.guide;
 
 /**
  * 遮罩系统运行异常的封装

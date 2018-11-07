@@ -64,8 +64,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void init() {
-        String token = SharedPreferencesUtils.getParam("token");
-        if (token != null) {
+//        String token = SharedPreferencesUtils.getParam("token");
+//        if (token != null) {
             adapter = new MainAdapter(getSupportFragmentManager());
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(TabHelper.getCount());
@@ -86,10 +86,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
             Intent intent = new Intent(this, WebSocketService.class);
             startService(intent);
-        } else {
-            LoginActivity.start(context);
-            finish();
-        }
+//        } else {
+//            LoginActivity.start(context);
+//            finish();
+//        }
         boolean isGuide = GuideUtil.getInstance().isGuide(GuideUtil.getInstance().main);
         if (isGuide) {
             showGuideView(community);

@@ -7,8 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.helper.EmptyLayout;
@@ -19,6 +24,7 @@ import com.fragmentapp.home.bean.HomeDataBean;
 import com.fragmentapp.home.imple.IHomeView;
 import com.fragmentapp.home.presenter.HomePresenter;
 import com.fragmentapp.im.IMActivity;
+import com.fragmentapp.view.dialog.IOSTaoBaoDialog;
 import com.fragmentapp.view.refresh.DefFootView;
 import com.fragmentapp.view.refresh.DefHeaderView;
 import com.fragmentapp.view.refresh.DownHeadView;
@@ -27,7 +33,9 @@ import com.fragmentapp.view.refresh.StickyHeadView;
 import com.fragmentapp.view.refresh.SunHeadView;
 import com.fragmentapp.view.refresh.TextHeadView;
 import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,8 +53,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnListenerClick {
 
-//    @BindView(R.id.refreshLayout)
-//    RefreshLayout refreshLayout;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -79,6 +87,15 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 IMActivity.start(getContext());
+            }
+        });
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+//                ActionSheetDialogNoTitle();
+                final IOSTaoBaoDialog dialog = new IOSTaoBaoDialog(getContext(), refreshLayout);
+                dialog.show();
+                return false;
             }
         });
 //        textHeadView = new TextHeadView(getContext());
@@ -118,6 +135,25 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
 //                    }
 //                });
 
+    }
+
+    private void ActionSheetDialogNoTitle() {
+        final ArrayList<DialogMenuItem> mContents = new ArrayList<>();
+        DialogMenuItem item = new DialogMenuItem("test",1);
+        mContents.add(item);
+        item = new DialogMenuItem("帮助与反馈",2);
+        mContents.add(item);
+        item = new DialogMenuItem("退出App",3);
+        mContents.add(item);
+        final ActionSheetDialog dialog = new ActionSheetDialog(getContext(), mContents, refreshLayout);
+        dialog.isTitleShow(false).show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(),mContents.get(position).mOperName,Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
