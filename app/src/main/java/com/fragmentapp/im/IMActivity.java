@@ -142,6 +142,7 @@ public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMo
 
     @Override
     public void onLoadMore(@NonNull com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout) {
+//        refreshLayout.finishLoadMore();
         refreshLayout.finishLoadMoreWithNoMoreData();
     }
 

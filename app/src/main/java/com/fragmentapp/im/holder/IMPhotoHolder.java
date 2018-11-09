@@ -64,7 +64,7 @@ public class IMPhotoHolder extends IMBaseHolder{
 
     @Override
     protected void content(final MsgBean item) {
-        showImage(item.isSelf());
+//        showImage(item.isSelf());
         btn_error.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

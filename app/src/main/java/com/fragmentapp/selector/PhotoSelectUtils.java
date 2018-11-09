@@ -4,13 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 
-import com.hanmaker.bryan.hc.R;
-import com.hanmaker.bryan.hc.util.log.KLog;
+import com.fragmentapp.R;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.tools.PictureFileUtils;
+import com.orhanobut.logger.Logger;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -132,7 +132,7 @@ public class PhotoSelectUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    public void clear(Activity context) {
+    public void clear(final Activity context) {
         RxPermissions permissions = new RxPermissions(context);
         permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
             @Override
@@ -145,7 +145,7 @@ public class PhotoSelectUtils {
                     PictureFileUtils.deleteCacheDirFile(context);
                 } else {
 //                    ToastUtils.showToastLongSafe(getString(R.string.picture_jurisdiction));
-                    KLog.e("PictureFileUtils", context.getString(R.string.picture_jurisdiction));
+                    Logger.e("PictureFileUtils "+context.getString(R.string.picture_jurisdiction));
                 }
             }
 

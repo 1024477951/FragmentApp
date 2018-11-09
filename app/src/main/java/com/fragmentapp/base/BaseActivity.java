@@ -16,7 +16,6 @@ import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by liuzhen on 2017/11/1.

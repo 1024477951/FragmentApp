@@ -1,12 +1,10 @@
 package com.fragmentapp.home.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -15,9 +13,6 @@ import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.fragmentapp.R;
-import com.fragmentapp.base.LazyFragment;
-import com.fragmentapp.helper.EmptyLayout;
-import com.fragmentapp.helper.RecyclerViewPositionHelper;
 import com.fragmentapp.home.TabHelper;
 import com.fragmentapp.home.adapter.HomeAdapter;
 import com.fragmentapp.home.bean.HomeDataBean;

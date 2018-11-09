@@ -43,12 +43,12 @@ task clean(type: Delete) {
 
 ext {
     applicationId = 'com.fragmentapp'
-    support_library_version = '27.0.0'
+    support_library_version = '28.0.0'
 
-    compileSdk = 27 //API Level SDK的版本号
-    buildTools = '27.0.0'//build-tools 构建工具版本
+    compileSdk = 28 //API Level SDK的版本号
+    buildTools = '28.0.2'//build-tools 构建工具版本
 
     minSdk = 19//4.4
-    targetSdk = 27
+    targetSdk = 28
 }
 

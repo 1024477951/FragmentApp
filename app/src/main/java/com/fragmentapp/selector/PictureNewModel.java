@@ -256,7 +256,7 @@ public class PictureNewModel {
     }
 
     /**
-     * @param Less than how many KB images are not compressed
+     * @param size than how many KB images are not compressed
      * @return
      */
     public PictureNewModel minimumCompressSize(int size) {
