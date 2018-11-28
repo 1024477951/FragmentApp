@@ -1,7 +1,6 @@
-package com.fragmentapp.view.beans;
+package com.fragmentapp.view.dialog;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
+import com.fragmentapp.view.beans.BeansView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -18,19 +18,19 @@ import butterknife.OnClick;
  * Created by liuzhen on 2017/11/17.
  */
 
-public class LoadingFragment extends BaseDialogFragment {
+public class LoadingDialog extends BaseDialogFragment {
 
     @BindView(R.id.tv_val)
     TextView tv_val;
     @BindView(R.id.beans)
     BeansView beans;
 
-    public static LoadingFragment newInstance() {
-        LoadingFragment fragment = new LoadingFragment();
+    public static LoadingDialog newInstance() {
+        LoadingDialog fragment = new LoadingDialog();
         return fragment;
     }
-    public static LoadingFragment newInstance(String val) {
-        LoadingFragment fragment = new LoadingFragment();
+    public static LoadingDialog newInstance(String val) {
+        LoadingDialog fragment = new LoadingDialog();
         Bundle bundle = new Bundle();
         bundle.putString("val",val);
         fragment.setArguments(bundle);
@@ -39,7 +39,7 @@ public class LoadingFragment extends BaseDialogFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_loading;
+        return R.layout.dialog_loading;
     }
 
     @Override

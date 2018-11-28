@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/d10.0">
+
+    <ImageView
+        android:layout_width="@dimen/d180.0"
+        android:layout_height="@dimen/d180.0"
+        android:layout_gravity="center"
+        android:src="@mipmap/icon_keyboard_img_no"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@mipmap/icon_keyboard_del"/>
+
+</FrameLayout>

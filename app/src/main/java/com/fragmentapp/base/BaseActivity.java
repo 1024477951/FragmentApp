@@ -1,6 +1,7 @@
 package com.fragmentapp.base;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.fragmentapp.R;
 import com.fragmentapp.helper.AppManager;
 import com.fragmentapp.helper.EmptyLayout;
+import com.fragmentapp.view.dialog.LoadingDialog;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
@@ -57,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context context;
     protected ImmersionBar mImmersionBar;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,13 +70,30 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         emptyLayout = new EmptyLayout(this);
         View view = findViewById(R.id.view_status);
-        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar = ImmersionBar.with(this).fitsSystemWindows(false);
         if (view != null) {
-            mImmersionBar.fitsSystemWindows(false)
-                    .statusBarView(view);
+            mImmersionBar.statusBarView(view);
         }
         mImmersionBar.init();
+        loadingDialog = LoadingDialog.newInstance();
         init();
+    }
+
+    protected void showDialog(){
+        if (loadingDialog.isVisible() == false){
+            loadingDialog.show(getSupportFragmentManager(),TAG);
+        }
+    }
+    protected void dismissDialog(){
+        if (loadingDialog.isVisible() == true){
+            loadingDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        ImmersionBar.with(this).init();
     }
 
     @Override
@@ -85,6 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mImmersionBar != null)
             mImmersionBar.destroy();
         context = null;
+        loadingDialog = null;
     }
 
     protected <T> T cover(Object t){

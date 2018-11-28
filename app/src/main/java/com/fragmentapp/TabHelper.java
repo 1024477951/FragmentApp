@@ -1,10 +1,10 @@
-package com.fragmentapp.home;
+package com.fragmentapp;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.SparseArray;
 
-import com.fragmentapp.home.fragment.IMFragment;
+import com.fragmentapp.base.IMFragment;
 
 import java.lang.ref.SoftReference;
 import java.util.List;

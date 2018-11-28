@@ -1,4 +1,4 @@
-package com.fragmentapp.home.view;
+package com.fragmentapp.view.bounce;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/d5.0"
         android:background="@color/white"
-        app:srlEnableLoadMore="false"
+        app:srlEnableLoadMore="true"
         app:srlEnableAutoLoadMore="false"
         app:srlHeaderMaxDragRate="2.5">
 
@@ -31,6 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/color_e1e1e1" />
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <!--</com.fragmentapp.view.refresh.RefreshLayout>-->

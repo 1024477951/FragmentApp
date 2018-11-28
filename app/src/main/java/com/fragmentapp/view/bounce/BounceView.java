@@ -1,4 +1,4 @@
-package com.fragmentapp.home.view;
+package com.fragmentapp.view.bounce;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

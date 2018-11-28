@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/d35.0"
+    android:paddingLeft="@dimen/d35.0"
+    android:paddingTop="@dimen/d35.0">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_author"
+        android:layout_width="@dimen/d110.0"
+        android:layout_height="@dimen/d110.0"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/icon_chat_single"
+        app:civ_border_color="@color/color_ffffff"
+        app:civ_border_width="@dimen/d1.0" />
+
+    <TextView android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/d0.0"
+        android:layout_weight="1"
+        android:textSize="@dimen/d36.0"
+        android:textColor="@color/color_333333"
+        android:layout_marginLeft="@dimen/d15.0"
+        app:layout_constraintLeft_toRightOf="@+id/iv_author"
+        android:text="name"/>
+
+    <TextView android:id="@+id/tv_content"
+        android:layout_width="@dimen/d0.0"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/d42.0"
+        android:textColor="@color/color_666666"
+        android:layout_marginTop="@dimen/d10.0"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        app:layout_constraintRight_toRightOf="parent"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:text="了阿拉啦啦啦啦啦啦啦了阿拉啦啦啦啦啦啊啦了阿了阿拉阿拉啦阿拉阿里啦啊啦了阿了阿拉阿拉啦阿拉阿里啦啊啦了阿了阿拉阿拉啦阿拉阿里啊啦了阿了阿拉阿拉啦阿拉阿里阿拉阿里啦啦啦啦阿拉阿啦了阿拉阿里阿拉阿里阿拉阿里啦啦啦了阿拉"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="@dimen/d600.0"
+        android:layout_height="wrap_content"
+        android:divider="@color/color_e1e1e1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_content"
+        app:layoutManager="GridLayoutManager"
+        android:orientation="vertical"
+        app:spanCount="3"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/d30.0"/>
+
+    <TextView android:id="@+id/tv_time"
+        android:layout_width="@dimen/d0.0"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/d36.0"
+        android:textColor="@color/color_999999"
+        android:layout_marginTop="@dimen/d25.0"
+        app:layout_constraintLeft_toLeftOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        android:text="10-25 14:00"/>
+
+    <TextView android:id="@+id/tv_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/d36.0"
+        android:textColor="@color/color_666666"
+        app:layout_constraintRight_toRightOf="@+id/tv_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_time"
+        android:text="回复"/>
+
+    <View
+        android:layout_width="@dimen/d0.0"
+        android:layout_height="@dimen/d1.0"
+        android:background="@color/color_dddddd"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_time"
+        android:layout_marginTop="@dimen/d25.0"/>
+
+</android.support.constraint.ConstraintLayout>

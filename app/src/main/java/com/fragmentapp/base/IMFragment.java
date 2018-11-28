@@ -1,4 +1,4 @@
-package com.fragmentapp.home.fragment;
+package com.fragmentapp.base;
 
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,9 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fragmentapp.R;
-import com.fragmentapp.base.BaseFragment;
-import com.fragmentapp.home.Tabs;
-import com.fragmentapp.view.beans.LoadingFragment;
+import com.fragmentapp.Tabs;
+import com.fragmentapp.view.dialog.LoadingDialog;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
@@ -54,7 +53,7 @@ public abstract class IMFragment extends BaseFragment {
 
 //    protected EmptyLayout emptyLayout;
     //    protected Loadding loadding;
-    private LoadingFragment loadingFragment;
+    private LoadingDialog loadingDialog;
 
     protected Unbinder unbinder;
 
@@ -87,7 +86,7 @@ public abstract class IMFragment extends BaseFragment {
             return;
         }
 //        emptyLayout = new EmptyLayout(getActivity());//初始化空页面布局
-        loadingFragment = LoadingFragment.newInstance();
+        loadingDialog = LoadingDialog.newInstance();
 
         mImmersionBar = ImmersionBar.with(this)
                 .keyboardEnable(true)
@@ -113,13 +112,13 @@ public abstract class IMFragment extends BaseFragment {
     }
 
     protected void showDialog(){
-        if (loadingFragment.isVisible() == false){
-            loadingFragment.show(getFragmentManager(),TAG);
+        if (loadingDialog.isVisible() == false){
+            loadingDialog.show(getFragmentManager(),TAG);
         }
     }
     protected void dismissDialog(){
-        if (loadingFragment.isVisible() == true){
-            loadingFragment.dismiss();
+        if (loadingDialog.isVisible() == true){
+            loadingDialog.dismiss();
         }
     }
 
@@ -188,7 +187,7 @@ public abstract class IMFragment extends BaseFragment {
 //        if (emptyLayout != null)
 //            emptyLayout.clear();
 //        emptyLayout = null;
-        loadingFragment = null;
+        loadingDialog = null;
         if (mImmersionBar != null)
             mImmersionBar.destroy();
         if (unbinder != null)

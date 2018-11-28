@@ -43,9 +43,4 @@ public abstract class BaseDialogFragment extends AppCompatDialogFragment {
         return contentView;
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-    }
-
 }

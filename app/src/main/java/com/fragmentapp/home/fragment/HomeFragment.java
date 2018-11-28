@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -13,34 +14,24 @@ import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.fragmentapp.R;
-import com.fragmentapp.home.TabHelper;
+import com.fragmentapp.TabHelper;
 import com.fragmentapp.home.adapter.HomeAdapter;
+import com.fragmentapp.base.IMFragment;
 import com.fragmentapp.home.bean.HomeDataBean;
 import com.fragmentapp.home.imple.IHomeView;
 import com.fragmentapp.home.presenter.HomePresenter;
 import com.fragmentapp.im.IMActivity;
+import com.fragmentapp.search.SearchActivity;
+import com.fragmentapp.selector.PhotoSelectUtils;
 import com.fragmentapp.view.dialog.IOSTaoBaoDialog;
-import com.fragmentapp.view.refresh.DefFootView;
-import com.fragmentapp.view.refresh.DefHeaderView;
-import com.fragmentapp.view.refresh.DownHeadView;
-import com.fragmentapp.view.refresh.RefreshLayout;
-import com.fragmentapp.view.refresh.StickyHeadView;
-import com.fragmentapp.view.refresh.SunHeadView;
-import com.fragmentapp.view.refresh.TextHeadView;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by liuzhen on 2017/11/8.
@@ -67,8 +58,7 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
     protected void init() {
 
         setTitleText("消息");
-        img_menu_icon.setImageResource(R.mipmap.de_ic_add);
-
+        setTitleRightMenu(R.mipmap.de_ic_add);
         presenter = new HomePresenter(this);
         page = 1;
 
@@ -77,6 +67,17 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        View head = LayoutInflater.from(getContext()).inflate(R.layout.layout_search, null);
+        if (head != null){
+            adapter.addHeaderView(head);
+            head.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SearchActivity.start(getContext());
+                }
+            });
+        }
         presenter.getArticleList(page);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -161,7 +162,7 @@ public class HomeFragment extends IMFragment implements IHomeView,TabHelper.OnLi
 
     @OnClick({R.id.menu})
     public void click(View view) {
-
+        PhotoSelectUtils.getInstance().openNum(HomeFragment.this);
     }
 
     @Override

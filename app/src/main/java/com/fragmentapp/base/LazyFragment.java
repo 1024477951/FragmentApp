@@ -1,20 +1,15 @@
 package com.fragmentapp.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fragmentapp.R;
 import com.fragmentapp.helper.EmptyLayout;
-import com.fragmentapp.view.beans.LoadingFragment;
-import com.fragmentapp.view.progress.Loadding;
+import com.fragmentapp.view.dialog.LoadingDialog;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
@@ -58,7 +53,7 @@ public abstract class LazyFragment extends BaseFragment {
 
     protected EmptyLayout emptyLayout;
 //    protected Loadding loadding;
-    private LoadingFragment loadingFragment;
+    private LoadingDialog loadingDialog;
 
     protected Unbinder unbinder;
 
@@ -89,7 +84,7 @@ public abstract class LazyFragment extends BaseFragment {
             return;
         }
         emptyLayout = new EmptyLayout(getActivity());//初始化空页面布局
-        loadingFragment = LoadingFragment.newInstance();
+        loadingDialog = LoadingDialog.newInstance();
 
         mImmersionBar = ImmersionBar.with(this)
                 .fitsSystemWindows(false)
@@ -115,13 +110,13 @@ public abstract class LazyFragment extends BaseFragment {
     }
 
     protected void showDialog(){
-        if (loadingFragment.isVisible() == false){
-            loadingFragment.show(getFragmentManager(),TAG);
+        if (loadingDialog.isVisible() == false){
+            loadingDialog.show(getFragmentManager(),TAG);
         }
     }
     protected void dismissDialog(){
-        if (loadingFragment.isVisible() == true){
-            loadingFragment.dismiss();
+        if (loadingDialog.isVisible() == true){
+            loadingDialog.dismiss();
         }
     }
 
@@ -190,7 +185,7 @@ public abstract class LazyFragment extends BaseFragment {
         if (emptyLayout != null)
             emptyLayout.clear();
         emptyLayout = null;
-        loadingFragment = null;
+        loadingDialog = null;
         if (mImmersionBar != null)
             mImmersionBar.destroy();
         if (unbinder != null)

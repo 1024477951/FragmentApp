@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/d150.0"
     android:background="@drawable/shape_navigation"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/toolbars">
 
     <FrameLayout
         android:id="@+id/fl_left"

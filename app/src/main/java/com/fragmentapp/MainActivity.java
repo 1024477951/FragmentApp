@@ -1,4 +1,4 @@
-package com.fragmentapp.home;
+package com.fragmentapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,15 +13,12 @@ import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.model.GuidePage;
 import com.app.hubert.guide.model.HighlightOptions;
 import com.app.hubert.guide.model.RelativeGuide;
-import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.EmptyLayout;
 import com.fragmentapp.helper.GuideUtil;
-import com.fragmentapp.helper.SharedPreferencesUtils;
 import com.fragmentapp.home.adapter.MainAdapter;
 import com.fragmentapp.home.fragment.HomeFragment;
 import com.fragmentapp.im.service.WebSocketService;
-import com.fragmentapp.login.LoginActivity;
 
 import butterknife.BindView;
 
@@ -34,8 +31,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     View home;
     @BindView(R.id.contact)
     View contact;
-    @BindView(R.id.community)
-    View community;
+    @BindView(R.id.dynamic)
+    View dynamic;
     @BindView(R.id.me)
     View me;
 
@@ -73,7 +70,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
             addTab(home, 0);
             addTab(contact, 1);
-            addTab(community, 2);
+            addTab(dynamic, 2);
             addTab(me, 3);
             select(0);
 
@@ -92,7 +89,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 //        }
         boolean isGuide = GuideUtil.getInstance().isGuide(GuideUtil.getInstance().main);
         if (isGuide) {
-            showGuideView(community);
+            showGuideView(dynamic);
         }
     }
 
@@ -142,7 +139,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             case R.id.contact:
                 position = 1;
                 break;
-            case R.id.community:
+            case R.id.dynamic:
                 position = 2;
                 break;
             case R.id.me:

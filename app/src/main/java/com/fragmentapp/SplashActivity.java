@@ -2,7 +2,6 @@ package com.fragmentapp;
 
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.SharedPreferencesUtils;
-import com.fragmentapp.home.MainActivity;
 import com.fragmentapp.login.LoginActivity;
 
 /**

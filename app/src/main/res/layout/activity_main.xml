@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true" >
 
-                <com.fragmentapp.home.view.BounceView
+                <com.fragmentapp.view.bounce.BounceView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selected_main_home"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true" >
 
-                <com.fragmentapp.home.view.BounceView
+                <com.fragmentapp.view.bounce.BounceView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selected_main_contact"
@@ -111,7 +111,7 @@
 
         </RelativeLayout>
 
-        <RelativeLayout android:id="@+id/community"
+        <RelativeLayout android:id="@+id/dynamic"
             android:layout_width="@dimen/d0.0"
             android:layout_height="match_parent"
             android:background="@drawable/shape_line"
@@ -123,12 +123,12 @@
             android:layout_weight="1">
 
             <FrameLayout
-                android:id="@+id/fl_community"
+                android:id="@+id/fl_dynamic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true" >
 
-                <com.fragmentapp.home.view.BounceView
+                <com.fragmentapp.view.bounce.BounceView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selected_main_community"
@@ -148,10 +148,10 @@
                 android:textColor="#696868"
                 android:textSize="@dimen/d30.0"
                 android:tag="tv"
-                android:layout_below="@+id/fl_community"
+                android:layout_below="@+id/fl_dynamic"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/d4.0"
-                android:text="社区"/>
+                android:text="动态"/>
 
         </RelativeLayout>
 
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true" >
 
-                <com.fragmentapp.home.view.BounceView
+                <com.fragmentapp.view.bounce.BounceView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selected_main_me"

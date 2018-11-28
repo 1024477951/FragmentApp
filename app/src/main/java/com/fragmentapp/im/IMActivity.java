@@ -63,8 +63,6 @@ public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMo
 
     @Override
     public void init() {
-        mImmersionBar.statusBarView(R.id.view_status);
-        mImmersionBar.init();
         setTitleText("消息");
 
         adapter = new IMAdapter(list);
