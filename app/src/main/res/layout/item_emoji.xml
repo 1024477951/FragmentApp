@@ -8,7 +8,6 @@
     <ImageView
         android:id="@+id/iv_img"
         android:layout_width="@dimen/d90.0"
-        android:layout_height="@dimen/d90.0"
-        android:src="@mipmap/icon_keyboard_emoji_no" />
+        android:layout_height="@dimen/d90.0" />
 
 </android.support.constraint.ConstraintLayout>

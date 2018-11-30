@@ -3,6 +3,7 @@ package com.fragmentapp.view.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
@@ -17,14 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
 import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
 import com.fragmentapp.dynamic.adapter.KeyboardImgAdapter;
-import com.fragmentapp.view.bounce.LinIndicate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +36,14 @@ import butterknife.OnClick;
  * Created by liuzhen on 2017/11/17.
  */
 
-public class KeyboardDialog extends BaseDialogFragment {
+public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.OnSoftInputChangedListener {
 
     @BindView(R.id.root)
     View root;
     @BindView(R.id.layout_emoji)
     View layout_emoji;
-    @BindView(R.id.view_indicate)
-    LinIndicate view_indicate;
+//    @BindView(R.id.view_indicate)
+//    LinIndicate view_indicate;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     private EmojiListAdapter emojiListAdapter;
@@ -77,9 +77,12 @@ public class KeyboardDialog extends BaseDialogFragment {
 
     @Override
     protected void init() {
+//        KeyboardUtils.registerSoftInputChangedListener(getActivity(),this);
         if (getArguments() != null) {
             Bundle bundle = getArguments();
         }
+        KeyboardUtils.showSoftInput(getActivity());
+        layout_emoji.setVisibility(View.GONE);
         imgAdapter = new KeyboardImgAdapter(R.layout.item_dynamic_keyboard_img);
         rvImgList.setAdapter(imgAdapter);
         List<String> items = new ArrayList<>();
@@ -107,24 +110,41 @@ public class KeyboardDialog extends BaseDialogFragment {
             @Override
             public void onClick(View v) {
                 keyY = root.getBottom();
+                reloadEmoji(false);
             }
         });
-        view_indicate.load(4);
+//        view_indicate.load(4);
 //        setKeyHeight(1000);
 
         viewPager.setOffscreenPageLimit(1);
         emojiListAdapter = new EmojiListAdapter(getChildFragmentManager(),1);
         viewPager.setAdapter(emojiListAdapter);
+        emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
+            @Override
+            public void click(String emojiKey) {
+                if (emojiKey != null) {
+                    et_comment.setText(emojiKey);
+                }
+            }
+        });
     }
 
     public void reloadEmoji(boolean isOpen){
         if (layout_emoji != null) {
             if (isOpen) {
-                if (layout_emoji.getVisibility() == View.GONE)
+                if (layout_emoji.getVisibility() == View.GONE) {
                     layout_emoji.setVisibility(View.VISIBLE);
+                    if (getActivity() != null) {
+                        KeyboardUtils.hideSoftInput(getActivity());
+                    }
+                }
             } else {
-                if (layout_emoji.getVisibility() == View.VISIBLE)
+                if (layout_emoji.getVisibility() == View.VISIBLE) {
                     layout_emoji.setVisibility(View.GONE);
+                    if (getActivity() != null) {
+                        KeyboardUtils.showSoftInput(getActivity());
+                    }
+                }
             }
         }
     }
@@ -132,16 +152,6 @@ public class KeyboardDialog extends BaseDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new MyDialog(getContext(), getTheme());
-    }
-
-    @OnClick({R.id.root})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.root:
-                break;
-            default:
-                break;
-        }
     }
 
     public void onSwitch(FragmentManager manager){
@@ -169,9 +179,40 @@ public class KeyboardDialog extends BaseDialogFragment {
 
     }
 
+    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full})
+    public void click(View view){
+        switch (view.getId()){
+            case R.id.cb_emoji:
+                reloadEmoji(true);
+                break;
+            case R.id.cb_img:
+                reloadEmoji(true);
+                break;
+            case R.id.iv_full:
+
+                Window window = getDialog().getWindow();
+                WindowManager.LayoutParams params = window.getAttributes();
+                params.gravity = Gravity.BOTTOM;
+                if (params.height == WindowManager.LayoutParams.MATCH_PARENT){
+                    params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                }else{
+                    params.height = WindowManager.LayoutParams.MATCH_PARENT;
+                }
+                params.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+                window.setAttributes(params);
+                break;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSoftInputChanged(int height) {
+
     }
 
     class MyDialog extends AppCompatDialog {
@@ -182,27 +223,7 @@ public class KeyboardDialog extends BaseDialogFragment {
 
         @Override
         public boolean onTouchEvent(@NonNull MotionEvent event) {
-            if(keyY > 0){
-                isClose = false;
-            }else {
-                isClose = true;
-            }
-//            Logger.e("getBottom "+root.getBottom()+" getY "+root.getY()+" keyY "+keyY+" isClose "+isClose);
-            if (isClose == false){
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (getCurrentFocus() != null) {//是否有获取焦点的view
-                        if (getCurrentFocus().getWindowToken() != null) {
-                            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                            keyY = 0;//重置关闭逻辑
-                        }
-                    }
-                }
-//                return true;
-                return super.onTouchEvent(event);
-            }else{
-                return super.onTouchEvent(event);
-            }
+            return super.onTouchEvent(event);
         }
     }
 
@@ -212,4 +233,5 @@ public class KeyboardDialog extends BaseDialogFragment {
             layout_emoji.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
         }
     }
+
 }

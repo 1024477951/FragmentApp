@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.fragmentapp.dynamic.fragment.EmojiFragment;
+
 /**
  * Created by liuzhen on 2017/12/14.
  */
@@ -22,9 +24,17 @@ public class EmojiListAdapter extends FragmentPagerAdapter {
         return EmojiFragmentFactory.getInstance().getFragment(position);
     }
 
+    public void setEmojiCallBack(CallBack callBack){
+        ((EmojiFragment)getItem(0)).setCallBack(callBack);
+    }
+
     @Override
     public int getCount() {
         return count;
+    }
+
+    public interface CallBack{
+        void click(String emojiKey);
     }
 
 }

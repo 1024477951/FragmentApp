@@ -9,7 +9,7 @@
         android:layout_width="@dimen/d180.0"
         android:layout_height="@dimen/d180.0"
         android:layout_gravity="center"
-        android:src="@mipmap/icon_keyboard_img_no"/>
+        android:src="@mipmap/empty"/>
 
     <ImageView
         android:layout_width="wrap_content"

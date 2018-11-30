@@ -117,7 +117,7 @@ dependencies {
     //viewpagebar
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     //AndroidUtil
-//    implementation 'com.blankj:utilcode:1.20.4'
+    implementation 'com.blankj:utilcode:1.22.0'
 
 }
 
