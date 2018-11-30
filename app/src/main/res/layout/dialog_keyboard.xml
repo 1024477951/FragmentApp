@@ -46,8 +46,8 @@
         android:layout_marginRight="@dimen/d10.0"
         android:text="发送"/>
     <ImageView android:id="@+id/iv_emoji"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/d70.0"
+        android:layout_height="@dimen/d70.0"
         app:layout_constraintTop_toBottomOf="@+id/rvImgList"
         app:layout_constraintLeft_toLeftOf="@+id/rvImgList"
         android:layout_marginTop="@dimen/d15.0"
@@ -55,11 +55,58 @@
         android:src="@mipmap/icon_keyboard_emoji_no"/>
 
     <ImageView android:id="@+id/iv_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/d70.0"
+        android:layout_height="@dimen/d70.0"
         app:layout_constraintTop_toTopOf="@+id/iv_emoji"
         app:layout_constraintLeft_toRightOf="@+id/iv_emoji"
         android:layout_marginLeft="@dimen/d50.0"
         android:src="@mipmap/icon_keyboard_img_no"/>
+
+    <View android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d1.0"
+        android:layout_marginTop="@dimen/d10.0"
+        app:layout_constraintTop_toBottomOf="@+id/iv_emoji"
+        android:background="@color/color_ffffff"/>
+
+    <LinearLayout android:id="@+id/layout_emoji"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d730.0"
+        app:layout_constraintTop_toBottomOf="@+id/view_bottom"
+        android:padding="@dimen/d10.0"
+        android:orientation="vertical">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0.0"
+            android:layout_weight="1"/>
+
+        <!--<com.fragmentapp.view.bounce.LinIndicate-->
+            <!--android:id="@+id/view_indicate"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:background="@color/color_ffffff"-->
+            <!--android:gravity="center"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/viewPager"-->
+            <!--android:layout_marginTop="@dimen/d10.0"/>-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d10.0">
+            <ImageView android:id="@+id/iv_emoji_bottom"
+                android:layout_width="@dimen/d70.0"
+                android:layout_height="@dimen/d70.0"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_keyboard_emoji_no"/>
+
+            <ImageView android:id="@+id/iv_emoji_del"
+                android:layout_width="@dimen/d70.0"
+                android:layout_height="@dimen/d70.0"
+                android:layout_gravity="right|center_vertical"
+                android:src="@mipmap/compose_emotion_delete"/>
+        </FrameLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

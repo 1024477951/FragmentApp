@@ -2,6 +2,7 @@ package com.fragmentapp.dynamic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -43,6 +45,8 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
     private DynamicDetailAdapter commentAdapter;
     private int page,count,headY;
 
+    private KeyboardDialog dialog;
+
     public static void start(Context context) {
         start(context, null);
     }
@@ -63,6 +67,24 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
 
     @Override
     public void init() {
+        dialog = KeyboardDialog.newInstance();
+        rvComment.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            public void onGlobalLayout() {
+
+                Rect r = new Rect();
+                rvComment.getWindowVisibleDisplayFrame(r);
+                int screenHeight = getWindow().getDecorView().getRootView().getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+                Logger.e("keypadHeight--"+keypadHeight);
+                if (dialog != null) {
+                    if (keypadHeight > 0) {
+                        dialog.reloadEmoji(false);
+                    } else {
+                        dialog.reloadEmoji(true);
+                    }
+                }
+            }
+        });
         setTitleText("动态详情");
 
         initComment();
@@ -151,10 +173,17 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
     public void click(View view){
         switch (view.getId()){
             case R.id.layout_comment:
-                KeyboardDialog.newInstance().onSwitch(getSupportFragmentManager());
-//                final ShareBottomDialog dialog = new ShareBottomDialog(context, rvComment);
-//                dialog.showAnim(new BounceTopEnter()).show();
+                dialog.onSwitch(getSupportFragmentManager());
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialog != null){
+            dialog.dismiss();
+            dialog = null;
         }
     }
 
