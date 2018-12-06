@@ -1,7 +1,9 @@
 package com.fragmentapp.view.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -18,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.KeyboardUtils;
@@ -54,6 +58,10 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     @BindView(R.id.et_comment)
     EditText et_comment;
+    @BindView(R.id.cb_emoji)
+    CheckBox cb_emoji;
+    @BindView(R.id.cb_img)
+    CheckBox cb_img;
     private boolean isClose = false;
     private int keyY = 0;
     private int keyHeight;
@@ -77,10 +85,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     @Override
     protected void init() {
-//        KeyboardUtils.registerSoftInputChangedListener(getActivity(),this);
-        if (getArguments() != null) {
-            Bundle bundle = getArguments();
-        }
+        KeyboardUtils.registerSoftInputChangedListener(getActivity(),this);
         KeyboardUtils.showSoftInput(getActivity());
         layout_emoji.setVisibility(View.GONE);
         imgAdapter = new KeyboardImgAdapter(R.layout.item_dynamic_keyboard_img);
@@ -122,14 +127,31 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
             @Override
             public void click(String emojiKey) {
-                if (emojiKey != null) {
-                    et_comment.setText(emojiKey);
-                }
+//                if (emojiKey != null) {
+//                    // 获取当前光标位置,在指定位置上添加表情图片文本
+//                    int curPosition = et_comment.getSelectionStart();
+//                    StringBuilder sb = new StringBuilder(et_comment.getText().toString());
+//                    sb.insert(curPosition, emojiKey);
+//
+//                    // 特殊文字处理,将表情等转换一下
+//                    et_comment.setText(SpanStringUtils.getEmotionContent(sb.toString(), R.dimen.d70_0));
+//                    // 将光标设置到新增完表情的右侧
+//                    et_comment.setSelection(curPosition + emojiKey.length());
+//                    et_comment.requestFocus();
+//                }
             }
         });
     }
 
-    public void reloadEmoji(boolean isOpen){
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (et_comment != null){
+            et_comment.setText("");
+        }
+    }
+
+    public void reloadEmoji(boolean isOpen) {
         if (layout_emoji != null) {
             if (isOpen) {
                 if (layout_emoji.getVisibility() == View.GONE) {
@@ -143,15 +165,23 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
                     layout_emoji.setVisibility(View.GONE);
                     if (getActivity() != null) {
                         KeyboardUtils.showSoftInput(getActivity());
+                        cb_img.setChecked(false);
+                        cb_emoji.setChecked(false);
                     }
                 }
             }
         }
     }
 
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(et_comment.getWindowToken(), 0);
+    }
+
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new MyDialog(getContext(), getTheme());
+    public void onDestroy() {
+        super.onDestroy();
+        KeyboardUtils.hideSoftInput(getActivity());
     }
 
     public void onSwitch(FragmentManager manager){
@@ -183,47 +213,56 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     public void click(View view){
         switch (view.getId()){
             case R.id.cb_emoji:
-                reloadEmoji(true);
+                if (getActivity() != null) {
+                    KeyboardUtils.hideSoftInput(getActivity());
+                }
                 break;
             case R.id.cb_img:
-                reloadEmoji(true);
+                cb_emoji.setChecked(true);
+                cb_img.setChecked(false);
+                hideKeyboard();
                 break;
             case R.id.iv_full:
-
-                Window window = getDialog().getWindow();
-                WindowManager.LayoutParams params = window.getAttributes();
-                params.gravity = Gravity.BOTTOM;
-                if (params.height == WindowManager.LayoutParams.MATCH_PARENT){
-                    params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                }else{
-                    params.height = WindowManager.LayoutParams.MATCH_PARENT;
-                }
-                params.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-                window.setAttributes(params);
+                pushFull();
                 break;
         }
+    }
+
+    private void pushFull(){
+        Window window = getDialog().getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.BOTTOM;
+        if (params.height == WindowManager.LayoutParams.MATCH_PARENT) {
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+            ConstraintLayout.LayoutParams parm = (ConstraintLayout.LayoutParams) et_comment.getLayoutParams();
+            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+            et_comment.setLayoutParams(parm);
+            et_comment.setMaxLines(3);
+        } else {
+            params.height = WindowManager.LayoutParams.MATCH_PARENT;
+
+            ConstraintLayout.LayoutParams parm = (ConstraintLayout.LayoutParams) et_comment.getLayoutParams();
+            parm.height = ConstraintLayout.LayoutParams.MATCH_PARENT;
+            et_comment.setLayoutParams(parm);
+            et_comment.setMaxLines(Integer.MAX_VALUE);
+        }
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(params);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        KeyboardUtils.unregisterSoftInputChangedListener(getActivity());
     }
 
     @Override
     public void onSoftInputChanged(int height) {
-
-    }
-
-    class MyDialog extends AppCompatDialog {
-
-        public MyDialog(Context context, int theme) {
-            super(context,theme);
-        }
-
-        @Override
-        public boolean onTouchEvent(@NonNull MotionEvent event) {
-            return super.onTouchEvent(event);
+        if (height > 0) {
+            reloadEmoji(false);
+        } else {
+            reloadEmoji(true);
         }
     }
 

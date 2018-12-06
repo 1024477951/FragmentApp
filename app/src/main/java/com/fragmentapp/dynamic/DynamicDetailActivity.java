@@ -68,23 +68,23 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
     @Override
     public void init() {
         dialog = KeyboardDialog.newInstance();
-        rvComment.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-
-                Rect r = new Rect();
-                rvComment.getWindowVisibleDisplayFrame(r);
-                int screenHeight = getWindow().getDecorView().getRootView().getHeight();
-                int keypadHeight = screenHeight - r.bottom;
-                Logger.e("keypadHeight--"+keypadHeight);
-                if (dialog != null) {
-                    if (keypadHeight > 0) {
-                        dialog.reloadEmoji(false);
-                    } else {
-                        dialog.reloadEmoji(true);
-                    }
-                }
-            }
-        });
+//        rvComment.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            public void onGlobalLayout() {
+//
+//                Rect r = new Rect();
+//                rvComment.getWindowVisibleDisplayFrame(r);
+//                int screenHeight = getWindow().getDecorView().getRootView().getHeight();
+//                int keypadHeight = screenHeight - r.bottom;
+//                Logger.e("keypadHeight--"+keypadHeight);
+//                if (dialog != null) {
+//                    if (keypadHeight > 0) {
+//                        dialog.reloadEmoji(false);
+//                    } else {
+//                        dialog.reloadEmoji(true);
+//                    }
+//                }
+//            }
+//        });
         setTitleText("动态详情");
 
         initComment();
