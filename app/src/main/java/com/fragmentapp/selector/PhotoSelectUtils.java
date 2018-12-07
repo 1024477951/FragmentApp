@@ -116,6 +116,86 @@ public class PhotoSelectUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
+    public void openNum(Fragment fragment,int maxSelectNum) {
+        PictureNewSelector.create(fragment)
+                .openGallery(PictureMimeType.ofImage())
+                .theme(R.style.picture_QQ_num_style)
+//                .compressSavePath(getPath())//压缩图片保存地址
+                .maxSelectNum(maxSelectNum)
+                .minSelectNum(1)
+                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                .cropCompressQuality(50)// 裁剪压缩质量 默认90 int
+                .compress(false)// 是否压缩 true or false
+                .synOrAsy(true)//同步true或异步false 压缩 默认同步
+                .imageSpanCount(4)// 每行显示个数 int
+                .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .previewImage(false)// 是否可预览图片 true or false
+                .previewVideo(true)// 是否可预览视频 true or false
+                .enablePreviewAudio(true) // 是否可播放音频 true or false
+                .isCamera(true)// 是否显示拍照按钮 true or false
+                .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                .setOutputCameraPath("/photo")// 自定义拍照保存路径,可不填
+                .glideOverride(160, 160)// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                .isGif(false)// 是否显示gif图片 true or false
+                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+    }
+    public void openNum(Activity activity,int maxSelectNum) {
+        PictureNewSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .theme(R.style.picture_QQ_num_style)
+//                .compressSavePath(getPath())//压缩图片保存地址
+                .maxSelectNum(maxSelectNum)
+                .minSelectNum(1)
+                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                .cropCompressQuality(50)// 裁剪压缩质量 默认90 int
+                .compress(false)// 是否压缩 true or false
+                .synOrAsy(true)//同步true或异步false 压缩 默认同步
+                .imageSpanCount(4)// 每行显示个数 int
+                .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .previewImage(false)// 是否可预览图片 true or false
+                .previewVideo(true)// 是否可预览视频 true or false
+                .enablePreviewAudio(true) // 是否可播放音频 true or false
+                .isCamera(true)// 是否显示拍照按钮 true or false
+                .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                .setOutputCameraPath("/photo")// 自定义拍照保存路径,可不填
+                .glideOverride(160, 160)// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                .isGif(true)// 是否显示gif图片 true or false
+                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+    }
+    /**
+     * 自定义表情选择
+     */
+    public void openEmoji(Fragment fragment) {
+        PictureNewSelector.create(fragment)
+                .openGallery(PictureMimeType.ofImage())
+                .theme(R.style.picture_QQ_num_style)
+//                .compressSavePath(getPath())//压缩图片保存地址
+                .maxSelectNum(1)
+                .minSelectNum(1)
+                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                .cropCompressQuality(50)// 裁剪压缩质量 默认90 int
+                .compress(false)// 是否压缩 true or false
+                .synOrAsy(true)//同步true或异步false 压缩 默认同步
+                .imageSpanCount(4)// 每行显示个数 int
+                .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .previewImage(false)// 是否可预览图片 true or false
+                .previewVideo(true)// 是否可预览视频 true or false
+                .enablePreviewAudio(true) // 是否可播放音频 true or false
+                .isCamera(true)// 是否显示拍照按钮 true or false
+                .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                .setOutputCameraPath("/photo")// 自定义拍照保存路径,可不填
+                .glideOverride(160, 160)// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                .isGif(true)// 是否显示gif图片 true or false
+                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+    }
+
+
     /**
      * 拍照
      */
@@ -144,8 +224,7 @@ public class PhotoSelectUtils {
                 if (aBoolean) {
                     PictureFileUtils.deleteCacheDirFile(context);
                 } else {
-//                    ToastUtils.showToastLongSafe(getString(R.string.picture_jurisdiction));
-                    Logger.e("PictureFileUtils "+context.getString(R.string.picture_jurisdiction));
+                    Logger.e("PictureFileUtils 读取权限卡被拒绝");
                 }
             }
 

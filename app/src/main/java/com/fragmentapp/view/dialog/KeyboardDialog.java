@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,11 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
 import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
 import com.fragmentapp.dynamic.adapter.KeyboardImgAdapter;
+import com.fragmentapp.helper.SpanStringUtils;
+import com.fragmentapp.selector.PhotoSelectUtils;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,18 +134,18 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
             @Override
             public void click(String emojiKey) {
-//                if (emojiKey != null) {
-//                    // 获取当前光标位置,在指定位置上添加表情图片文本
-//                    int curPosition = et_comment.getSelectionStart();
-//                    StringBuilder sb = new StringBuilder(et_comment.getText().toString());
-//                    sb.insert(curPosition, emojiKey);
-//
-//                    // 特殊文字处理,将表情等转换一下
-//                    et_comment.setText(SpanStringUtils.getEmotionContent(sb.toString(), R.dimen.d70_0));
-//                    // 将光标设置到新增完表情的右侧
-//                    et_comment.setSelection(curPosition + emojiKey.length());
-//                    et_comment.requestFocus();
-//                }
+                if (emojiKey != null) {
+                    // 获取当前光标位置,在指定位置上添加表情图片文本
+                    int curPosition = et_comment.getSelectionStart();
+                    StringBuilder sb = new StringBuilder(et_comment.getText().toString());
+                    sb.insert(curPosition, emojiKey);
+
+                    // 特殊文字处理,将表情等转换一下
+                    et_comment.setText(SpanStringUtils.getEmotionContent(sb.toString(), R.dimen.d70_0));
+                    // 将光标设置到新增完表情的右侧
+                    et_comment.setSelection(curPosition + emojiKey.length());
+                    et_comment.requestFocus();
+                }
             }
         });
     }
@@ -209,18 +216,23 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     }
 
-    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full})
+    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full, R.id.iv_emoji_del})
     public void click(View view){
         switch (view.getId()){
-            case R.id.cb_emoji:
-                if (getActivity() != null) {
-                    KeyboardUtils.hideSoftInput(getActivity());
+            case R.id.iv_emoji_del:
+                if (et_comment != null) {
+                    et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
                 }
                 break;
-            case R.id.cb_img:
+            case R.id.cb_emoji:
                 cb_emoji.setChecked(true);
                 cb_img.setChecked(false);
                 hideKeyboard();
+                break;
+            case R.id.cb_img:
+                cb_emoji.setChecked(false);
+                cb_img.setChecked(true);
+                PhotoSelectUtils.getInstance().openNum(this, 3);
                 break;
             case R.id.iv_full:
                 pushFull();
@@ -270,6 +282,28 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         this.keyHeight = keyHeight;
         if (layout_emoji != null && keyHeight > 0) {
             layout_emoji.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+            if (data != null) {
+                List<LocalMedia> photos = PictureSelector.obtainMultipleResult(data);
+                List<String> items = new ArrayList<>();
+                for (LocalMedia media : photos) {
+                    items.add(media.getPath());
+                }
+                if (imgAdapter != null) {
+                    if (imgAdapter.getData().size() > 0) {
+                        imgAdapter.addData(items);
+                    }else{
+                        imgAdapter.setNewData(items);
+                    }
+                }
+            }
+
         }
     }
 
