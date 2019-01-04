@@ -1,5 +1,6 @@
 package com.fragmentapp.dynamic;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
@@ -88,6 +90,12 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
         setTitleText("动态详情");
 
         initComment();
+
+        Intent intent = getIntent();
+        if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_SEND)) {
+//            ClipData uri = intent.getClipData();
+            ToastUtils.showShort("分享测试成功");
+        }
     }
 
     private void initComment(){

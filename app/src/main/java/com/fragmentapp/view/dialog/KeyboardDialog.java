@@ -69,8 +69,6 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     CheckBox cb_emoji;
     @BindView(R.id.cb_img)
     CheckBox cb_img;
-    private boolean isClose = false;
-    private int keyY = 0;
     private int keyHeight;
 
     public static KeyboardDialog newInstance() {
@@ -87,7 +85,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     @Override
     protected int getLayoutId() {
-        return R.layout.dialog_keyboard;
+        return R.layout.dialog_keyboard_test;
     }
 
     @Override
@@ -121,7 +119,6 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         et_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                keyY = root.getBottom();
                 reloadEmoji(false);
             }
         });
@@ -216,9 +213,13 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     }
 
-    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full, R.id.iv_emoji_del})
+    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full, R.id.iv_emoji_del,R.id.tv_send})
     public void click(View view){
         switch (view.getId()){
+            case R.id.tv_send:
+                hideKeyboard();
+                dismiss();
+                break;
             case R.id.iv_emoji_del:
                 if (et_comment != null) {
                     et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
@@ -247,16 +248,14 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         if (params.height == WindowManager.LayoutParams.MATCH_PARENT) {
             params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-            ConstraintLayout.LayoutParams parm = (ConstraintLayout.LayoutParams) et_comment.getLayoutParams();
-            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-            et_comment.setLayoutParams(parm);
+            ConstraintLayout.LayoutParams parm = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            root.setLayoutParams(parm);
             et_comment.setMaxLines(3);
         } else {
             params.height = WindowManager.LayoutParams.MATCH_PARENT;
 
-            ConstraintLayout.LayoutParams parm = (ConstraintLayout.LayoutParams) et_comment.getLayoutParams();
-            parm.height = ConstraintLayout.LayoutParams.MATCH_PARENT;
-            et_comment.setLayoutParams(parm);
+            ConstraintLayout.LayoutParams parm = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.MATCH_PARENT);
+            root.setLayoutParams(parm);
             et_comment.setMaxLines(Integer.MAX_VALUE);
         }
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
