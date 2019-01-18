@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -92,9 +93,17 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
         initComment();
 
         Intent intent = getIntent();
-        if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_SEND)) {
-//            ClipData uri = intent.getClipData();
-            ToastUtils.showShort("分享测试成功");
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if(extras == null)
+                return;
+            switch (intent.getType()) {
+                case "text/plain"://分享的内容类型，如果png图片：image/png 
+                    ToastUtils.showShort("分享内容：\ntitle: " + extras.get(Intent.EXTRA_TITLE) + "\ncontent: " + extras.get(Intent.EXTRA_TEXT));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

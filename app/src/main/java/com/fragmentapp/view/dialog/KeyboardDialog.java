@@ -25,8 +25,11 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
 import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
@@ -71,6 +74,8 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     CheckBox cb_img;
     private int keyHeight;
 
+    private boolean isFirst = true;
+
     public static KeyboardDialog newInstance() {
         KeyboardDialog fragment = new KeyboardDialog();
         return fragment;
@@ -78,14 +83,14 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     public static KeyboardDialog newInstance(int val) {
         KeyboardDialog fragment = new KeyboardDialog();
         Bundle bundle = new Bundle();
-        bundle.putInt("keyHeight",val);
+//        bundle.putInt("keyHeight",val);
         fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.dialog_keyboard_test;
+        return R.layout.dialog_keyboard;
     }
 
     @Override
@@ -242,24 +247,25 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     }
 
     private void pushFull(){
-        Window window = getDialog().getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.gravity = Gravity.BOTTOM;
-        if (params.height == WindowManager.LayoutParams.MATCH_PARENT) {
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-            ConstraintLayout.LayoutParams parm = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            root.setLayoutParams(parm);
+        LinearLayout.LayoutParams parm = (LinearLayout.LayoutParams) et_comment.getLayoutParams();
+        if (parm.height != WindowManager.LayoutParams.WRAP_CONTENT) {
             et_comment.setMaxLines(3);
+            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
         } else {
-            params.height = WindowManager.LayoutParams.MATCH_PARENT;
-
-            ConstraintLayout.LayoutParams parm = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.MATCH_PARENT);
-            root.setLayoutParams(parm);
             et_comment.setMaxLines(Integer.MAX_VALUE);
+            parm.height = keyHeight;
         }
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        window.setAttributes(params);
+        et_comment.setLayoutParams(parm);
+    }
+
+    private void setFullHeight(int height){
+        LinearLayout.LayoutParams parm = (LinearLayout.LayoutParams) et_comment.getLayoutParams();
+        if (parm.height != WindowManager.LayoutParams.WRAP_CONTENT) {
+            parm.height = height;
+        }else{
+            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        }
+        et_comment.setLayoutParams(parm);
     }
 
     @Override
@@ -271,16 +277,13 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     @Override
     public void onSoftInputChanged(int height) {
         if (height > 0) {
+            if (isFirst){
+                keyHeight = height;
+                isFirst = false;
+            }
             reloadEmoji(false);
         } else {
             reloadEmoji(true);
-        }
-    }
-
-    public void setKeyHeight(int keyHeight) {
-        this.keyHeight = keyHeight;
-        if (layout_emoji != null && keyHeight > 0) {
-            layout_emoji.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
         }
     }
 

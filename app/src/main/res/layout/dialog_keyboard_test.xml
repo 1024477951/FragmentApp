@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0.0"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:padding="@dimen/d10.0">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/et_comment"
@@ -29,7 +28,10 @@
                 android:cursorVisible="true"
                 android:gravity="top|left"
                 android:hint="请输入内容"
+                android:padding="@dimen/d10.0"
+                android:inputType="textMultiLine"
                 android:maxLines="3"
+                android:text="asfasdfasfsadfsdafasdfsadfsafdasdfas"
                 android:textColor="@color/color_444444"
                 android:textColorHint="@color/color_999999"
                 android:textCursorDrawable="@null"
