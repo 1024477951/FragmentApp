@@ -3,6 +3,12 @@
 
 欢迎收藏
 
+--仿微博输入框效果--
+
+博客地址：https://www.cnblogs.com/LiuZhen/p/10297446.html
+
+![image](https://github.com/1024477951/FragmentApp/blob/master/app/src/main/gif/keyboard_dialog.gif)
+
 --仿微信未读平滑滚动定位效果--
 
 博客地址：https://www.cnblogs.com/LiuZhen/p/9884948.html

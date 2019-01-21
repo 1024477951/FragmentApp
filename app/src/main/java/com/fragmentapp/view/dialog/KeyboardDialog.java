@@ -52,11 +52,9 @@ import butterknife.OnClick;
 
 public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.OnSoftInputChangedListener {
 
-    @BindView(R.id.root)
-    View root;
     @BindView(R.id.layout_emoji)
     View layout_emoji;
-//    @BindView(R.id.view_indicate)
+    //    @BindView(R.id.view_indicate)
 //    LinIndicate view_indicate;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -80,6 +78,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         KeyboardDialog fragment = new KeyboardDialog();
         return fragment;
     }
+
     public static KeyboardDialog newInstance(int val) {
         KeyboardDialog fragment = new KeyboardDialog();
         Bundle bundle = new Bundle();
@@ -95,14 +94,14 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     @Override
     protected void init() {
-        KeyboardUtils.registerSoftInputChangedListener(getActivity(),this);
+        KeyboardUtils.registerSoftInputChangedListener(getActivity(), this);
         KeyboardUtils.showSoftInput(getActivity());
         layout_emoji.setVisibility(View.GONE);
         imgAdapter = new KeyboardImgAdapter(R.layout.item_dynamic_keyboard_img);
         rvImgList.setAdapter(imgAdapter);
         List<String> items = new ArrayList<>();
-        for(int i = 0;i< 3;i++){
-            items.add(""+i);
+        for (int i = 0; i < 3; i++) {
+            items.add("" + i);
         }
         imgAdapter.setNewData(items);
         et_comment.addTextChangedListener(new TextWatcher() {
@@ -131,7 +130,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 //        setKeyHeight(1000);
 
         viewPager.setOffscreenPageLimit(1);
-        emojiListAdapter = new EmojiListAdapter(getChildFragmentManager(),1);
+        emojiListAdapter = new EmojiListAdapter(getChildFragmentManager(), 1);
         viewPager.setAdapter(emojiListAdapter);
         emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
             @Override
@@ -155,7 +154,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (et_comment != null){
+        if (et_comment != null) {
             et_comment.setText("");
         }
     }
@@ -193,10 +192,10 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         KeyboardUtils.hideSoftInput(getActivity());
     }
 
-    public void onSwitch(FragmentManager manager){
-        if (isVisible() == false){
-            show(manager,TAG);
-        }else{
+    public void onSwitch(FragmentManager manager) {
+        if (isVisible() == false) {
+            show(manager, TAG);
+        } else {
             dismiss();
         }
     }
@@ -218,9 +217,9 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     }
 
-    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full, R.id.iv_emoji_del,R.id.tv_send})
-    public void click(View view){
-        switch (view.getId()){
+    @OnClick({R.id.cb_emoji, R.id.cb_img, R.id.iv_full, R.id.iv_emoji_del, R.id.tv_send})
+    public void click(View view) {
+        switch (view.getId()) {
             case R.id.tv_send:
                 hideKeyboard();
                 dismiss();
@@ -246,7 +245,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         }
     }
 
-    private void pushFull(){
+    private void pushFull() {
         LinearLayout.LayoutParams parm = (LinearLayout.LayoutParams) et_comment.getLayoutParams();
         if (parm.height != WindowManager.LayoutParams.WRAP_CONTENT) {
             et_comment.setMaxLines(3);
@@ -258,11 +257,11 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         et_comment.setLayoutParams(parm);
     }
 
-    private void setFullHeight(int height){
+    private void setFullHeight(int height) {
         LinearLayout.LayoutParams parm = (LinearLayout.LayoutParams) et_comment.getLayoutParams();
         if (parm.height != WindowManager.LayoutParams.WRAP_CONTENT) {
             parm.height = height;
-        }else{
+        } else {
             parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
         }
         et_comment.setLayoutParams(parm);
@@ -277,7 +276,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     @Override
     public void onSoftInputChanged(int height) {
         if (height > 0) {
-            if (isFirst){
+            if (isFirst) {
                 keyHeight = height;
                 isFirst = false;
             }
@@ -300,7 +299,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
                 if (imgAdapter != null) {
                     if (imgAdapter.getData().size() > 0) {
                         imgAdapter.addData(items);
-                    }else{
+                    } else {
                         imgAdapter.setNewData(items);
                     }
                 }
