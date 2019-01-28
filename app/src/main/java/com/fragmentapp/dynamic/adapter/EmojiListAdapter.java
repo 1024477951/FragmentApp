@@ -5,6 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fragmentapp.dynamic.fragment.EmojiFragment;
+import com.fragmentapp.emoji.StickerCategory;
+import com.fragmentapp.emoji.StickerItem;
+
+import java.util.List;
 
 /**
  * Created by liuzhen on 2017/12/14.
@@ -12,16 +16,18 @@ import com.fragmentapp.dynamic.fragment.EmojiFragment;
 
 public class EmojiListAdapter extends FragmentPagerAdapter {
 
-    private int count;
+    private List<StickerCategory> list;
 
-    public EmojiListAdapter(FragmentManager fm, int count) {
+    public EmojiListAdapter(FragmentManager fm, List<StickerCategory> list) {
         super(fm);
-        this.count = count;
+        this.list = list;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return EmojiFragmentFactory.getInstance().getFragment(position);
+        EmojiFragment fragment = EmojiFragmentFactory.getInstance().getFragment(position);
+        fragment.setName(list.get(position).getName());
+        return fragment;
     }
 
     public void setEmojiCallBack(CallBack callBack){
@@ -30,11 +36,11 @@ public class EmojiListAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return count;
+        return list.size();
     }
 
     public interface CallBack{
-        void click(String emojiKey);
+        void click(StickerItem item,int position);
     }
 
 }

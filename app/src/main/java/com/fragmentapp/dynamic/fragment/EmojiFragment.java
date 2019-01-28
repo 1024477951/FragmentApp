@@ -11,6 +11,8 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.dynamic.adapter.EmojiAdapter;
 import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
+import com.fragmentapp.emoji.StickerCategory;
+import com.fragmentapp.emoji.StickerManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +30,8 @@ public class EmojiFragment extends LazyFragment {
     private EmojiAdapter adapter;
     private EmojiListAdapter.CallBack callBack;
 
+    private String name;
+
     public static EmojiFragment newInstance(Bundle bundle) {
         EmojiFragment fragment = new EmojiFragment();
         fragment.setArguments(bundle);
@@ -41,19 +45,25 @@ public class EmojiFragment extends LazyFragment {
 
     @Override
     protected void init() {
-        String[] rc_myemoji_code = getResources().getStringArray(R.array.rc_myemoji_code);
         adapter = new EmojiAdapter(R.layout.item_emoji);
         recyclerView.setAdapter(adapter);
-        List<String> list = Arrays.asList(rc_myemoji_code);
-        adapter.setNewData(list);
+
+        final StickerManager manager = StickerManager.getInstance();
+        // 贴图
+        StickerCategory category = manager.getCategory(name);
+        adapter.setNewData(category.getStickers());
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 if (callBack != null){
-                    callBack.click(adapter.getData().get(position));
+                    callBack.click(adapter.getData().get(position),position);
                 }
             }
         });
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setCallBack(EmojiListAdapter.CallBack callBack){

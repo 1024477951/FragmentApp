@@ -1,40 +1,34 @@
 package com.fragmentapp.view.dialog;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.KeyboardUtils;
-import com.blankj.utilcode.util.ScreenUtils;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
 import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
 import com.fragmentapp.dynamic.adapter.KeyboardImgAdapter;
-import com.fragmentapp.helper.SpanStringUtils;
+import com.fragmentapp.emoji.EmojiManager;
+import com.fragmentapp.emoji.StickerCategory;
+import com.fragmentapp.emoji.StickerItem;
+import com.fragmentapp.emoji.StickerManager;
 import com.fragmentapp.selector.PhotoSelectUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -105,9 +99,14 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         }
         imgAdapter.setNewData(items);
         et_comment.addTextChangedListener(new TextWatcher() {
+
+            private int start;
+            private int count;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                this.start = start;
+                this.count = count;
             }
 
             @Override
@@ -117,7 +116,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                EmojiManager.replaceEmoticons(getActivity(), s, start, count);
             }
         });
         et_comment.setOnClickListener(new View.OnClickListener() {
@@ -129,23 +128,28 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 //        view_indicate.load(4);
 //        setKeyHeight(1000);
 
-        viewPager.setOffscreenPageLimit(1);
-        emojiListAdapter = new EmojiListAdapter(getChildFragmentManager(), 1);
+        // 贴图
+        List<StickerCategory> categories = StickerManager.getInstance().getCategories();//只添加了贴图，还没有添加默认表情
+
+        viewPager.setOffscreenPageLimit(categories.size());
+        emojiListAdapter = new EmojiListAdapter(getChildFragmentManager(), categories);
         viewPager.setAdapter(emojiListAdapter);
         emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
             @Override
-            public void click(String emojiKey) {
-                if (emojiKey != null) {
-                    // 获取当前光标位置,在指定位置上添加表情图片文本
-                    int curPosition = et_comment.getSelectionStart();
-                    StringBuilder sb = new StringBuilder(et_comment.getText().toString());
-                    sb.insert(curPosition, emojiKey);
+            public void click(StickerItem item,int position) {
+                String name = item.getCategory();
 
-                    // 特殊文字处理,将表情等转换一下
-                    et_comment.setText(SpanStringUtils.getEmotionContent(sb.toString(), R.dimen.d70_0));
-                    // 将光标设置到新增完表情的右侧
-                    et_comment.setSelection(curPosition + emojiKey.length());
-                    et_comment.requestFocus();
+                String key = EmojiManager.getDisplayText(position);
+
+                Editable mEditable = et_comment.getText();
+                if (key.equals("/DEL")) {
+                    et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                } else {
+                    int start = et_comment.getSelectionStart();
+                    int end = et_comment.getSelectionEnd();
+                    start = (start < 0 ? 0 : start);
+                    end = (start < 0 ? 0 : end);
+                    mEditable.replace(start, end, key);
                 }
             }
         });

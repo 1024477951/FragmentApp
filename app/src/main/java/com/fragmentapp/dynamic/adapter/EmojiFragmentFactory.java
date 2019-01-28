@@ -24,10 +24,10 @@ public class EmojiFragmentFactory {
         return Instance.instance;
     }
 
-    private SparseArray<SoftReference<BaseFragment>> arr = new SparseArray<SoftReference<BaseFragment>>();
+    private SparseArray<SoftReference<EmojiFragment>> arr = new SparseArray<SoftReference<EmojiFragment>>();
 
-    public BaseFragment getFragment(int pos) {
-        BaseFragment fragment = null;
+    public EmojiFragment getFragment(int pos) {
+        EmojiFragment fragment = null;
         if (null != arr.get(pos))
             fragment = arr.get(pos).get();
         if (null == fragment) {
@@ -35,10 +35,12 @@ public class EmojiFragmentFactory {
             bundle.putInt("id",pos);
             switch (pos) {
                 case 0:
+                case 1:
+                case 2:
                     fragment = EmojiFragment.newInstance(bundle);
                     break;
             }
-            arr.put(pos, new SoftReference<BaseFragment>(fragment));
+            arr.put(pos, new SoftReference<EmojiFragment>(fragment));
         }
         return fragment;
     }
