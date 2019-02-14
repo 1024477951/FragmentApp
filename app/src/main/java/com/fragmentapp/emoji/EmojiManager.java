@@ -43,16 +43,15 @@ public class EmojiManager {
     private static Pattern pattern;
 
     // default entries
-    private static final List<Entry> defaultEntries = new ArrayList<Entry>();
+    private static final List<EmojiItem> defaultEntries = new ArrayList<EmojiItem>();
     // text to entry
-    private static final Map<String, Entry> text2entry = new HashMap<String, Entry>();
+    private static final Map<String, EmojiItem> text2entry = new HashMap<String, EmojiItem>();
     // asset bitmap cache, key: asset path
     private static LruCache<String, Bitmap> drawableCache;
 
     static {
         Context context = App.getInstance();
-
-        load(context, EMOT_DIR + "emojis.xml");//加载默认表情
+        load(context, EMOT_DIR + "emoji.xml");//加载默认表情
 
         pattern = makePattern();
 
@@ -63,16 +62,6 @@ public class EmojiManager {
                     oldValue.recycle();
             }
         };
-    }
-
-    private static class Entry {
-        String text;
-        String assetPath;
-
-        Entry(String text, String assetPath) {
-            this.text = text;
-            this.assetPath = assetPath;
-        }
     }
 
     //
@@ -94,12 +83,16 @@ public class EmojiManager {
                 .get(index).text : null;
     }
 
+    public static final List<EmojiItem> getEmojiList() {
+        return defaultEntries;
+    }
+
     public static final Pattern getPattern() {
         return pattern;
     }
 
     public static final Drawable getDrawable(Context context, String text) {
-        Entry entry = text2entry.get(text);
+        EmojiItem entry = text2entry.get(text);
         if (entry == null) {
             return null;
         }
@@ -162,6 +155,8 @@ public class EmojiManager {
         private String catalog = "";
 
         void load(Context context, String assetPath) {
+            text2entry.clear();
+            defaultEntries.clear();
             InputStream is = null;
             try {
                 is = context.getAssets().open(assetPath);
@@ -189,7 +184,7 @@ public class EmojiManager {
             } else if (localName.equals("Emoticon")) {
                 String tag = attributes.getValue(uri, "Tag");
                 String fileName = attributes.getValue(uri, "File");
-                Entry entry = new Entry(tag, EMOT_DIR + catalog + "/" + fileName);
+                EmojiItem entry = new EmojiItem(tag, EMOT_DIR + catalog + "/" + fileName);
 
                 text2entry.put(entry.text, entry);
                 if (catalog.equals("default")) {

@@ -11,6 +11,7 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.LazyFragment;
 import com.fragmentapp.dynamic.adapter.EmojiAdapter;
 import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
+import com.fragmentapp.emoji.EmojiManager;
 import com.fragmentapp.emoji.StickerCategory;
 import com.fragmentapp.emoji.StickerManager;
 
@@ -47,11 +48,11 @@ public class EmojiFragment extends LazyFragment {
     protected void init() {
         adapter = new EmojiAdapter(R.layout.item_emoji);
         recyclerView.setAdapter(adapter);
-
-        final StickerManager manager = StickerManager.getInstance();
-        // 贴图
-        StickerCategory category = manager.getCategory(name);
-        adapter.setNewData(category.getStickers());
+//        final StickerManager manager = StickerManager.getInstance();
+//        // 贴图
+//        StickerCategory category = manager.getCategory(name);
+//        adapter.setNewData(category.getStickers());
+        adapter.setNewData(EmojiManager.getEmojiList());
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
