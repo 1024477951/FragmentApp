@@ -1,12 +1,11 @@
-package com.fragmentapp.dynamic.adapter;
+package com.fragmentapp.emoji.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.fragmentapp.R;
-import com.fragmentapp.emoji.EmojiItem;
+import com.fragmentapp.emoji.bean.EmojiItem;
 import com.fragmentapp.helper.GlideAppUtils;
 
 /**

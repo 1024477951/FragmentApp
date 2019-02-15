@@ -1,9 +1,10 @@
-package com.fragmentapp.emoji;
+package com.fragmentapp.emoji.manager;
 
 import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.fragmentapp.App;
+import com.fragmentapp.emoji.bean.StickerItem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/** 加载贴图表情 */
 public class StickerCategory implements Serializable {
     private static final long serialVersionUID = -81692490861539040L;
 

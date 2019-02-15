@@ -1,4 +1,4 @@
-package com.fragmentapp.emoji;
+package com.fragmentapp.emoji.manager;
 
 import android.content.res.AssetManager;
 import android.util.Log;
@@ -75,6 +75,11 @@ public class StickerManager {
         try {
             String[] files = assetManager.list("sticker");
             StickerCategory category;
+
+            category = new StickerCategory("emoji", "emoji", true, 0);
+            stickerCategories.add(category);
+            stickerCategoryMap.put("emoji", category);
+
             for (String name : files) {
                 if (!FileUtil.hasExtentsion(name)) {
                     category = new StickerCategory(name, name, true, getStickerOrder(name));

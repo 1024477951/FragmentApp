@@ -1,4 +1,4 @@
-package com.fragmentapp.emoji;
+package com.fragmentapp.emoji.manager;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.util.Xml;
 
 import com.fragmentapp.App;
+import com.fragmentapp.emoji.bean.EmojiItem;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -30,12 +31,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** 默认表情管理 */
 public class EmojiManager {
 
     private static final float DEF_SCALE = 0.6f;
     private static final float SMALL_SCALE = 0.45F;
 
-    private static final String EMOT_DIR = "emoji/";
+    private static final String EMOT_DIR = "emoji/";//asstes路径
 
     // max cache size
     private static final int CACHE_MAX_SIZE = 1024;

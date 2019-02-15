@@ -199,7 +199,9 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
     protected void onDestroy() {
         super.onDestroy();
         if (dialog != null){
-            dialog.dismiss();
+            if (dialog.isVisible()) {
+                dialog.dismiss();
+            }
             dialog = null;
         }
     }

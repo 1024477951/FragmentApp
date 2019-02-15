@@ -1,4 +1,4 @@
-package com.fragmentapp.emoji;
+package com.fragmentapp.emoji.bean;
 
 /**
  * Created by liuzhen on 2019/2/13.

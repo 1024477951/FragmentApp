@@ -23,13 +23,13 @@ import android.widget.LinearLayout;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
-import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
+import com.fragmentapp.emoji.EmojisListAdapter;
 import com.fragmentapp.dynamic.adapter.KeyboardImgAdapter;
-import com.fragmentapp.emoji.EmojiItem;
-import com.fragmentapp.emoji.EmojiManager;
-import com.fragmentapp.emoji.StickerCategory;
-import com.fragmentapp.emoji.StickerItem;
-import com.fragmentapp.emoji.StickerManager;
+import com.fragmentapp.emoji.bean.EmojiItem;
+import com.fragmentapp.emoji.fragment.EmojiBaseFragment;
+import com.fragmentapp.emoji.manager.EmojiManager;
+import com.fragmentapp.emoji.manager.StickerCategory;
+import com.fragmentapp.emoji.manager.StickerManager;
 import com.fragmentapp.selector.PhotoSelectUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -53,7 +53,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 //    LinIndicate view_indicate;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    private EmojiListAdapter emojiListAdapter;
+    private EmojisListAdapter emojisListAdapter;
 
     @BindView(R.id.rvImgList)
     RecyclerView rvImgList;
@@ -130,23 +130,25 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 //        setKeyHeight(1000);
 
         // 贴图
-//        List<StickerCategory> categories = StickerManager.getInstance().getCategories();//只添加了贴图，还没有添加默认表情
+        List<StickerCategory> categories = StickerManager.getInstance().getCategories();//只添加了贴图，还没有添加默认表情
 
-        viewPager.setOffscreenPageLimit(1);
-        emojiListAdapter = new EmojiListAdapter(getChildFragmentManager());
-        viewPager.setAdapter(emojiListAdapter);
-        emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
+        viewPager.setOffscreenPageLimit(categories.size());
+        emojisListAdapter = new EmojisListAdapter(getChildFragmentManager(),categories);
+        viewPager.setAdapter(emojisListAdapter);
+        emojisListAdapter.setEmojiCallBack(new EmojiBaseFragment.CallBack() {
             @Override
-            public void click(EmojiItem item, int position) {
-                Editable mEditable = et_comment.getText();
-                if (item.text.equals("/DEL")) {
-                    et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-                } else {
-                    int start = et_comment.getSelectionStart();
-                    int end = et_comment.getSelectionEnd();
-                    start = (start < 0 ? 0 : start);
-                    end = (start < 0 ? 0 : end);
-                    mEditable.replace(start, end, item.text);
+            public void click(String path, String name) {
+                if (name.equals("emoji")) {
+                    Editable mEditable = et_comment.getText();
+                    if (path.equals("/DEL")) {
+                        et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    } else {
+                        int start = et_comment.getSelectionStart();
+                        int end = et_comment.getSelectionEnd();
+                        start = (start < 0 ? 0 : start);
+                        end = (start < 0 ? 0 : end);
+                        mEditable.replace(start, end, path);
+                    }
                 }
             }
         });

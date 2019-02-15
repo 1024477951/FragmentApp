@@ -1,4 +1,4 @@
-package com.fragmentapp.emoji;
+package com.fragmentapp.emoji.bean;
 
 public class StickerItem {
     private String category;//类别名
