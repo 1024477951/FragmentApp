@@ -56,14 +56,16 @@ public class WebSocketService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mSocket.disconnect();
+        if (mSocket != null) {
+            mSocket.disconnect();
 
         /*可以指定关闭单个Emitter.Listener，也可以一次性全部关闭*/
 //        mSocket.off(Socket.EVENT_CONNECT, onConnect);
 //        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
 //        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
 //        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off();
+            mSocket.off();
+        }
         mSocket = null;
         Logger.e(TAG+" WebSocket销毁了");
     }

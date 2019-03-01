@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <external-path
+            name="external_files"
+            path="Android/data/" />
+        <external-path
+            name="beta_external_path"
+            path="Download/" />
+        <external-path
+            name="data"
+            path="Android" />
+        <external-path
+            name="external"
+            path="" />
+    </paths>
+</resources>

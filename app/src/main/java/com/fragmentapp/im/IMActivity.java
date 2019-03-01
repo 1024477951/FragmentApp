@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.im.adapter.IMAdapter;
@@ -14,6 +15,7 @@ import com.fragmentapp.im.bean.IMEntity;
 import com.fragmentapp.im.bean.MsgBean;
 import com.fragmentapp.im.imple.IIMView;
 import com.fragmentapp.im.presenter.IMPresenter;
+import com.fragmentapp.view.keyboard.KeyBoardView;
 import com.fragmentapp.view.refresh.DownHeadView;
 import com.fragmentapp.view.refresh.RefreshLayout;
 import com.fragmentapp.view.refresh.StickyHeadView;
@@ -30,7 +32,10 @@ import butterknife.BindView;
  * Created by liuzhen on 2018/8/6.
  */
 
-public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMoreListener {
+public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMoreListener ,KeyboardUtils.OnSoftInputChangedListener{
+
+    @BindView(R.id.layout_keyboard)
+    KeyBoardView layout_keyboard;
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
@@ -64,7 +69,7 @@ public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMo
     @Override
     public void init() {
         setTitleText("消息");
-
+        KeyboardUtils.registerSoftInputChangedListener(this, this);
         adapter = new IMAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
@@ -97,7 +102,7 @@ public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMo
                 }
             }
         });
-
+        layout_keyboard.setKeyBoardView(getSupportFragmentManager());
     }
 
     @Override
@@ -148,5 +153,10 @@ public class IMActivity extends BaseActivity implements IIMView ,OnRefreshLoadMo
     public void onRefresh(@NonNull com.scwang.smartrefresh.layout.api.RefreshLayout refreshLayout) {
         presenter.getList(page);
         refreshLayout.finishRefresh();
+    }
+
+    @Override
+    public void onSoftInputChanged(int height) {
+        layout_keyboard.updateHeight(height);
     }
 }
