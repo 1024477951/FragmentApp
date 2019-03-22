@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/root"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -29,6 +30,6 @@
     <ImageView
         android:layout_width="@dimen/d50.0"
         android:layout_height="@dimen/d50.0"
-        android:src="@drawable/shape_bottom_ffb94b_triangle"
+        app:srcCompat="@drawable/shape_bottom_ffb94b_triangle"
         android:layout_gravity="center_horizontal"/>
 </LinearLayout>

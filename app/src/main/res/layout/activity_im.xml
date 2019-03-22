@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -100,7 +100,7 @@
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dp"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/icon_chat_emoji_normal"
+                    app:srcCompat="@mipmap/icon_chat_emoji_normal"
                     android:visibility="visible" />
 
 
@@ -143,7 +143,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <android.support.v4.view.ViewPager
+                <androidx.viewpager.widget.ViewPager
                     android:id="@+id/emoji_viewpage"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

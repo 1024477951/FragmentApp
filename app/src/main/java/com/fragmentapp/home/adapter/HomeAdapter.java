@@ -1,7 +1,7 @@
 package com.fragmentapp.home.adapter;
 
-import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,9 +10,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.fragmentapp.R;
 import com.fragmentapp.helper.RecyclerViewPositionHelper;
 import com.fragmentapp.home.bean.HomeDataBean;
-import com.orhanobut.logger.Logger;
-
-import java.util.HashSet;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

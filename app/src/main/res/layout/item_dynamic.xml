@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:src="@mipmap/icon_dynamic_fire"/>
+            app:srcCompat="@mipmap/icon_dynamic_fire"/>
 
     </LinearLayout>
 
@@ -90,7 +90,7 @@
         android:ellipsize="end"
         android:text="啦啦啦啦啦啦啦啦啦啦啦啦了阿拉啦啦啦啦阿拉了了了阿拉阿里阿拉阿里啦啦啦啦了阿拉啦啦啦啦了阿拉啦了阿拉阿拉啦啦啦了阿拉啊啦了阿拉阿里阿拉阿里啦了阿拉阿里阿拉啦啦啦啦啦啦啦啦啦啦啦啦了阿拉啦啦啦啦阿拉了了了阿拉阿里阿拉阿里啦啦啦啦了阿拉啦啦啦啦了阿拉啦了阿拉阿拉啦啦啦了阿拉啊啦了阿拉阿里阿拉阿里啦了阿拉阿里阿拉"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="@dimen/d600.0"
         android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
         <ImageView
             android:layout_width="@dimen/d45.0"
             android:layout_height="@dimen/d45.0"
-            android:src="@mipmap/icon_dynamic_comment"
+            app:srcCompat="@mipmap/icon_dynamic_comment"
             android:layout_gravity="center_vertical"/>
 
         <TextView android:id="@+id/tv_count_comment"
@@ -166,4 +166,4 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/d20.0"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

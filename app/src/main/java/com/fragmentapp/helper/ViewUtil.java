@@ -16,12 +16,13 @@
 package com.fragmentapp.helper;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Jacksgong on 3/28/16.
@@ -61,13 +62,13 @@ public class ViewUtil {
         return true;
     }
 
-    public static boolean isFullScreen(final Activity activity) {
+    public static boolean isFullScreen(final AppCompatActivity activity) {
         return (activity.getWindow().getAttributes().flags
                 & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static boolean isTranslucentStatus(final Activity activity) {
+    public static boolean isTranslucentStatus(final AppCompatActivity activity) {
         //noinspection SimplifiableIfStatement
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return (activity.getWindow().getAttributes().flags
@@ -77,7 +78,7 @@ public class ViewUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    static boolean isFitsSystemWindows(final Activity activity) {
+    static boolean isFitsSystemWindows(final AppCompatActivity activity) {
         //noinspection SimplifiableIfStatement
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             return ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0).

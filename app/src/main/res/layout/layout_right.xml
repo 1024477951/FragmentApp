@@ -16,7 +16,7 @@
         android:background="@drawable/shape_radius_ffffff_100"
         android:gravity="center"
         android:scaleType="center"
-        android:src="@mipmap/icon_stars_add"
+        app:srcCompat="@mipmap/icon_stars_add"
         android:visibility="visible"/>
 
     <LinearLayout android:id="@+id/item_delete"
@@ -35,7 +35,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:scaleType="center"
-            android:src="@mipmap/icon_stars_del"/>
+            app:srcCompat="@mipmap/icon_stars_del"/>
 
         <TextView
             android:id="@+id/tv_del"

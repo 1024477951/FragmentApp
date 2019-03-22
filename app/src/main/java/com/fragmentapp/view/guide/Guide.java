@@ -1,6 +1,5 @@
 package com.fragmentapp.view.guide;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.view.View;
@@ -8,10 +7,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * 遮罩系统的封装 <br>
  * 外部需要调用{@link com.blog.www.guideview.GuideBuilder}来创建该实例，实例创建后调用
- * {@link #show(Activity)} 控制显示； 调用 {@link #dismiss()}让遮罩系统消失。 <br>
+ * {@link #show(AppCompatActivity)} 控制显示； 调用 {@link #dismiss()}让遮罩系统消失。 <br>
  *
  * Created by binIoter
  */
@@ -51,7 +52,7 @@ public class Guide implements View.OnKeyListener, View.OnClickListener {
    *
    * @param activity 目标Activity
    */
-  public void show(Activity activity) {
+  public void show(AppCompatActivity activity) {
     if (mMaskView == null) {
       mMaskView = onCreateView(activity);
     }
@@ -143,7 +144,7 @@ public class Guide implements View.OnKeyListener, View.OnClickListener {
     mShouldCheckLocInWindow = set;
   }
 
-  private MaskView onCreateView(Activity activity) {
+  private MaskView onCreateView(AppCompatActivity activity) {
     ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
     // ViewGroup content = (ViewGroup) activity.getWindow().getDecorView();
     MaskView maskView = new MaskView(activity);

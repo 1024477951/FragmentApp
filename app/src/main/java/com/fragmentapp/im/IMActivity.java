@@ -2,22 +2,17 @@ package com.fragmentapp.im;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.im.adapter.IMAdapter;
-import com.fragmentapp.im.bean.IMEntity;
 import com.fragmentapp.im.bean.MsgBean;
 import com.fragmentapp.im.imple.IIMView;
 import com.fragmentapp.im.presenter.IMPresenter;
-import com.fragmentapp.view.refresh.DownHeadView;
-import com.fragmentapp.view.refresh.RefreshLayout;
-import com.fragmentapp.view.refresh.StickyHeadView;
-import com.fragmentapp.view.refresh.TextHeadView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 

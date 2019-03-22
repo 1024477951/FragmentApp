@@ -1,4 +1,4 @@
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toTopOf="@+id/rvImgList"
         android:textSize="@dimen/d46.0"
         android:maxLines="3"/>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvImgList"
         android:layout_width="@dimen/d0.0"
         android:layout_height="@dimen/d200.0"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@+id/tv_send"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/icon_keyboard_full"/>
+        app:srcCompat="@mipmap/icon_keyboard_full"/>
 
     <TextView android:id="@+id/tv_send"
         android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
         android:layout_height="@dimen/d730.0"
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical">
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0.0"
@@ -122,8 +122,8 @@
                 android:layout_width="@dimen/d80.0"
                 android:layout_height="@dimen/d80.0"
                 android:layout_gravity="right|center_vertical"
-                android:src="@mipmap/compose_emotion_delete"/>
+                app:srcCompat="@mipmap/compose_emotion_delete"/>
         </FrameLayout>
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

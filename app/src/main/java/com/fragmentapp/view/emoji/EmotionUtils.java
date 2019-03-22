@@ -1,7 +1,7 @@
 package com.fragmentapp.view.emoji;
 
 import android.content.res.TypedArray;
-import android.support.v4.util.ArrayMap;
+import androidx.collection.ArrayMap;
 
 import com.fragmentapp.App;
 import com.fragmentapp.R;

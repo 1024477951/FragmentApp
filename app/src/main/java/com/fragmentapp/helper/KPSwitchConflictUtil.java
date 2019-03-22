@@ -15,9 +15,10 @@
  */
 package com.fragmentapp.helper;
 
-import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Jacksgong on 3/30/16.
@@ -58,7 +59,7 @@ public class KPSwitchConflictUtil {
                               /* Nullable **/final View switchPanelKeyboardBtn,
                               /* Nullable **/final View focusView,
                               /* Nullable **/final SwitchClickListener switchClickListener) {
-        final Activity activity = (Activity) panelLayout.getContext();
+        final AppCompatActivity activity = (AppCompatActivity) panelLayout.getContext();
 
         if (switchPanelKeyboardBtn != null) {
             switchPanelKeyboardBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +116,7 @@ public class KPSwitchConflictUtil {
                               final View focusView,
                               /** Nullable **/final SwitchClickListener switchClickListener,
                               SubPanelAndTrigger... subPanelAndTriggers) {
-        final Activity activity = (Activity) panelLayout.getContext();
+        final AppCompatActivity activity = (AppCompatActivity) panelLayout.getContext();
 
         for (SubPanelAndTrigger subPanelAndTrigger : subPanelAndTriggers) {
 
@@ -165,7 +166,7 @@ public class KPSwitchConflictUtil {
      * non-layout-conflict.
      */
     public static void showPanel(final View panelLayout) {
-        final Activity activity = (Activity) panelLayout.getContext();
+        final AppCompatActivity activity = (AppCompatActivity) panelLayout.getContext();
         panelLayout.setVisibility(View.VISIBLE);
         if (activity.getCurrentFocus() != null) {
             KeyboardUtil.hideKeyboard(activity.getCurrentFocus());
@@ -180,7 +181,7 @@ public class KPSwitchConflictUtil {
      * @param focusView   the view will be focused.
      */
     public static void showKeyboard(final View panelLayout, final View focusView) {
-        final Activity activity = (Activity) panelLayout.getContext();
+        final AppCompatActivity activity = (AppCompatActivity) panelLayout.getContext();
 
         KeyboardUtil.showKeyboard(focusView);
         if (isHandleByPlaceholder(activity)) {
@@ -221,7 +222,7 @@ public class KPSwitchConflictUtil {
      * @param panelLayout the layout of panel.
      */
     public static void hidePanelAndKeyboard(final View panelLayout) {
-        final Activity activity = (Activity) panelLayout.getContext();
+        final AppCompatActivity activity = (AppCompatActivity) panelLayout.getContext();
 
         final View focusView = activity.getCurrentFocus();
         if (focusView != null) {
@@ -260,7 +261,7 @@ public class KPSwitchConflictUtil {
         return isFullScreen || (isTranslucentStatus && !isFitsSystem);
     }
 
-    static boolean isHandleByPlaceholder(final Activity activity) {
+    static boolean isHandleByPlaceholder(final AppCompatActivity activity) {
         return isHandleByPlaceholder(ViewUtil.isFullScreen(activity),
                 ViewUtil.isTranslucentStatus(activity), ViewUtil.isFitsSystemWindows(activity));
     }

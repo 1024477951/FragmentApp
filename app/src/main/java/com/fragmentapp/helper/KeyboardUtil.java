@@ -16,7 +16,6 @@
 package com.fragmentapp.helper;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -31,6 +30,8 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
 import com.fragmentapp.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Jacksgong on 15/7/6.
@@ -74,9 +75,9 @@ public class KeyboardUtil {
      * @param context the keyboard height is stored by shared-preferences, so need context.
      * @return the stored keyboard height.
      * @see #getValidPanelHeight(Context)
-     * @see #attach(Activity, IPanelHeightTarget)
+     * @see #attach(AppCompatActivity, IPanelHeightTarget)
      * <p/>
-     * Handle and refresh the keyboard height by {@link #attach(Activity, IPanelHeightTarget)}.
+     * Handle and refresh the keyboard height by {@link #attach(AppCompatActivity, IPanelHeightTarget)}.
      */
     public static int getKeyboardHeight(final Context context) {
         if (lastSaveKeyboardHeight == 0) {
@@ -93,7 +94,7 @@ public class KeyboardUtil {
      * @see #getMaxPanelHeight(Resources)
      * @see #getMinPanelHeight(Resources)
      * @see #getKeyboardHeight(Context)
-     * @see #attach(Activity, IPanelHeightTarget)
+     * @see #attach(AppCompatActivity, IPanelHeightTarget)
      * <p/>
      * The keyboard height may be too short or too height. we intercept the keyboard height in
      * [{@link #getMinPanelHeight(Resources)}, {@link #getMaxPanelHeight(Resources)}].
@@ -140,7 +141,7 @@ public class KeyboardUtil {
 
 
     /**
-     * Recommend invoked by {@link Activity#onCreate(Bundle)}
+     * Recommend invoked by {@link AppCompatActivity#onCreate(Bundle)}
      * For align the height of the keyboard to {@code target} as much as possible.
      * For save the refresh the keyboard height to shared-preferences.
      *
@@ -150,7 +151,7 @@ public class KeyboardUtil {
      * @see #saveKeyboardHeight(Context, int)
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity,
+    public static ViewTreeObserver.OnGlobalLayoutListener attach(final AppCompatActivity activity,
                                                                  IPanelHeightTarget target,
                                                                  /* Nullable */
                                                                  OnKeyboardShowingListener lis) {
@@ -185,9 +186,9 @@ public class KeyboardUtil {
     }
 
     /**
-     * @see #attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)
+     * @see #attach(AppCompatActivity, IPanelHeightTarget, OnKeyboardShowingListener)
      */
-    public static ViewTreeObserver.OnGlobalLayoutListener attach(final Activity activity,
+    public static ViewTreeObserver.OnGlobalLayoutListener attach(final AppCompatActivity activity,
                                                                  IPanelHeightTarget target) {
         return attach(activity, target, null);
     }
@@ -199,7 +200,7 @@ public class KeyboardUtil {
      * @param l        ViewTreeObserver.OnGlobalLayoutListener returned by {@link #attach} method
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static void detach(Activity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
+    public static void detach(AppCompatActivity activity, ViewTreeObserver.OnGlobalLayoutListener l) {
         ViewGroup contentView = activity.findViewById(android.R.id.content);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             contentView.getViewTreeObserver().removeOnGlobalLayoutListener(l);
@@ -431,7 +432,7 @@ public class KeyboardUtil {
     /**
      * The interface is used to listen the keyboard showing state.
      *
-     * @see #attach(Activity, IPanelHeightTarget, OnKeyboardShowingListener)
+     * @see #attach(AppCompatActivity, IPanelHeightTarget, OnKeyboardShowingListener)
      * @see KeyboardStatusListener#calculateKeyboardShowing(int)
      */
     public interface OnKeyboardShowingListener {

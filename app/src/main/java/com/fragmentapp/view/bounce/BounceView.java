@@ -2,21 +2,16 @@ package com.fragmentapp.view.bounce;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.CompoundButton;
-
-import com.fragmentapp.R;
 
 /**
  * Created by liuzhen on 2017/11/14.
  */
 
-public class BounceView extends android.support.v7.widget.AppCompatCheckBox{
+public class BounceView extends androidx.appcompat.widget.AppCompatCheckBox{
 
     public BounceView(Context context) {
         super(context);

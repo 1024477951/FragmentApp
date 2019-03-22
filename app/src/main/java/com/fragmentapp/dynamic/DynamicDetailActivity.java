@@ -2,26 +2,18 @@ package com.fragmentapp.dynamic;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.EditText;
 
-import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.dynamic.adapter.DynamicDetailAdapter;
 import com.fragmentapp.dynamic.adapter.DynamicItemAdapter;
-import com.fragmentapp.dynamic.adapter.KeyboardImgAdapter;
 import com.fragmentapp.view.dialog.KeyboardDialog;
-import com.fragmentapp.view.dialog.ShareBottomDialog;
-import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;

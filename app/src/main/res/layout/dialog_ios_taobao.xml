@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
@@ -32,7 +33,7 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:src="@mipmap/ic_share_wechat_friend_circle" />
+                app:srcCompat="@mipmap/ic_share_wechat_friend_circle" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,7 +56,7 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:src="@mipmap/ic_share_wechat_friend" />
+                app:srcCompat="@mipmap/ic_share_wechat_friend" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,7 +85,7 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:src="@mipmap/ic_share_qq" />
+                app:srcCompat="@mipmap/ic_share_qq" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
             <ImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:src="@mipmap/ic_share_sms" />
+                app:srcCompat="@mipmap/ic_share_sms" />
 
             <TextView
                 android:layout_width="wrap_content"

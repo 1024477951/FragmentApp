@@ -1,8 +1,7 @@
 package com.fragmentapp.selector;
 
 import android.Manifest;
-import android.app.Activity;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.fragmentapp.R;
 import com.luck.picture.lib.PictureSelector;
@@ -12,6 +11,7 @@ import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.tools.PictureFileUtils;
 import com.orhanobut.logger.Logger;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -36,7 +36,7 @@ public class PhotoSelectUtils {
     /**
      * 选择
      */
-    public void open(Activity activity, boolean isCrop) {
+    public void open(AppCompatActivity activity, boolean isCrop) {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
                 .theme(R.style.picture_QQ_style)
@@ -141,7 +141,7 @@ public class PhotoSelectUtils {
                 .isGif(false)// 是否显示gif图片 true or false
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
-    public void openNum(Activity activity,int maxSelectNum) {
+    public void openNum(AppCompatActivity activity, int maxSelectNum) {
         PictureNewSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
                 .theme(R.style.picture_QQ_num_style)
@@ -212,7 +212,7 @@ public class PhotoSelectUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    public void clear(final Activity context) {
+    public void clear(final AppCompatActivity context) {
         RxPermissions permissions = new RxPermissions(context);
         permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
             @Override

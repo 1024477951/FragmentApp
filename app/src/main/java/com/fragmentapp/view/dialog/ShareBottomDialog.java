@@ -1,16 +1,14 @@
 package com.fragmentapp.view.dialog;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.flyco.animation.FlipEnter.FlipVerticalSwingEnter;
 import com.flyco.dialog.widget.base.BottomBaseDialog;
 import com.fragmentapp.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ShareBottomDialog extends BottomBaseDialog<ShareBottomDialog> {

@@ -2,13 +2,10 @@ package com.fragmentapp.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -18,12 +15,10 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.helper.KeyboardUtil;
 import com.fragmentapp.home.bean.HomeDataBean;
-import com.fragmentapp.home.presenter.HomePresenter;
 import com.fragmentapp.search.adapter.SearchAdapter;
 import com.fragmentapp.search.imple.ISearchView;
 import com.fragmentapp.search.presenter.SearchPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
