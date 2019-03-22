@@ -1,14 +1,23 @@
 package com.fragmentapp.dynamic;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseActivity;
 import com.fragmentapp.dynamic.adapter.DynamicDetailAdapter;
@@ -80,6 +89,20 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
         setTitleText("动态详情");
 
         initComment();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if(extras == null)
+                return;
+            switch (intent.getType()) {
+                case "text/plain"://分享的内容类型，如果png图片：image/png 
+                    ToastUtils.showShort("分享内容：\ntitle: " + extras.get(Intent.EXTRA_TITLE) + "\ncontent: " + extras.get(Intent.EXTRA_TEXT));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void initComment(){
@@ -174,7 +197,9 @@ public class DynamicDetailActivity extends BaseActivity implements OnRefreshLoad
     protected void onDestroy() {
         super.onDestroy();
         if (dialog != null){
-            dialog.dismiss();
+            if (dialog.isVisible()) {
+                dialog.dismiss();
+            }
             dialog = null;
         }
     }

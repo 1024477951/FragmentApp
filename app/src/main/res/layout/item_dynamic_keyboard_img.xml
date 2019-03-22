@@ -12,10 +12,12 @@
         android:layout_gravity="center"
         app:srcCompat="@mipmap/empty"/>
 
-    <ImageView
+    <ImageView android:id="@+id/iv_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
+        android:paddingBottom="@dimen/d15.0"
+        android:paddingLeft="@dimen/d15.0"
         app:srcCompat="@mipmap/icon_keyboard_del"/>
 
 </FrameLayout>

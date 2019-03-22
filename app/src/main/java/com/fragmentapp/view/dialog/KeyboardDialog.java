@@ -1,5 +1,6 @@
 package com.fragmentapp.view.dialog;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,19 +13,23 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.fragmentapp.R;
 import com.fragmentapp.base.BaseDialogFragment;
-import com.fragmentapp.dynamic.adapter.EmojiListAdapter;
+import com.fragmentapp.emoji.EmojisListAdapter;
 import com.fragmentapp.dynamic.adapter.KeyboardImgAdapter;
-import com.fragmentapp.helper.SpanStringUtils;
+import com.fragmentapp.emoji.bean.EmojiItem;
+import com.fragmentapp.emoji.fragment.EmojiBaseFragment;
+import com.fragmentapp.emoji.manager.EmojiManager;
+import com.fragmentapp.emoji.manager.StickerCategory;
+import com.fragmentapp.emoji.manager.StickerManager;
 import com.fragmentapp.selector.PhotoSelectUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -43,15 +48,13 @@ import butterknife.OnClick;
 
 public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.OnSoftInputChangedListener {
 
-    @BindView(R.id.root)
-    View root;
     @BindView(R.id.layout_emoji)
     View layout_emoji;
-//    @BindView(R.id.view_indicate)
+    //    @BindView(R.id.view_indicate)
 //    LinIndicate view_indicate;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    private EmojiListAdapter emojiListAdapter;
+    private EmojisListAdapter emojisListAdapter;
 
     @BindView(R.id.rvImgList)
     RecyclerView rvImgList;
@@ -63,18 +66,19 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     CheckBox cb_emoji;
     @BindView(R.id.cb_img)
     CheckBox cb_img;
-    private boolean isClose = false;
-    private int keyY = 0;
     private int keyHeight;
+
+    private boolean isFirst = true;
 
     public static KeyboardDialog newInstance() {
         KeyboardDialog fragment = new KeyboardDialog();
         return fragment;
     }
+
     public static KeyboardDialog newInstance(int val) {
         KeyboardDialog fragment = new KeyboardDialog();
         Bundle bundle = new Bundle();
-        bundle.putInt("keyHeight",val);
+//        bundle.putInt("keyHeight",val);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -86,20 +90,25 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     @Override
     protected void init() {
-        KeyboardUtils.registerSoftInputChangedListener(getActivity(),this);
+        KeyboardUtils.registerSoftInputChangedListener(getActivity(), this);
         KeyboardUtils.showSoftInput(getActivity());
         layout_emoji.setVisibility(View.GONE);
         imgAdapter = new KeyboardImgAdapter(R.layout.item_dynamic_keyboard_img);
         rvImgList.setAdapter(imgAdapter);
         List<String> items = new ArrayList<>();
-        for(int i = 0;i< 3;i++){
-            items.add(""+i);
+        for (int i = 0; i < 3; i++) {
+            items.add("" + i);
         }
         imgAdapter.setNewData(items);
         et_comment.addTextChangedListener(new TextWatcher() {
+
+            private int start;
+            private int after;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                this.start = start;
+                this.after = after;
             }
 
             @Override
@@ -109,36 +118,38 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                EmojiManager.replaceEmoticons(getActivity(), s, start, after);
             }
         });
         et_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                keyY = root.getBottom();
                 reloadEmoji(false);
             }
         });
 //        view_indicate.load(4);
 //        setKeyHeight(1000);
 
-        viewPager.setOffscreenPageLimit(1);
-        emojiListAdapter = new EmojiListAdapter(getChildFragmentManager(),1);
-        viewPager.setAdapter(emojiListAdapter);
-        emojiListAdapter.setEmojiCallBack(new EmojiListAdapter.CallBack() {
-            @Override
-            public void click(String emojiKey) {
-                if (emojiKey != null) {
-                    // 获取当前光标位置,在指定位置上添加表情图片文本
-                    int curPosition = et_comment.getSelectionStart();
-                    StringBuilder sb = new StringBuilder(et_comment.getText().toString());
-                    sb.insert(curPosition, emojiKey);
+        // 贴图
+        List<StickerCategory> categories = StickerManager.getInstance().getCategories();//只添加了贴图，还没有添加默认表情
 
-                    // 特殊文字处理,将表情等转换一下
-                    et_comment.setText(SpanStringUtils.getEmotionContent(sb.toString(), R.dimen.d70_0));
-                    // 将光标设置到新增完表情的右侧
-                    et_comment.setSelection(curPosition + emojiKey.length());
-                    et_comment.requestFocus();
+        viewPager.setOffscreenPageLimit(categories.size());
+        emojisListAdapter = new EmojisListAdapter(getChildFragmentManager(),categories);
+        viewPager.setAdapter(emojisListAdapter);
+        emojisListAdapter.setEmojiCallBack(new EmojiBaseFragment.CallBack() {
+            @Override
+            public void click(String path, String name) {
+                if (name.equals("emoji")) {
+                    Editable mEditable = et_comment.getText();
+                    if (path.equals("/DEL")) {
+                        et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+                    } else {
+                        int start = et_comment.getSelectionStart();
+                        int end = et_comment.getSelectionEnd();
+                        start = (start < 0 ? 0 : start);
+                        end = (start < 0 ? 0 : end);
+                        mEditable.replace(start, end, path);
+                    }
                 }
             }
         });
@@ -147,7 +158,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (et_comment != null){
+        if (et_comment != null) {
             et_comment.setText("");
         }
     }
@@ -175,7 +186,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     }
 
     private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(et_comment.getWindowToken(), 0);
     }
 
@@ -185,10 +196,10 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         KeyboardUtils.hideSoftInput(getActivity());
     }
 
-    public void onSwitch(FragmentManager manager){
-        if (isVisible() == false){
-            show(manager,TAG);
-        }else{
+    public void onSwitch(FragmentManager manager) {
+        if (isVisible() == false) {
+            show(manager, TAG);
+        } else {
             dismiss();
         }
     }
@@ -210,9 +221,13 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
 
     }
 
-    @OnClick({R.id.cb_emoji,R.id.cb_img,R.id.iv_full, R.id.iv_emoji_del})
-    public void click(View view){
-        switch (view.getId()){
+    @OnClick({R.id.cb_emoji, R.id.cb_img, R.id.iv_full, R.id.iv_emoji_del, R.id.tv_send})
+    public void click(View view) {
+        switch (view.getId()) {
+            case R.id.tv_send:
+                hideKeyboard();
+                dismiss();
+                break;
             case R.id.iv_emoji_del:
                 if (et_comment != null) {
                     et_comment.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
@@ -234,27 +249,26 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
         }
     }
 
-    private void pushFull(){
-        Window window = getDialog().getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.gravity = Gravity.BOTTOM;
-        if (params.height == WindowManager.LayoutParams.MATCH_PARENT) {
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-            ConstraintLayout.LayoutParams parm = (ConstraintLayout.LayoutParams) et_comment.getLayoutParams();
-            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-            et_comment.setLayoutParams(parm);
+    private void pushFull() {
+        LinearLayout.LayoutParams parm = (LinearLayout.LayoutParams) et_comment.getLayoutParams();
+        if (parm.height != WindowManager.LayoutParams.WRAP_CONTENT) {
             et_comment.setMaxLines(3);
+            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
         } else {
-            params.height = WindowManager.LayoutParams.MATCH_PARENT;
-
-            ConstraintLayout.LayoutParams parm = (ConstraintLayout.LayoutParams) et_comment.getLayoutParams();
-            parm.height = ConstraintLayout.LayoutParams.MATCH_PARENT;
-            et_comment.setLayoutParams(parm);
             et_comment.setMaxLines(Integer.MAX_VALUE);
+            parm.height = keyHeight;
         }
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        window.setAttributes(params);
+        et_comment.setLayoutParams(parm);
+    }
+
+    private void setFullHeight(int height) {
+        LinearLayout.LayoutParams parm = (LinearLayout.LayoutParams) et_comment.getLayoutParams();
+        if (parm.height != WindowManager.LayoutParams.WRAP_CONTENT) {
+            parm.height = height;
+        } else {
+            parm.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        }
+        et_comment.setLayoutParams(parm);
     }
 
     @Override
@@ -266,16 +280,13 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
     @Override
     public void onSoftInputChanged(int height) {
         if (height > 0) {
+            if (isFirst) {
+                keyHeight = height;
+                isFirst = false;
+            }
             reloadEmoji(false);
         } else {
             reloadEmoji(true);
-        }
-    }
-
-    public void setKeyHeight(int keyHeight) {
-        this.keyHeight = keyHeight;
-        if (layout_emoji != null && keyHeight > 0) {
-            layout_emoji.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000));
         }
     }
 
@@ -292,7 +303,7 @@ public class KeyboardDialog extends BaseDialogFragment implements KeyboardUtils.
                 if (imgAdapter != null) {
                     if (imgAdapter.getData().size() > 0) {
                         imgAdapter.addData(items);
-                    }else{
+                    } else {
                         imgAdapter.setNewData(items);
                     }
                 }
