@@ -1,9 +1,6 @@
 package com.fragmentapp.view.keyboard;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -21,6 +18,10 @@ import com.fragmentapp.emoji.manager.StickerCategory;
 import com.fragmentapp.emoji.manager.StickerManager;
 
 import java.util.List;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by liuzhen on 2019/2/20.

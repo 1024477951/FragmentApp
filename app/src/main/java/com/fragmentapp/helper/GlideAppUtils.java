@@ -1,7 +1,6 @@
 package com.fragmentapp.helper;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;

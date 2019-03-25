@@ -131,7 +131,7 @@
         会出现FileUriExposedException异常,框架强制执行了StrictMode API政策禁止向应用外公开file://URI,
         如果要 在应用间共享文件，可以发送content://URI类型的Uri，并授予URI临时访问权限，进行此授权的最简单方式是使用FileProvider类-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">

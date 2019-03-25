@@ -1,7 +1,6 @@
 package com.fragmentapp.emoji.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -10,6 +9,7 @@ import com.fragmentapp.emoji.adapter.StickerAdapter;
 import com.fragmentapp.emoji.manager.StickerCategory;
 import com.fragmentapp.emoji.manager.StickerManager;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**

@@ -2,21 +2,14 @@
 
 buildscript {
     repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.google.com' }
         jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
-        maven {
-            url 'https://dl.google.com/dl/android/maven2/'
-        }
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
         // NOTE: Do not place your application dependencies here; they belong
@@ -26,15 +19,11 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
-        mavenLocal()
-        mavenCentral()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "https://jitpack.io" }
         maven { url 'https://maven.google.com' }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        //Bmob的maven仓库地址--必填
-//        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
+        jcenter()
+        google()
     }
 }
 

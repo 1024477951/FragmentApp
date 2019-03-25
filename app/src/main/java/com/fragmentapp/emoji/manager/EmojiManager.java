@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory.Options;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.util.LruCache;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.style.ImageSpan;
@@ -30,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.collection.LruCache;
 
 /** 默认表情管理 */
 public class EmojiManager {

@@ -9,10 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 

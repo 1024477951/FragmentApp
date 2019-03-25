@@ -11,12 +11,12 @@ import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.RemoteException;
-import android.support.annotation.Nullable;
 
 import com.fragmentapp.R;
 import com.fragmentapp.aldl.WatchServiceConnection;
 import com.orhanobut.logger.Logger;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by liuzhen on 2019/2/26.

@@ -1,7 +1,6 @@
 package com.fragmentapp.emoji.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -11,6 +10,7 @@ import com.fragmentapp.R;
 import com.fragmentapp.base.BaseFragment;
 import com.fragmentapp.base.LazyFragment;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -24,7 +24,8 @@ public abstract class EmojiBaseFragment extends BaseFragment {
 
     //-------toolbar-------
     /** left */
-    @Nullable @BindView(R.id.fl_left)
+    @Nullable
+    @BindView(R.id.fl_left)
     public View fl_left;
     @Nullable @BindView(R.id.tv_left_title)
     public TextView tv_left_title;
