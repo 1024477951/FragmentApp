@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (isGuide) {
             showGuideView(dynamic);
         }
-        startAllServices();
+//        startAllServices();
         getLock(this);
 //        enterSetting();
 

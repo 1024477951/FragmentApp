@@ -36,13 +36,13 @@
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/d46.0"
                 android:maxLines="3"/>
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvImgList"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d180.0"
                 android:layout_marginBottom="@dimen/d15.0"
                 android:background="@drawable/shape_radius_ffffff_16_bottom"
-                app:layoutManager="LinearLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"/>
 
         </LinearLayout>
