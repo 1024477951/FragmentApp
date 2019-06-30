@@ -153,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/color_e1e1e1"
-            app:layoutManager="LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             android:scrollbars="none" />
 

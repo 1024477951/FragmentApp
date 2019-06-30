@@ -17,7 +17,6 @@ public class HtmlUtils {
         String regEx_style = "<style[^>]*?>[\\s\\S]*?<\\/style>"; //定义style的正则表达式
         String regEx_html = "<[^>]+>"; //定义HTML标签的正则表达式
 
-
         Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);
         Matcher m_script = p_script.matcher(htmlStr);
         htmlStr = m_script.replaceAll(""); //过滤script标签
@@ -30,7 +29,23 @@ public class HtmlUtils {
         Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
         Matcher m_html = p_html.matcher(htmlStr);
         htmlStr = m_html.replaceAll(""); //过滤html标签
+
+        htmlStr = htmlStr
+                .replaceAll("\\\\n"," ")
+                .replaceAll("\\\\r"," ")
+                .replaceAll("&nbsp;"," ");
         return htmlStr.trim(); //返回文本字符串
+    }
+
+    /**
+     ** 去掉所有html标签返回文字   
+     */
+    public static String delEmptyTag(String htmlStr) {
+        Pattern p = Pattern.compile("\\\\s*|\t|\r|\n");
+        Matcher m = p.matcher(htmlStr);
+        String dest = m.replaceAll("");
+//        String dest = htmlStr.replaceAll("\\\\n","");
+        return dest;
     }
 
     /**
@@ -52,7 +67,8 @@ public class HtmlUtils {
 
         Pattern p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
         Matcher m_html = p_html.matcher(htmlStr);
-        htmlStr = m_html.replaceAll("\n"); //过滤html标签
+        htmlStr = m_html.replaceAll(""); //过滤html标签
+
         return htmlStr.trim(); //返回文本字符串
     }
 

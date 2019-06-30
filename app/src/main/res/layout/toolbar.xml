@@ -22,7 +22,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/d43.0"
                 app:srcCompat="@mipmap/title_back"
-                android:visibility="invisible"/>
+                android:visibility="visible"/>
             <View android:id="@+id/circle_read"
                 android:layout_width="@dimen/d58.0"
                 android:layout_height="@dimen/d58.0"

@@ -97,5 +97,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        waterBgView = null;
     }
 }

@@ -189,31 +189,31 @@ public class NewWaterBgSurfaceView extends SurfaceView implements
 //                            canvas.drawCircle(width + off, waveHeight + 400, 5, paint);
 //                            canvas.drawCircle(width + off, waveHeight, 5, paint);
                             //第三条波浪降低高度和深色
-                            int newHeight = waveHeight + 80;
-                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
-                            path.reset();
-                            path.moveTo(-width + off1, newHeight);
-                            path.quadTo(-width * 3 / 4 + off1, newHeight + 50, -width / 2 + off1, newHeight);
-                            path.quadTo(-width / 4 + off1, newHeight - 50, off1, newHeight);
-                            path.quadTo(width / 4 + off1, newHeight + 50, width / 2 + off1, newHeight);
-                            path.quadTo(width * 3 / 4 + off1, newHeight - 50, width + off1, newHeight);
-                            path.lineTo(width, height);
-                            path.lineTo(-width, height);
-                            path.close();
-                            canvas.drawPath(path, paint);
-                            //第四条波浪
-                            newHeight = waveHeight + 130;
-                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
-                            path.reset();
-                            path.moveTo(-width + off2, newHeight);
-                            path.quadTo(-width * 3 / 4 + off2, newHeight + 80, -width / 2 + off2, newHeight);
-                            path.quadTo(-width / 4 + off2, newHeight - 80, off2, newHeight);
-                            path.quadTo(width / 4 + off2, newHeight + 80, width / 2 + off2, newHeight);
-                            path.quadTo(width * 3 / 4 + off2, newHeight - 80, width + off2, newHeight);
-                            path.lineTo(width, height);
-                            path.lineTo(-width, height);
-                            path.close();
-                            canvas.drawPath(path, paint);
+//                            int newHeight = waveHeight + 80;
+//                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
+//                            path.reset();
+//                            path.moveTo(-width + off1, newHeight);
+//                            path.quadTo(-width * 3 / 4 + off1, newHeight + 50, -width / 2 + off1, newHeight);
+//                            path.quadTo(-width / 4 + off1, newHeight - 50, off1, newHeight);
+//                            path.quadTo(width / 4 + off1, newHeight + 50, width / 2 + off1, newHeight);
+//                            path.quadTo(width * 3 / 4 + off1, newHeight - 50, width + off1, newHeight);
+//                            path.lineTo(width, height);
+//                            path.lineTo(-width, height);
+//                            path.close();
+//                            canvas.drawPath(path, paint);
+//                            //第四条波浪
+//                            newHeight = waveHeight + 130;
+//                            paint.setColor(getResources().getColor(R.color.color_be3c64c7));
+//                            path.reset();
+//                            path.moveTo(-width + off2, newHeight);
+//                            path.quadTo(-width * 3 / 4 + off2, newHeight + 80, -width / 2 + off2, newHeight);
+//                            path.quadTo(-width / 4 + off2, newHeight - 80, off2, newHeight);
+//                            path.quadTo(width / 4 + off2, newHeight + 80, width / 2 + off2, newHeight);
+//                            path.quadTo(width * 3 / 4 + off2, newHeight - 80, width + off2, newHeight);
+//                            path.lineTo(width, height);
+//                            path.lineTo(-width, height);
+//                            path.close();
+//                            canvas.drawPath(path, paint);
 
 //                            //贝塞尔坐标，测试红点
 //                            canvas.drawCircle(-width + off, waveHeight + 100, 5, paint);

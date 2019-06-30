@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
 import androidx.viewpager.widget.ViewPager;
+
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -101,9 +103,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 //        startAllServices();
         getLock(this);
 //        enterSetting();
+        String test = "肯讷河就下你说呢\n&nbsp;\n华东交大煎<p>111</p>鸡蛋饼\n&nbsp;\n喜欢喜<style width='66'></style>欢夫好河山\\n雪花秀你先弄你的\\n&nbsp;\\n&nbsp;";
+//        String test = "山\\n雪花秀你先弄你的\\n&nbsp;\\n&nbsp;";
 
-//        String html = "点酒<div>好多话</div><div>打扮打扮</div><div>谁扮打扮</div><div>谁都会</div><div>谁就是</div><div>时是的</div><div>    <br />    <br /></div>";
-//        HtmlUtils.delHTMLSkipBr(html);
+        String html = HtmlUtils.delHTMLTag(test);
+        Log.e("=====> ",test);
+        Log.e("=====> ",html);
     }
 
     /**
@@ -112,7 +117,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void startAllServices(){
         Intent intent = new Intent(this, WebSocketService.class);
         startService(intent);
-        //开启双守护进程
         startService(new Intent(this, WatchOneService.class));
         startService(new Intent(this, WatchTwoService.class));
         if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.LOLLIPOP) {

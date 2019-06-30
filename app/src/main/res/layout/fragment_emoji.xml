@@ -10,7 +10,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="@dimen/d0.0"
         android:layout_height="match_parent"
-        app:layoutManager="StaggeredGridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="5"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
